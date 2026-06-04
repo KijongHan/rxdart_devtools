@@ -55,7 +55,8 @@ class _ExampleAppState extends State<ExampleApp> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Open DevTools → RxDart tab to inspect tracked streams.'),
+              const Text(
+                  'Open DevTools → RxDart tab to inspect tracked streams.'),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () => _counter.add(_counter.value + 1),
@@ -63,7 +64,8 @@ class _ExampleAppState extends State<ExampleApp> {
               ),
               const SizedBox(height: 8),
               ElevatedButton(
-                onPressed: () => _query.add('q-${DateTime.now().millisecondsSinceEpoch}'),
+                onPressed: () =>
+                    _query.add('q-${DateTime.now().millisecondsSinceEpoch}'),
                 child: const Text('emit search.query'),
               ),
             ],

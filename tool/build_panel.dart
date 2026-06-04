@@ -29,9 +29,11 @@ Future<void> main(List<String> args) async {
 
   final exitCode = await result.exitCode;
   if (exitCode != 0) {
-    stderr.writeln('build_panel: devtools_extensions build_and_copy exited with $exitCode');
+    stderr.writeln(
+        'build_panel: devtools_extensions build_and_copy exited with $exitCode');
     exit(exitCode);
   }
 
-  stdout.writeln('build_panel: panel built and copied into packages/rxdart_devtools/extension/devtools/build/');
+  stdout.writeln(
+      'build_panel: panel built and copied into packages/rxdart_devtools/extension/devtools/build/');
 }

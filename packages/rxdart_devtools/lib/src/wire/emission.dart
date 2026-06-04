@@ -1,7 +1,8 @@
 import '../registry.dart';
 
 class WireEmission {
-  WireEmission({required this.value, required this.timestamp, required this.isError});
+  WireEmission(
+      {required this.value, required this.timestamp, required this.isError});
 
   factory WireEmission.fromEmission(Emission emission) => WireEmission(
         value: emission.value?.toString(),

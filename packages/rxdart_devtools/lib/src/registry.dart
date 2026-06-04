@@ -26,7 +26,8 @@ class TrackedEntry {
 }
 
 class Emission {
-  Emission({required this.value, required this.timestamp, this.isError = false});
+  Emission(
+      {required this.value, required this.timestamp, this.isError = false});
 
   final Object? value;
   final DateTime timestamp;
@@ -39,7 +40,8 @@ class Registry {
   static final Registry instance = Registry._();
 
   final Map<String, TrackedEntry> _entries = {};
-  final Expando<TrackedEntry> _byStream = Expando<TrackedEntry>('rxdart_devtools.tracked');
+  final Expando<TrackedEntry> _byStream =
+      Expando<TrackedEntry>('rxdart_devtools.tracked');
   int _nextId = 0;
 
   TrackedEntry register<T>(Stream<T> stream, {String? name, int? historySize}) {
@@ -75,7 +77,8 @@ class Registry {
       entry.history = ListQueue<Emission>.from(entry.history);
       return;
     }
-    final trimmed = entry.history.toList().sublist(entry.history.length - newSize);
+    final trimmed =
+        entry.history.toList().sublist(entry.history.length - newSize);
     entry.history = ListQueue<Emission>.from(trimmed);
   }
 }

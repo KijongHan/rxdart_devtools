@@ -30,7 +30,8 @@ class TrackedSnapshot {
         history: entry.history.map(WireEmission.fromEmission).toList(),
       );
 
-  factory TrackedSnapshot.fromJson(Map<String, Object?> json) => TrackedSnapshot(
+  factory TrackedSnapshot.fromJson(Map<String, Object?> json) =>
+      TrackedSnapshot(
         id: json['id']! as String,
         name: json['name']! as String,
         typeLabel: json['typeLabel']! as String,

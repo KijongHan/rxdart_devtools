@@ -30,6 +30,7 @@ abstract final class RxDartDevtools {
     bool enabled = true,
   }) {
     if (kReleaseMode) return;
+
     _config = RxDartDevtoolsConfig(
       historySize: historySize,
       closedEntryCap: closedEntryCap,

@@ -6,7 +6,9 @@ import 'package:rxdart_devtools/wire.dart';
 import '../service_client.dart';
 
 class StreamsController extends ChangeNotifier {
-  StreamsController({ServiceClient? client, Duration pollInterval = const Duration(seconds: 1)})
+  StreamsController(
+      {ServiceClient? client,
+      Duration pollInterval = const Duration(seconds: 1)})
       : _client = client ?? ServiceClient(),
         _pollInterval = pollInterval;
 
