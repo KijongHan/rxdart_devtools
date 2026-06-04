@@ -5,8 +5,8 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/rxdart_devtools.dart';
 
 void main() {
-  RxDartDevtools.init(historySize: 50);
   runApp(const ExampleApp());
+  RxDartDevtools.init(historySize: 50);
 }
 
 class ExampleApp extends StatefulWidget {
