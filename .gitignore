@@ -1,0 +1,20 @@
+# Dart / Flutter
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Built DevTools panel artifacts — built on publish, not committed.
+packages/rxdart_devtools/extension/devtools/build/

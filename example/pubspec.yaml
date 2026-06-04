@@ -1,0 +1,24 @@
+name: rxdart_devtools_example
+description: Demo app for rxdart_devtools — creates a few Subjects and tracks them.
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.6.0
+  flutter: '>=3.27.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  rxdart: ^0.28.0
+  rxdart_devtools:
+    path: ../packages/rxdart_devtools
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  lints: ^5.1.0
+
+flutter:
+  uses-material-design: true

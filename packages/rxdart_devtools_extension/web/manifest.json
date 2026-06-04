@@ -1,0 +1,12 @@
+{
+  "name": "rxdart_devtools_extension",
+  "short_name": "rxdart_devtools",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "description": "RxDart DevTools extension panel.",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": []
+}

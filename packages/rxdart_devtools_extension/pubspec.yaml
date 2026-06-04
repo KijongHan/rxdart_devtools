@@ -1,0 +1,27 @@
+name: rxdart_devtools_extension
+description: Flutter web panel source for the rxdart_devtools DevTools extension. Built and copied into the rxdart_devtools package; not published.
+version: 0.0.1
+publish_to: none
+
+resolution: workspace
+
+environment:
+  sdk: ^3.6.0
+  flutter: '>=3.27.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  devtools_app_shared: ^0.4.0
+  devtools_extensions: ^0.4.0
+  rxdart_devtools:
+    path: ../rxdart_devtools
+  vm_service: ^15.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  lints: ^5.1.0
+
+flutter:
+  uses-material-design: true

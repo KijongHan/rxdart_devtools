@@ -1,0 +1,10 @@
+name: _rxdart_devtools_workspace
+publish_to: none
+
+environment:
+  sdk: ^3.6.0
+
+workspace:
+  - packages/rxdart_devtools
+  - packages/rxdart_devtools_extension
+  - example

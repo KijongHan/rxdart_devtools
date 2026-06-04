@@ -1,0 +1,29 @@
+name: rxdart_devtools_workspace
+
+packages:
+  - packages/*
+  - example
+
+command:
+  bootstrap:
+    runPubGetInParallel: false
+
+scripts:
+  analyze:
+    run: dart analyze .
+    description: Run static analysis across the workspace.
+
+  test:
+    run: melos exec -c 1 --fail-fast -- "dart test"
+    description: Run unit tests across all packages.
+    packageFilters:
+      dirExists:
+        - test
+
+  build_panel:
+    run: dart tool/build_panel.dart
+    description: Build the Flutter web panel and copy artifacts into the runtime package's extension/devtools/build directory.
+
+  format:
+    run: dart format .
+    description: Format all Dart files in the workspace.
