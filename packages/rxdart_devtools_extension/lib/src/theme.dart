@@ -1,4 +1,3 @@
-import 'package:devtools_app_shared/ui.dart';
 import 'package:flutter/material.dart';
 
 class PanelTheme extends StatelessWidget {
