@@ -5,8 +5,8 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/rxdart_devtools.dart';
 
 void main() {
-  runApp(const ExampleApp());
   RxDartDevtools.init(historySize: 50);
+  runApp(const ExampleApp());
 }
 
 class ExampleApp extends StatefulWidget {
@@ -58,6 +58,10 @@ class _ExampleAppState extends State<ExampleApp> {
               const Text(
                   'Open DevTools → RxDart tab to inspect tracked streams.'),
               const SizedBox(height: 24),
+              Text('counter: ${_counter.value}'),
+              const SizedBox(height: 8),
+              Text('clock: ${_clock.value}'),
+              const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () => _counter.add(_counter.value + 1),
                 child: const Text('counter++'),

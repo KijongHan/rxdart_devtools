@@ -8,6 +8,7 @@ abstract final class Lifecycle {
   static void install() {
     if (_installed) return;
     _installed = true;
+    WidgetsFlutterBinding.ensureInitialized();
     final binding = WidgetsBinding.instance;
     binding.addObserver(_HotReloadObserver());
   }
