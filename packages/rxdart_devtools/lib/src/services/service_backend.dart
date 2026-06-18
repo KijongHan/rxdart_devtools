@@ -2,15 +2,13 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'registry.dart';
-import 'wire/snapshot.dart';
+import '../dto/snapshot.dart';
+import '../devtools/constants.dart';
 
-abstract final class ServiceExtensions {
-  static const String list = 'ext.rxdart.list';
-  static const String clearClosed = 'ext.rxdart.clearClosed';
-
+abstract final class ServiceBackend {
   static void register() {
-    developer.registerExtension(list, _handleList);
-    developer.registerExtension(clearClosed, _handleClearClosed);
+    developer.registerExtension(Constants.list, _handleList);
+    developer.registerExtension(Constants.clearClosed, _handleClearClosed);
   }
 
   static Future<developer.ServiceExtensionResponse> _handleList(

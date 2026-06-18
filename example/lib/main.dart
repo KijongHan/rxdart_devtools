@@ -59,9 +59,17 @@ class _ExampleAppState extends State<ExampleApp> {
                 'Open DevTools → RxDart tab to inspect tracked streams.',
               ),
               const SizedBox(height: 24),
-              Text('counter: ${_counter.value}'),
+              StreamBuilder(
+                  stream: _counter,
+                  builder: (context, snapshot) {
+                    return Text('counter: ${snapshot.data}');
+                  }),
               const SizedBox(height: 8),
-              Text('clock: ${_clock.value}'),
+              StreamBuilder(
+                  stream: _clock,
+                  builder: (context, snapshot) {
+                    return Text('clock: ${snapshot.data}');
+                  }),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () => _counter.add(_counter.value + 1),

@@ -1,4 +1,4 @@
-import '../registry.dart';
+import '../services/registry.dart';
 import 'emission.dart';
 
 class TrackedSnapshot {

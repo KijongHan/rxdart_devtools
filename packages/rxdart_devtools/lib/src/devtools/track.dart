@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-
-import 'registry.dart';
+import 'package:rxdart_devtools/src/services/registry.dart';
 
 extension RxDartDevtoolsTracking<T, S extends Stream<T>> on S {
   S track(String name, {int? historySize}) {

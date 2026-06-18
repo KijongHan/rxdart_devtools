@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:rxdart_devtools/wire.dart';
+import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
 
 import '../service_client.dart';
 

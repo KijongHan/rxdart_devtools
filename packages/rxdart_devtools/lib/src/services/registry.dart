@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'init.dart';
+import '../devtools/init.dart';
 import 'package:uuid/uuid.dart';
 
 class TrackedEntry {

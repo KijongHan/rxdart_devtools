@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import 'lifecycle.dart';
-import 'service_extensions.dart';
+import '../services/lifecycle.dart';
+import '../services/service_backend.dart';
 
 class RxDartDevtoolsConfig {
   const RxDartDevtoolsConfig({
@@ -39,7 +39,7 @@ abstract final class RxDartDevtools {
     );
     if (_initialized) return;
     _initialized = true;
-    ServiceExtensions.register();
+    ServiceBackend.register();
     Lifecycle.install();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rxdart_devtools/wire.dart';
+import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
 
 class StreamList extends StatelessWidget {
   const StreamList({required this.streams, super.key});

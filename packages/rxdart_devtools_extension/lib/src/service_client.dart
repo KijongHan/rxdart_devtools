@@ -1,5 +1,5 @@
 import 'package:devtools_extensions/devtools_extensions.dart';
-import 'package:rxdart_devtools/wire.dart';
+import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
 import 'package:vm_service/vm_service.dart';
 
 class ServiceClient {
@@ -11,7 +11,7 @@ class ServiceClient {
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
     if (isolate == null) return const [];
     final response = await service.callServiceExtension(
-      'ext.rxdart.list',
+      Constants.list,
       isolateId: isolate.id,
     );
 
@@ -30,7 +30,7 @@ class ServiceClient {
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
     if (isolate == null) return;
     await service.callServiceExtension(
-      'ext.rxdart.clearClosed',
+      Constants.clearClosed,
       isolateId: isolate.id,
     );
   }
