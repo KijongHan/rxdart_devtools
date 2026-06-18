@@ -26,9 +26,9 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   void initState() {
     super.initState();
-    _counter = BehaviorSubject<int>.seeded(0).tracked('counter');
-    _query = PublishSubject<String>().tracked('search.query', historySize: 200);
-    _clock = BehaviorSubject<DateTime>.seeded(DateTime.now()).tracked('clock');
+    _counter = BehaviorSubject<int>.seeded(0).track('counter');
+    _query = PublishSubject<String>().track('search.query', historySize: 200);
+    _clock = BehaviorSubject<DateTime>.seeded(DateTime.now());
 
     _tickTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       _clock.add(DateTime.now());
@@ -56,7 +56,8 @@ class _ExampleAppState extends State<ExampleApp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                  'Open DevTools → RxDart tab to inspect tracked streams.'),
+                'Open DevTools → RxDart tab to inspect tracked streams.',
+              ),
               const SizedBox(height: 24),
               Text('counter: ${_counter.value}'),
               const SizedBox(height: 8),

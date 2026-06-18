@@ -78,7 +78,7 @@ Press `r` in the relevant terminal:
 | Edit | Reload in |
 |---|---|
 | Panel widgets, controllers, theming (`packages/rxdart_devtools_extension/lib/**`) | Terminal 2 (Chrome) |
-| Runtime registry, `.tracked()`, service extension (`packages/rxdart_devtools/lib/src/**`) | Terminal 1 (example) |
+| Runtime registry, `.track()`, service extension (`packages/rxdart_devtools/lib/src/**`) | Terminal 1 (example) |
 | Wire DTOs (`packages/rxdart_devtools/lib/src/wire/**`) | **Both** — runtime serializes, panel deserializes |
 | `extension/devtools/config.yaml` | Irrelevant in simulator mode |
 
@@ -112,13 +112,13 @@ melos run format       # dart format .
 Every public entry point in `package:rxdart_devtools` must begin with a `kReleaseMode` guard so the Dart AOT compiler dead-code-eliminates the debug-only machinery from consumers' release builds:
 
 ```dart
-Stream<T> tracked(String? name, {int? historySize}) {
+Stream<T> track(String? name, {int? historySize}) {
   if (kReleaseMode) return this;
   return impl.trackImpl(this, name, historySize);
 }
 ```
 
-This applies to `Stream<T>.tracked`, `RxDartDevtools.init`, and any future public surface that touches the registry, lifecycle hooks, service extensions, or stack-derived naming.
+This applies to `Stream<T>.track`, `RxDartDevtools.init`, and any future public surface that touches the registry, lifecycle hooks, service extensions, or stack-derived naming.
 
 ### Wire DTOs are shared via the runtime package
 

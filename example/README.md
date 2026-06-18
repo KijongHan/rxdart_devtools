@@ -1,6 +1,6 @@
 # rxdart_devtools example
 
-A minimal Flutter app that exercises the `.tracked()` API.
+A minimal Flutter app that exercises the `.track()` API.
 
 ## First-time setup
 

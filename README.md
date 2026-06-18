@@ -42,4 +42,4 @@ Output lands in `packages/rxdart_devtools/extension/devtools/build/`, which ship
 
 ## Status
 
-Scaffold only. The runtime `.tracked()` API, registry, and panel UI are stubs that compile but do not yet wire end-to-end.
+Scaffold only. The runtime `.track()` API, registry, and panel UI are stubs that compile but do not yet wire end-to-end.

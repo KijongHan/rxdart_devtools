@@ -14,7 +14,7 @@ class EmptyState extends StatelessWidget {
           const Text('No tracked streams'),
           const SizedBox(height: 4),
           Text(
-            'Call .tracked() on a Subject or Stream to see it here.',
+            'Call .track() on a Subject or Stream to see it here.',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],

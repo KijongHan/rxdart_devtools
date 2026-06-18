@@ -18,7 +18,7 @@ abstract final class Naming {
       final match = RegExp(r'\(([^)\s]+\.dart):(\d+)').firstMatch(line);
       if (match == null) continue;
       final file = match.group(1)!.split('/').last;
-      if (file.startsWith('tracked.dart') ||
+      if (file.startsWith('track.dart') ||
           file.startsWith('registry.dart') ||
           file.startsWith('naming.dart')) {
         continue;
