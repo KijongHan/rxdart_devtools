@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'init.dart';
 import 'naming.dart';
+import 'package:uuid/uuid.dart';
 
 class TrackedEntry {
   TrackedEntry({
@@ -26,8 +27,11 @@ class TrackedEntry {
 }
 
 class Emission {
-  Emission(
-      {required this.value, required this.timestamp, this.isError = false});
+  Emission({
+    required this.value,
+    required this.timestamp,
+    this.isError = false,
+  });
 
   final Object? value;
   final DateTime timestamp;
@@ -39,23 +43,18 @@ class Registry {
 
   static final Registry instance = Registry._();
 
+  final Uuid uuid = Uuid();
+
   final Map<String, TrackedEntry> _entries = {};
-  final Expando<TrackedEntry> _byStream =
-      Expando<TrackedEntry>('rxdart_devtools.tracked');
-  int _nextId = 0;
+  final Expando<TrackedEntry> _byStream = Expando<TrackedEntry>();
 
   TrackedEntry register<T>(Stream<T> stream, {String? name, int? historySize}) {
     final existing = _byStream[stream];
-    if (existing != null) {
-      if (historySize != null) {
-        _resizeHistory(existing, historySize);
-      }
-      return existing;
-    }
+    if (existing != null) return existing;
 
     final resolvedHistory = historySize ?? RxDartDevtools.config.historySize;
     final entry = TrackedEntry(
-      id: 'rx_${_nextId++}',
+      id: uuid.v4(),
       name: name ?? Naming.fromStackTrace(stream.runtimeType.toString()),
       typeLabel: stream.runtimeType.toString(),
       historySize: resolvedHistory,
