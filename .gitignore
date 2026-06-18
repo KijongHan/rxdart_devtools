@@ -9,7 +9,6 @@ pubspec.lock
 
 # IDE
 .idea/
-.vscode/
 *.iml
 
 # OS

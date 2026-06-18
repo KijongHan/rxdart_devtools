@@ -1,0 +1,17 @@
+{
+  "window.autoDetectColorScheme": true,
+  "cursor.cpp.disabledLanguages": [
+    "plaintext"
+  ],
+  "git.autofetch": true,
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [
+      80
+    ],
+    "editor.selectionHighlight": false,
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  }
+}
