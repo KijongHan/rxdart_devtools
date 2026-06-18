@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'init.dart';
@@ -46,6 +47,7 @@ class Registry {
   final Uuid uuid = Uuid();
 
   final Map<String, TrackedEntry> _entries = {};
+  final Map<String, StreamSubscription<dynamic>> _subscriptions = {};
   final Expando<TrackedEntry> _byStream = Expando<TrackedEntry>();
 
   TrackedEntry register<T>(Stream<T> stream, {String? name, int? historySize}) {
@@ -53,8 +55,9 @@ class Registry {
     if (existing != null) return existing;
 
     final resolvedHistory = historySize ?? RxDartDevtools.config.historySize;
+    final id = uuid.v4();
     final entry = TrackedEntry(
-      id: uuid.v4(),
+      id: id,
       name: name ?? Naming.fromStackTrace(stream.runtimeType.toString()),
       typeLabel: stream.runtimeType.toString(),
       historySize: resolvedHistory,
@@ -62,6 +65,26 @@ class Registry {
 
     _entries[entry.id] = entry;
     _byStream[stream] = entry;
+
+    final subscription = stream.listen(
+      (value) {
+        entry.lastValue = value;
+        entry.emissionCount++;
+        entry.lastEmittedAt = DateTime.now();
+      },
+      onDone: () {
+        entry.isClosed = true;
+        entry.closedAt = DateTime.now();
+        _subscriptions.remove(id);
+        _entries.remove(id);
+      },
+      onError: (error, stackTrace) {
+        entry.lastError = error;
+        entry.emissionCount++;
+        entry.lastEmittedAt = DateTime.now();
+      },
+    );
+    _subscriptions[id] = subscription;
     return entry;
   }
 
