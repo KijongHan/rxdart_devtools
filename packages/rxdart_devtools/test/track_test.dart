@@ -21,10 +21,9 @@ void main() {
       expect(identical(a, b), isTrue);
     });
 
-    test('allows null name (stack-derived fallback)', () {
-      final subject = PublishSubject<String>();
-      final tracked = subject.track(null);
-      expect(identical(subject, tracked), isTrue);
+    test('throws ArgumentError if name is empty', () {
+      final subject = BehaviorSubject<int>.seeded(0);
+      expect(() => subject.track(''), throwsArgumentError);
     });
   });
 }
