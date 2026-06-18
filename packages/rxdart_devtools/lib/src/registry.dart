@@ -50,13 +50,12 @@ class Registry {
 
   TrackedEntry register<T>(Stream<T> stream,
       {required String name, int? historySize}) {
-    final resolvedHistory = historySize ?? RxDartDevtools.config.historySize;
     final id = uuid.v4();
     final entry = TrackedEntry(
       id: id,
       name: name,
       typeLabel: stream.runtimeType.toString(),
-      historySize: resolvedHistory,
+      historySize: historySize ?? RxDartDevtools.config.historySize,
     );
 
     final subscription = stream.listen(
