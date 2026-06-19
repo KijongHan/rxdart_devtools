@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:rxdart_devtools/src/types/entries.dart';
+import 'package:rxdart_devtools/src/types/streams.dart';
 
 import 'emission.dart';
 
@@ -18,22 +18,20 @@ class TrackedSnapshot {
     required this.lastEmittedAt,
     required this.isClosed,
     required this.closedAt,
-    required this.history,
   });
 
-  factory TrackedSnapshot.fromEntry(TrackedEntry<dynamic> entry) =>
+  factory TrackedSnapshot.fromEntry(StreamEntry<dynamic> entry) =>
       TrackedSnapshot(
         id: entry.entryIdentifier.id,
         name: entry.entryIdentifier.name,
         typeLabel: entry.entryIdentifier.typeLabel,
-        lastValue: entry.lastValue?.toString(),
-        lastError: entry.lastError?.toString(),
-        emissionCount: entry.emissionCount,
-        listenerCount: entry.listenerCount,
-        lastEmittedAt: entry.lastEmittedAt?.toIso8601String(),
-        isClosed: entry.isClosed,
-        closedAt: entry.closedAt?.toIso8601String(),
-        history: entry.history.map(WireEmission.fromEmission).toList(),
+        lastValue: entry.data?.lastValue?.toString(),
+        lastError: entry.data?.lastError?.toString(),
+        emissionCount: entry.metadata.emissionCount,
+        listenerCount: entry.metadata.listenerCount,
+        lastEmittedAt: entry.metadata.lastEmittedAt?.toIso8601String(),
+        isClosed: entry.metadata.isClosed,
+        closedAt: entry.metadata.closedAt?.toIso8601String(),
       );
 
   factory TrackedSnapshot.fromJson(Map<String, dynamic> json) =>
@@ -49,7 +47,6 @@ class TrackedSnapshot {
   final String? lastEmittedAt;
   final bool isClosed;
   final String? closedAt;
-  final List<WireEmission> history;
 
   Map<String, dynamic> toJson() => _$TrackedSnapshotToJson(this);
 }

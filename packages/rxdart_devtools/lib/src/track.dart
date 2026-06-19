@@ -9,7 +9,7 @@ extension RxDartDevtoolsTracking<T, S extends Stream<T>> on S {
       throw ArgumentError('name cannot be empty');
     }
 
-    Registry.instance.register<T>(this, name: name, historySize: historySize);
+    Registry.instance.register<T>(this, (name: name, historySize: historySize));
     return this;
   }
 }

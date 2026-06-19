@@ -1,0 +1,107 @@
+class Emission<T> {
+  Emission({
+    required this.value,
+    required this.timestamp,
+    this.isError = false,
+  });
+
+  final T? value;
+  final DateTime timestamp;
+  final bool isError;
+}
+
+class StreamIdentifier {
+  StreamIdentifier(
+      {required this.id, required this.name, required this.typeLabel});
+
+  final String id;
+  final String name;
+  final String typeLabel;
+
+  StreamIdentifier copyWith({String? id, String? name, String? typeLabel}) {
+    return StreamIdentifier(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      typeLabel: typeLabel ?? this.typeLabel,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) => other is StreamIdentifier && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
+}
+
+class StreamMetadata {
+  StreamMetadata({
+    required this.emissionCount,
+    required this.listenerCount,
+    required this.lastEmittedAt,
+    required this.isClosed,
+    required this.closedAt,
+  });
+
+  final int emissionCount;
+  final int listenerCount;
+  final DateTime? lastEmittedAt;
+  final bool isClosed;
+  final DateTime? closedAt;
+
+  StreamMetadata copyWith({
+    int? emissionCount,
+    int? listenerCount,
+    DateTime? lastEmittedAt,
+    bool? isClosed,
+    DateTime? closedAt,
+  }) {
+    return StreamMetadata(
+      emissionCount: emissionCount ?? this.emissionCount,
+      listenerCount: listenerCount ?? this.listenerCount,
+      lastEmittedAt: lastEmittedAt ?? this.lastEmittedAt,
+      isClosed: isClosed ?? this.isClosed,
+      closedAt: closedAt ?? this.closedAt,
+    );
+  }
+}
+
+class StreamData<T> {
+  StreamData({
+    required this.lastValue,
+    required this.lastError,
+  });
+
+  final T? lastValue;
+  final Object? lastError;
+
+  StreamData<T> copyWith({T? lastValue, Object? lastError}) {
+    return StreamData<T>(
+      lastValue: lastValue ?? this.lastValue,
+      lastError: lastError ?? this.lastError,
+    );
+  }
+}
+
+class StreamEntry<T> {
+  StreamEntry({
+    required this.entryIdentifier,
+    required this.metadata,
+    this.data,
+  });
+
+  final StreamIdentifier entryIdentifier;
+  final StreamData<T>? data;
+  final StreamMetadata metadata;
+
+  StreamEntry<T> copyWith({
+    StreamIdentifier? entryIdentifier,
+    StreamData<T>? data,
+    StreamMetadata? metadata,
+  }) {
+    return StreamEntry<T>(
+      entryIdentifier: entryIdentifier ?? this.entryIdentifier,
+      data: data ?? this.data,
+      metadata: metadata ?? this.metadata,
+    );
+  }
+}

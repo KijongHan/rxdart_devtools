@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'registry.dart';
+import 'package:rxdart_devtools/src/services/streams.dart';
 import '../dto/snapshot.dart';
 import '../devtools/constants.dart';
 
@@ -15,7 +15,7 @@ abstract final class ServiceBackend {
     String method,
     Map<String, String> parameters,
   ) async {
-    final entries = Registry.instance.all
+    final entries = Streams.instance.all
         .map((entry) => TrackedSnapshot.fromEntry(entry).toJson())
         .toList();
     return developer.ServiceExtensionResponse.result(
@@ -27,7 +27,7 @@ abstract final class ServiceBackend {
     String method,
     Map<String, String> parameters,
   ) async {
-    Registry.instance.clearClosed();
+    Streams.instance.clearClosed();
     return developer.ServiceExtensionResponse.result(jsonEncode({'ok': true}));
   }
 }

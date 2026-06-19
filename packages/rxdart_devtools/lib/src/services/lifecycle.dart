@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'registry.dart';
+import 'streams.dart';
 
 abstract final class Lifecycle {
   static bool _installed = false;
@@ -20,6 +20,6 @@ class _HotReloadObserver with WidgetsBindingObserver {
   // Hot reload — Flutter calls reassemble on every widget. The widgets binding
   // fires didReassemble before propagation. We hook there to evict closed entries.
   void didReassemble() {
-    Registry.instance.clearClosed();
+    Streams.instance.clearClosed();
   }
 }

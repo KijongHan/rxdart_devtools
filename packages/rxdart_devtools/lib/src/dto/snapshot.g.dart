@@ -18,9 +18,6 @@ TrackedSnapshot _$TrackedSnapshotFromJson(Map<String, dynamic> json) =>
       lastEmittedAt: json['lastEmittedAt'] as String?,
       isClosed: json['isClosed'] as bool,
       closedAt: json['closedAt'] as String?,
-      history: (json['history'] as List<dynamic>)
-          .map((e) => WireEmission.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
 Map<String, dynamic> _$TrackedSnapshotToJson(TrackedSnapshot instance) =>
@@ -35,5 +32,4 @@ Map<String, dynamic> _$TrackedSnapshotToJson(TrackedSnapshot instance) =>
       'lastEmittedAt': instance.lastEmittedAt,
       'isClosed': instance.isClosed,
       'closedAt': instance.closedAt,
-      'history': instance.history.map((e) => e.toJson()).toList(),
     };

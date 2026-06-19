@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:collection';
-
-import '../devtools/init.dart';
+import 'package:rxdart_devtools/src/services/streams.dart';
+import 'package:rxdart_devtools/src/types/registry.dart';
 import 'package:uuid/uuid.dart';
-import '../types/entries.dart';
+import '../types/streams.dart';
 
 class Registry {
   Registry._();
@@ -12,56 +11,34 @@ class Registry {
 
   final Uuid uuid = Uuid();
 
-  final Map<String, TrackedEntry<dynamic>> _entries = {};
-  final Map<String, StreamSubscription<dynamic>> _subscriptions = {};
+  final Map<StreamIdentifier, StreamSubscription<dynamic>> _subscriptions = {};
 
-  TrackedEntry<T> register<T>(Stream<T> stream,
-      {required String name, int? historySize}) {
-    final id = uuid.v4();
-    final entry = TrackedEntry<T>(
-      entryIdentifier: EntryIdentifier(
-          id: id, name: name, typeLabel: stream.runtimeType.toString()),
-      historySize: historySize ?? RxDartDevtools.config.historySize,
+  void register<T>(
+    Stream<T> stream,
+    RegistryConfig config,
+  ) {
+    final (:name, :historySize) = config;
+    final identifier = StreamIdentifier(
+      id: uuid.v4(),
+      name: name,
+      typeLabel: stream.runtimeType.toString(),
     );
 
     final subscription = stream.listen(
       (value) {
-        entry.lastValue = value;
-        entry.emissionCount++;
-        entry.lastEmittedAt = DateTime.now();
+        Streams.instance.updateValue(identifier, value);
       },
       onDone: () {
-        entry.isClosed = true;
-        entry.closedAt = DateTime.now();
-        _subscriptions[id]?.cancel();
-        _subscriptions.remove(id);
-        _entries.remove(id);
+        _subscriptions[identifier]?.cancel();
+        _subscriptions.remove(identifier);
+        Streams.instance.remove(identifier);
       },
-      onError: (error, stackTrace) {
-        entry.lastError = error;
-        entry.emissionCount++;
-        entry.lastEmittedAt = DateTime.now();
+      onError: (Object error, stackTrace) {
+        Streams.instance.updateError(identifier, error);
       },
     );
 
-    _subscriptions[id] = subscription;
-    _entries[id] = entry;
-    return entry;
-  }
-
-  Iterable<TrackedEntry<dynamic>> get all => _entries.values;
-
-  void clearClosed() {
-    _entries.removeWhere((_, entry) => entry.isClosed);
-  }
-
-  void _resizeHistory(TrackedEntry entry, int newSize) {
-    if (entry.history.length <= newSize) {
-      entry.history = ListQueue<Emission>.from(entry.history);
-      return;
-    }
-    final trimmed =
-        entry.history.toList().sublist(entry.history.length - newSize);
-    entry.history = ListQueue<Emission>.from(trimmed);
+    Streams.instance.insertEntry<dynamic>(identifier);
+    _subscriptions[identifier] = subscription;
   }
 }

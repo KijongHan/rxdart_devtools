@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:rxdart_devtools/src/types/entries.dart';
+import 'package:rxdart_devtools/src/types/streams.dart';
 
 part 'emission.g.dart';
 
