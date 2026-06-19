@@ -12,13 +12,13 @@ class Registry {
 
   final Uuid uuid = Uuid();
 
-  final Map<String, TrackedEntry> _entries = {};
+  final Map<String, TrackedEntry<dynamic>> _entries = {};
   final Map<String, StreamSubscription<dynamic>> _subscriptions = {};
 
-  TrackedEntry register<T>(Stream<T> stream,
+  TrackedEntry<T> register<T>(Stream<T> stream,
       {required String name, int? historySize}) {
     final id = uuid.v4();
-    final entry = TrackedEntry(
+    final entry = TrackedEntry<T>(
       id: id,
       name: name,
       typeLabel: stream.runtimeType.toString(),
@@ -50,7 +50,7 @@ class Registry {
     return entry;
   }
 
-  Iterable<TrackedEntry> get all => _entries.values;
+  Iterable<TrackedEntry<dynamic>> get all => _entries.values;
 
   void clearClosed() {
     _entries.removeWhere((_, entry) => entry.isClosed);

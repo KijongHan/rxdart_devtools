@@ -1,35 +1,35 @@
 import 'dart:collection';
 
-class Emission {
+class Emission<T> {
   Emission({
     required this.value,
     required this.timestamp,
     this.isError = false,
   });
 
-  final Object? value;
+  final T? value;
   final DateTime timestamp;
   final bool isError;
 }
 
-class TrackedEntry {
+class TrackedEntry<T> {
   TrackedEntry({
     required this.id,
     required this.name,
     required this.typeLabel,
     required int historySize,
-  }) : history = ListQueue<Emission>(historySize);
+  }) : history = ListQueue<Emission<T>>(historySize);
 
   final String id;
   final String name;
   final String typeLabel;
 
-  Object? lastValue;
+  T? lastValue;
   Object? lastError;
   int emissionCount = 0;
   int listenerCount = 0;
   DateTime? lastEmittedAt;
-  ListQueue<Emission> history;
+  ListQueue<Emission<T>> history;
   bool isClosed = false;
   DateTime? closedAt;
 }

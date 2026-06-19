@@ -1,6 +1,11 @@
-import 'emission.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:rxdart_devtools/src/services/types.dart';
 
+import 'emission.dart';
+
+part 'snapshot.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class TrackedSnapshot {
   TrackedSnapshot({
     required this.id,
@@ -16,7 +21,8 @@ class TrackedSnapshot {
     required this.history,
   });
 
-  factory TrackedSnapshot.fromEntry(TrackedEntry entry) => TrackedSnapshot(
+  factory TrackedSnapshot.fromEntry(TrackedEntry<dynamic> entry) =>
+      TrackedSnapshot(
         id: entry.id,
         name: entry.name,
         typeLabel: entry.typeLabel,
@@ -30,23 +36,8 @@ class TrackedSnapshot {
         history: entry.history.map(WireEmission.fromEmission).toList(),
       );
 
-  factory TrackedSnapshot.fromJson(Map<String, Object?> json) =>
-      TrackedSnapshot(
-        id: json['id']! as String,
-        name: json['name']! as String,
-        typeLabel: json['typeLabel']! as String,
-        lastValue: json['lastValue'] as String?,
-        lastError: json['lastError'] as String?,
-        emissionCount: json['emissionCount']! as int,
-        listenerCount: json['listenerCount']! as int,
-        lastEmittedAt: json['lastEmittedAt'] as String?,
-        isClosed: json['isClosed']! as bool,
-        closedAt: json['closedAt'] as String?,
-        history: (json['history']! as List)
-            .cast<Map<String, Object?>>()
-            .map(WireEmission.fromJson)
-            .toList(),
-      );
+  factory TrackedSnapshot.fromJson(Map<String, dynamic> json) =>
+      _$TrackedSnapshotFromJson(json);
 
   final String id;
   final String name;
@@ -60,17 +51,5 @@ class TrackedSnapshot {
   final String? closedAt;
   final List<WireEmission> history;
 
-  Map<String, Object?> toJson() => {
-        'id': id,
-        'name': name,
-        'typeLabel': typeLabel,
-        'lastValue': lastValue,
-        'lastError': lastError,
-        'emissionCount': emissionCount,
-        'listenerCount': listenerCount,
-        'lastEmittedAt': lastEmittedAt,
-        'isClosed': isClosed,
-        'closedAt': closedAt,
-        'history': history.map((e) => e.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() => _$TrackedSnapshotToJson(this);
 }
