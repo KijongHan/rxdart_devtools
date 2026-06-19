@@ -105,6 +105,18 @@ melos run analyze      # dart analyze across the workspace
 melos run format       # dart format .
 ```
 
+## Code generation
+
+Wire DTOs in `packages/rxdart_devtools/lib/src/dto/` use `json_serializable`. Generated `*.g.dart` siblings are committed.
+
+Regenerate after adding or changing any `@JsonSerializable` class:
+
+```bash
+cd packages/rxdart_devtools
+dart run build_runner build       # one-shot
+dart run build_runner watch       # rebuild on save
+```
+
 ## Conventions
 
 ### `kReleaseMode` guards on public entry points
