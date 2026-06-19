@@ -1,4 +1,4 @@
-import '../services/registry.dart';
+import 'package:rxdart_devtools/src/services/types.dart';
 
 class WireEmission {
   WireEmission({

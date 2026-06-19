@@ -1,5 +1,5 @@
-import '../services/registry.dart';
 import 'emission.dart';
+import 'package:rxdart_devtools/src/services/types.dart';
 
 class TrackedSnapshot {
   TrackedSnapshot({

@@ -3,40 +3,7 @@ import 'dart:collection';
 
 import '../devtools/init.dart';
 import 'package:uuid/uuid.dart';
-
-class TrackedEntry {
-  TrackedEntry({
-    required this.id,
-    required this.name,
-    required this.typeLabel,
-    required int historySize,
-  }) : history = ListQueue<Emission>(historySize);
-
-  final String id;
-  final String name;
-  final String typeLabel;
-
-  Object? lastValue;
-  Object? lastError;
-  int emissionCount = 0;
-  int listenerCount = 0;
-  DateTime? lastEmittedAt;
-  ListQueue<Emission> history;
-  bool isClosed = false;
-  DateTime? closedAt;
-}
-
-class Emission {
-  Emission({
-    required this.value,
-    required this.timestamp,
-    this.isError = false,
-  });
-
-  final Object? value;
-  final DateTime timestamp;
-  final bool isError;
-}
+import 'types.dart';
 
 class Registry {
   Registry._();
@@ -67,6 +34,7 @@ class Registry {
       onDone: () {
         entry.isClosed = true;
         entry.closedAt = DateTime.now();
+        _subscriptions[id]?.cancel();
         _subscriptions.remove(id);
         _entries.remove(id);
       },
