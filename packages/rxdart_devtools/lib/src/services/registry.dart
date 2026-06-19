@@ -3,7 +3,7 @@ import 'dart:collection';
 
 import '../devtools/init.dart';
 import 'package:uuid/uuid.dart';
-import 'types.dart';
+import '../types/entries.dart';
 
 class Registry {
   Registry._();
@@ -19,9 +19,8 @@ class Registry {
       {required String name, int? historySize}) {
     final id = uuid.v4();
     final entry = TrackedEntry<T>(
-      id: id,
-      name: name,
-      typeLabel: stream.runtimeType.toString(),
+      entryIdentifier: EntryIdentifier(
+          id: id, name: name, typeLabel: stream.runtimeType.toString()),
       historySize: historySize ?? RxDartDevtools.config.historySize,
     );
 

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:rxdart_devtools/src/services/types.dart';
+import 'package:rxdart_devtools/src/types/entries.dart';
 
 import 'emission.dart';
 
@@ -23,9 +23,9 @@ class TrackedSnapshot {
 
   factory TrackedSnapshot.fromEntry(TrackedEntry<dynamic> entry) =>
       TrackedSnapshot(
-        id: entry.id,
-        name: entry.name,
-        typeLabel: entry.typeLabel,
+        id: entry.entryIdentifier.id,
+        name: entry.entryIdentifier.name,
+        typeLabel: entry.entryIdentifier.typeLabel,
         lastValue: entry.lastValue?.toString(),
         lastError: entry.lastError?.toString(),
         emissionCount: entry.emissionCount,

@@ -12,17 +12,22 @@ class Emission<T> {
   final bool isError;
 }
 
-class TrackedEntry<T> {
-  TrackedEntry({
-    required this.id,
-    required this.name,
-    required this.typeLabel,
-    required int historySize,
-  }) : history = ListQueue<Emission<T>>(historySize);
+class EntryIdentifier<T> {
+  EntryIdentifier(
+      {required this.id, required this.name, required this.typeLabel});
 
   final String id;
   final String name;
   final String typeLabel;
+}
+
+class TrackedEntry<T> {
+  TrackedEntry({
+    required this.entryIdentifier,
+    required int historySize,
+  }) : history = ListQueue<Emission<T>>(historySize);
+
+  final EntryIdentifier<T> entryIdentifier;
 
   T? lastValue;
   Object? lastError;
