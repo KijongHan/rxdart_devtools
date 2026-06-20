@@ -33,7 +33,7 @@ class Streams {
             emissionCount: currentEntry.metadata.emissionCount + 1,
             lastEmittedAt: DateTime.now(),
           ),
-          data: currentEntry.data?.copyWith(lastValue: value, lastError: null),
+          data: StreamData(lastValue: value, lastError: null),
         ) ??
         registerStream<T>(identifier,
             data: StreamData(lastValue: value, lastError: null));
@@ -44,6 +44,7 @@ class Streams {
   StreamEntry<dynamic> updateError(StreamIdentifier identifier, Object error) {
     final currentEntry = _entries[identifier];
     final newEntry = currentEntry?.copyWith(
+          data: StreamData(lastValue: null, lastError: error),
           metadata: currentEntry.metadata.copyWith(
             emissionCount: currentEntry.metadata.emissionCount + 1,
             lastEmittedAt: DateTime.now(),
