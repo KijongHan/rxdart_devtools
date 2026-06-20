@@ -1,8 +1,11 @@
+import 'package:rxdart_devtools/src/providers/datetime.dart';
+import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/types/events.dart';
 import 'package:rxdart_devtools/src/types/streams.dart';
 import 'package:uuid/uuid.dart';
 
 class EventsService {
+  final DateTimeProvider _dateTime = getIt.get<DateTimeProvider>();
   final Uuid uuid = Uuid();
 
   final List<BaseEventLog> _eventLogsByTimestamp = [];
@@ -15,7 +18,7 @@ class EventsService {
     final changeEventLog = ChangeEventLog(
       eventLogIdentifier: EventLogIdentifier(
         id: uuid.v4(),
-        timestamp: DateTime.now(),
+        timestamp: _dateTime.now(),
       ),
       streamIdentifier: streamIdentifier,
       newValue: value,
@@ -29,7 +32,7 @@ class EventsService {
     final errorEventLog = ErrorEventLog(
       eventLogIdentifier: EventLogIdentifier(
         id: uuid.v4(),
-        timestamp: DateTime.now(),
+        timestamp: _dateTime.now(),
       ),
       streamIdentifier: streamIdentifier,
       error: error,
@@ -42,7 +45,7 @@ class EventsService {
     final registerEventLog = RegisterEventLog(
       eventLogIdentifier: EventLogIdentifier(
         id: uuid.v4(),
-        timestamp: DateTime.now(),
+        timestamp: _dateTime.now(),
       ),
       streamIdentifier: streamIdentifier,
     );
@@ -54,7 +57,7 @@ class EventsService {
     final deregisterEventLog = DeregisterEventLog(
       eventLogIdentifier: EventLogIdentifier(
         id: uuid.v4(),
-        timestamp: DateTime.now(),
+        timestamp: _dateTime.now(),
       ),
       streamIdentifier: streamIdentifier,
     );

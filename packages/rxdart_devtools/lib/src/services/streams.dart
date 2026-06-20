@@ -1,6 +1,9 @@
+import 'package:rxdart_devtools/src/providers/datetime.dart';
+import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/types/streams.dart';
 
 class StreamsService {
+  final DateTimeProvider _dateTime = getIt.get<DateTimeProvider>();
   final Map<StreamIdentifier, StreamEntry<dynamic>> _entries = {};
 
   StreamEntry<dynamic> registerStream<T>(
@@ -27,7 +30,7 @@ class StreamsService {
     final newEntry = currentEntry?.copyWith(
           metadata: currentEntry.metadata.copyWith(
             emissionCount: currentEntry.metadata.emissionCount + 1,
-            lastEmittedAt: DateTime.now(),
+            lastEmittedAt: _dateTime.now(),
           ),
           data: StreamData(lastValue: value, lastError: null),
         ) ??
@@ -43,7 +46,7 @@ class StreamsService {
           data: StreamData(lastValue: null, lastError: error),
           metadata: currentEntry.metadata.copyWith(
             emissionCount: currentEntry.metadata.emissionCount + 1,
-            lastEmittedAt: DateTime.now(),
+            lastEmittedAt: _dateTime.now(),
           ),
         ) ??
         registerStream<dynamic>(identifier,
@@ -58,7 +61,7 @@ class StreamsService {
     final newEntry = currentEntry.copyWith(
       metadata: currentEntry.metadata.copyWith(
         isClosed: true,
-        closedAt: DateTime.now(),
+        closedAt: _dateTime.now(),
       ),
     );
     _entries[identifier] = newEntry;

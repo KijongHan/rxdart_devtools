@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:rxdart_devtools/src/providers/config.dart';
+import 'package:rxdart_devtools/src/providers/datetime.dart';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/services/events.dart';
 import 'package:rxdart_devtools/src/services/registry.dart';
@@ -43,6 +44,8 @@ abstract final class RxDartDevtools {
         ),
       ),
     );
+    getIt.registerSingleton(DateTimeProvider());
+
     getIt.registerSingleton(StreamsService());
     getIt.registerSingleton(EventsService());
     getIt.registerSingleton(RegistryService());
