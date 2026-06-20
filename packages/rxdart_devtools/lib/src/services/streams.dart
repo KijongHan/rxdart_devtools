@@ -1,10 +1,6 @@
 import 'package:rxdart_devtools/src/types/streams.dart';
 
-class Streams {
-  Streams._();
-
-  static final Streams instance = Streams._();
-
+class StreamsService {
   final Map<StreamIdentifier, StreamEntry<dynamic>> _entries = {};
 
   StreamEntry<dynamic> registerStream<T>(

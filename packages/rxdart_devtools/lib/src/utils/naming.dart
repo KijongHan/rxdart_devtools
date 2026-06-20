@@ -3,8 +3,8 @@ import '../devtools/init.dart';
 abstract final class Naming {
   static int _fallbackCounter = 0;
 
-  static String fromStackTrace(String typeLabel) {
-    if (!RxDartDevtools.config.captureStackTraces) {
+  static String fromStackTrace(String typeLabel, RxDartDevtoolsConfig config) {
+    if (!config.captureStackTraces) {
       return '$typeLabel#${_fallbackCounter++}';
     }
     final frame = _firstUserFrame(StackTrace.current);

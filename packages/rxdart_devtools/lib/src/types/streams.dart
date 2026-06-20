@@ -1,15 +1,3 @@
-class Emission<T> {
-  Emission({
-    required this.value,
-    required this.timestamp,
-    this.isError = false,
-  });
-
-  final T? value;
-  final DateTime timestamp;
-  final bool isError;
-}
-
 class StreamIdentifier {
   StreamIdentifier(
       {required this.id, required this.name, required this.typeLabel});

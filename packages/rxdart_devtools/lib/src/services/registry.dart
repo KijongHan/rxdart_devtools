@@ -1,15 +1,14 @@
 import 'dart:async';
+import 'package:get_it/get_it.dart';
 import 'package:rxdart_devtools/src/services/events.dart';
 import 'package:rxdart_devtools/src/services/streams.dart';
 import 'package:rxdart_devtools/src/types/registry.dart';
 import 'package:uuid/uuid.dart';
 import '../types/streams.dart';
 
-class Registry {
-  Registry._();
-
-  static final Registry instance = Registry._();
-
+class RegistryService {
+  final streamsService = GetIt.I.get<StreamsService>();
+  final eventsService = GetIt.I.get<EventsService>();
   final Uuid uuid = Uuid();
 
   final Map<StreamIdentifier, StreamSubscription<dynamic>> _subscriptions = {};
@@ -27,23 +26,23 @@ class Registry {
 
     final subscription = stream.listen(
       (value) {
-        Streams.instance.updateValue(identifier, value);
-        Events.instance.addValueEventLog(identifier, value);
+        streamsService.updateValue(identifier, value);
+        eventsService.addValueEventLog(identifier, value);
       },
       onDone: () {
         _subscriptions[identifier]?.cancel();
         _subscriptions.remove(identifier);
-        Streams.instance.deregisterStream(identifier);
-        Events.instance.deregisterStream(identifier);
+        streamsService.deregisterStream(identifier);
+        eventsService.deregisterStream(identifier);
       },
       onError: (Object error, stackTrace) {
-        Streams.instance.updateError(identifier, error);
-        Events.instance.addErrorEventLog(identifier, error);
+        streamsService.updateError(identifier, error);
+        eventsService.addErrorEventLog(identifier, error);
       },
     );
 
-    Streams.instance.registerStream<dynamic>(identifier);
-    Events.instance.registerStream(identifier);
+    streamsService.registerStream<dynamic>(identifier);
+    eventsService.registerStream(identifier);
     _subscriptions[identifier] = subscription;
   }
 }

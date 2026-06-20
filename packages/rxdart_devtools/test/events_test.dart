@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rxdart_devtools/src/services/events.dart';
 import 'package:rxdart_devtools/src/types/events.dart';
 import 'package:rxdart_devtools/src/types/streams.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
-  final events = Events.instance;
+  final events = GetIt.I.get<EventsService>();
   const uuid = Uuid();
 
   StreamIdentifier newIdentifier() => StreamIdentifier(
@@ -47,7 +48,9 @@ void main() {
   });
 
   group('Events.addValueEventLog', () {
-    test('records a ChangeEventLog with the new value and null oldValue on first call', () {
+    test(
+        'records a ChangeEventLog with the new value and null oldValue on first call',
+        () {
       final id = newIdentifier();
       events.registerStream(id);
       events.addValueEventLog<int>(id, 42);

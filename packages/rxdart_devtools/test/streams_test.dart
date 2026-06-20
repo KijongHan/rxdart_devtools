@@ -1,10 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rxdart_devtools/src/services/streams.dart';
 import 'package:rxdart_devtools/src/types/streams.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
-  final streams = Streams.instance;
+  final streams = GetIt.I.get<StreamsService>();
   const uuid = Uuid();
 
   StreamIdentifier newIdentifier() => StreamIdentifier(
@@ -90,7 +91,8 @@ void main() {
       expect(storedFor(id).data?.lastValue, 7);
     });
 
-    test('supports a concrete generic when entry was registered as <dynamic>', () {
+    test('supports a concrete generic when entry was registered as <dynamic>',
+        () {
       // FAILS: see todo--streams-update-value-bugs (#4).
       // `newEntry as StreamEntry<T>` casts a StreamEntry<dynamic> to
       // StreamEntry<int>, which throws _TypeError under Dart's reified generics.

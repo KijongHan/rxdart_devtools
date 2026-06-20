@@ -2,12 +2,8 @@ import 'package:rxdart_devtools/src/types/events.dart';
 import 'package:rxdart_devtools/src/types/streams.dart';
 import 'package:uuid/uuid.dart';
 
-class Events {
-  Events._();
-
+class EventsService {
   final Uuid uuid = Uuid();
-
-  static final Events instance = Events._();
 
   final List<BaseEventLog> _eventLogsByTimestamp = [];
   final Map<StreamIdentifier, List<BaseEventLog>> _eventLogsByStream = {};
