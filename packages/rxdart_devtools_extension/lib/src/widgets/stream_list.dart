@@ -14,6 +14,7 @@ class StreamList extends StatelessWidget {
       itemBuilder: (context, index) {
         final s = streams[index];
         return ListTile(
+          key: ValueKey(s.id),
           dense: true,
           title: Text(s.name),
           subtitle: Text('${s.typeLabel} · ${s.emissionCount} emissions'),

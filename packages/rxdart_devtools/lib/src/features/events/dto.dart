@@ -4,7 +4,15 @@ import 'package:rxdart_devtools/src/features/events/types.dart';
 part 'dto.g.dart';
 
 sealed class EventLogDto {
-  const EventLogDto();
+  const EventLogDto({
+    required this.id,
+    required this.timestamp,
+    required this.streamId,
+  });
+
+  final String id;
+  final String timestamp;
+  final String streamId;
 
   factory EventLogDto.fromEventLog(BaseEventLog log) => switch (log) {
         ChangeEventLog<dynamic>() => ChangeEventLogDto.fromEventLog(log),
@@ -30,9 +38,9 @@ sealed class EventLogDto {
 @JsonSerializable()
 final class ChangeEventLogDto extends EventLogDto {
   ChangeEventLogDto({
-    required this.id,
-    required this.timestamp,
-    required this.streamId,
+    required super.id,
+    required super.timestamp,
+    required super.streamId,
     required this.newValue,
     required this.oldValue,
   });
@@ -49,9 +57,6 @@ final class ChangeEventLogDto extends EventLogDto {
   factory ChangeEventLogDto.fromJson(Map<String, dynamic> json) =>
       _$ChangeEventLogDtoFromJson(json);
 
-  final String id;
-  final String timestamp;
-  final String streamId;
   final String? newValue;
   final String? oldValue;
 
@@ -65,9 +70,9 @@ final class ChangeEventLogDto extends EventLogDto {
 @JsonSerializable()
 final class ErrorEventLogDto extends EventLogDto {
   ErrorEventLogDto({
-    required this.id,
-    required this.timestamp,
-    required this.streamId,
+    required super.id,
+    required super.timestamp,
+    required super.streamId,
     required this.error,
   });
 
@@ -81,9 +86,6 @@ final class ErrorEventLogDto extends EventLogDto {
   factory ErrorEventLogDto.fromJson(Map<String, dynamic> json) =>
       _$ErrorEventLogDtoFromJson(json);
 
-  final String id;
-  final String timestamp;
-  final String streamId;
   final String error;
 
   @override
@@ -96,9 +98,9 @@ final class ErrorEventLogDto extends EventLogDto {
 @JsonSerializable()
 final class RegisterEventLogDto extends EventLogDto {
   RegisterEventLogDto({
-    required this.id,
-    required this.timestamp,
-    required this.streamId,
+    required super.id,
+    required super.timestamp,
+    required super.streamId,
   });
 
   factory RegisterEventLogDto.fromEventLog(RegisterEventLog log) =>
@@ -111,10 +113,6 @@ final class RegisterEventLogDto extends EventLogDto {
   factory RegisterEventLogDto.fromJson(Map<String, dynamic> json) =>
       _$RegisterEventLogDtoFromJson(json);
 
-  final String id;
-  final String timestamp;
-  final String streamId;
-
   @override
   Map<String, dynamic> toJson() => {
         'type': 'register',
@@ -125,9 +123,9 @@ final class RegisterEventLogDto extends EventLogDto {
 @JsonSerializable()
 final class DeregisterEventLogDto extends EventLogDto {
   DeregisterEventLogDto({
-    required this.id,
-    required this.timestamp,
-    required this.streamId,
+    required super.id,
+    required super.timestamp,
+    required super.streamId,
   });
 
   factory DeregisterEventLogDto.fromEventLog(DeregisterEventLog log) =>
@@ -139,10 +137,6 @@ final class DeregisterEventLogDto extends EventLogDto {
 
   factory DeregisterEventLogDto.fromJson(Map<String, dynamic> json) =>
       _$DeregisterEventLogDtoFromJson(json);
-
-  final String id;
-  final String timestamp;
-  final String streamId;
 
   @override
   Map<String, dynamic> toJson() => {

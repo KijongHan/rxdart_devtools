@@ -18,14 +18,14 @@ class EventsList extends StatelessWidget {
       separatorBuilder: (_, __) => const Divider(height: 1),
       itemBuilder: (context, index) {
         final log = eventLogs[index];
-        return _EventTile(log: log);
+        return _EventTile(key: ValueKey(log.id), log: log);
       },
     );
   }
 }
 
 class _EventTile extends StatelessWidget {
-  const _EventTile({required this.log});
+  const _EventTile({super.key, required this.log});
 
   final EventLogDto log;
 
@@ -57,28 +57,14 @@ class _EventTile extends StatelessWidget {
     return ListTile(
       dense: true,
       leading: _Badge(label: label, color: color),
-      title: Text(_streamIdOf(log)),
+      title: Text(log.streamId),
       subtitle: subtitle.isEmpty ? null : Text(subtitle),
       trailing: Text(
-        _shortTimestamp(_timestampOf(log)),
+        _shortTimestamp(log.timestamp),
         style: Theme.of(context).textTheme.bodySmall,
       ),
     );
   }
-
-  static String _streamIdOf(EventLogDto log) => switch (log) {
-        ChangeEventLogDto(:final streamId) => streamId,
-        ErrorEventLogDto(:final streamId) => streamId,
-        RegisterEventLogDto(:final streamId) => streamId,
-        DeregisterEventLogDto(:final streamId) => streamId,
-      };
-
-  static String _timestampOf(EventLogDto log) => switch (log) {
-        ChangeEventLogDto(:final timestamp) => timestamp,
-        ErrorEventLogDto(:final timestamp) => timestamp,
-        RegisterEventLogDto(:final timestamp) => timestamp,
-        DeregisterEventLogDto(:final timestamp) => timestamp,
-      };
 
   static String _shortTimestamp(String iso) {
     final parsed = DateTime.tryParse(iso);
