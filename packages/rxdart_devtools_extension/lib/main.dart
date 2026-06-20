@@ -1,9 +1,11 @@
 import 'package:devtools_extensions/devtools_extensions.dart';
 import 'package:flutter/material.dart';
 
+import 'src/state/events_controller.dart';
 import 'src/state/streams_controller.dart';
 import 'src/theme.dart';
 import 'src/widgets/empty_state.dart';
+import 'src/widgets/events_list.dart';
 import 'src/widgets/stream_list.dart';
 
 void main() {
@@ -29,17 +31,20 @@ class _Panel extends StatefulWidget {
 }
 
 class _PanelState extends State<_Panel> {
-  late final StreamsController _controller;
+  late final StreamsController _streamsController;
+  late final EventsController _eventsController;
 
   @override
   void initState() {
     super.initState();
-    _controller = StreamsController()..start();
+    _streamsController = StreamsController()..start();
+    _eventsController = EventsController()..start();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _streamsController.dispose();
+    _eventsController.dispose();
     super.dispose();
   }
 
@@ -47,12 +52,22 @@ class _PanelState extends State<_Panel> {
   Widget build(BuildContext context) {
     return PanelTheme(
       child: ListenableBuilder(
-        listenable: _controller,
+        listenable: Listenable.merge([_streamsController, _eventsController]),
         builder: (context, _) {
-          if (_controller.streams.isEmpty) {
+          if (_streamsController.streams.isEmpty) {
             return const EmptyState();
           }
-          return StreamList(streams: _controller.streams);
+          return Row(
+            children: [
+              Expanded(
+                child: StreamList(streams: _streamsController.streams),
+              ),
+              const VerticalDivider(width: 1),
+              Expanded(
+                child: EventsList(eventLogs: _eventsController.eventLogs),
+              ),
+            ],
+          );
         },
       ),
     );
