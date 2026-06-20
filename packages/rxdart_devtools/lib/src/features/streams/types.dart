@@ -23,28 +23,24 @@ class StreamIdentifier {
 
 class StreamMetadata {
   StreamMetadata({
-    required this.emissionCount,
     required this.listenerCount,
     required this.lastEmittedAt,
     required this.isClosed,
     required this.closedAt,
   });
 
-  final int emissionCount;
   final int listenerCount;
   final DateTime? lastEmittedAt;
   final bool isClosed;
   final DateTime? closedAt;
 
   StreamMetadata copyWith({
-    int? emissionCount,
     int? listenerCount,
     DateTime? lastEmittedAt,
     bool? isClosed,
     DateTime? closedAt,
   }) {
     return StreamMetadata(
-      emissionCount: emissionCount ?? this.emissionCount,
       listenerCount: listenerCount ?? this.listenerCount,
       lastEmittedAt: lastEmittedAt ?? this.lastEmittedAt,
       isClosed: isClosed ?? this.isClosed,

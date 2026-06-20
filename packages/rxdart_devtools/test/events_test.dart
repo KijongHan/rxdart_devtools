@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rxdart_devtools/src/providers/datetime.dart';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
 import 'package:rxdart_devtools/src/features/events/types.dart';
@@ -6,8 +7,18 @@ import 'package:rxdart_devtools/src/features/streams/types.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
-  final events = getIt.get<EventsService>();
+  late final EventsService events;
   const uuid = Uuid();
+
+  setUpAll(() {
+    getIt.registerSingleton(DateTimeProvider());
+    getIt.registerSingleton(EventsService());
+    events = getIt.get<EventsService>();
+  });
+
+  tearDownAll(() async {
+    await getIt.reset();
+  });
 
   StreamIdentifier newIdentifier() => StreamIdentifier(
         id: uuid.v4(),

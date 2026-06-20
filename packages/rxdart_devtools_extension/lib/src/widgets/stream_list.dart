@@ -17,7 +17,7 @@ class StreamList extends StatelessWidget {
           key: ValueKey(s.id),
           dense: true,
           title: Text(s.name),
-          subtitle: Text('${s.typeLabel} · ${s.emissionCount} emissions'),
+          subtitle: Text(s.typeLabel),
           trailing: Text(s.lastValue ?? '—'),
         );
       },

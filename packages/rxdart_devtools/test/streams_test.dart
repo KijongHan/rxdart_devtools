@@ -1,12 +1,23 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rxdart_devtools/src/providers/datetime.dart';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
-  final streams = getIt.get<StreamsService>();
+  late final StreamsService streams;
   const uuid = Uuid();
+
+  setUpAll(() {
+    getIt.registerSingleton(DateTimeProvider());
+    getIt.registerSingleton(StreamsService());
+    streams = getIt.get<StreamsService>();
+  });
+
+  tearDownAll(() async {
+    await getIt.reset();
+  });
 
   StreamIdentifier newIdentifier() => StreamIdentifier(
         id: uuid.v4(),
@@ -27,7 +38,6 @@ void main() {
     test('initializes metadata to defaults', () {
       final id = newIdentifier();
       final entry = streams.registerStream<int>(id);
-      expect(entry.metadata.emissionCount, 0);
       expect(entry.metadata.listenerCount, 0);
       expect(entry.metadata.lastEmittedAt, isNull);
       expect(entry.metadata.isClosed, isFalse);
@@ -51,14 +61,6 @@ void main() {
   });
 
   group('Streams.updateValue', () {
-    test('increments emissionCount on each call', () {
-      final id = newIdentifier();
-      streams.registerStream<dynamic>(id);
-      streams.updateValue<dynamic>(id, 1);
-      streams.updateValue<dynamic>(id, 2);
-      expect(storedFor(id).metadata.emissionCount, 2);
-    });
-
     test('sets lastEmittedAt', () {
       final id = newIdentifier();
       streams.registerStream<dynamic>(id);
@@ -86,8 +88,6 @@ void main() {
     test('on a fresh identifier creates the entry via the fallback path', () {
       final id = newIdentifier();
       streams.updateValue<dynamic>(id, 7);
-      // Fallback path goes through registerStream, which sets data and
-      // initializes metadata fresh (so emissionCount is 0, not 1).
       expect(storedFor(id).data?.lastValue, 7);
     });
 
@@ -103,13 +103,6 @@ void main() {
   });
 
   group('Streams.updateError', () {
-    test('increments emissionCount on an existing entry', () {
-      final id = newIdentifier();
-      streams.registerStream<dynamic>(id);
-      streams.updateError(id, 'boom');
-      expect(storedFor(id).metadata.emissionCount, 1);
-    });
-
     test('records error on existing entry data', () {
       final id = newIdentifier();
       streams.registerStream<dynamic>(

@@ -11,7 +11,6 @@ class StreamEntryDto {
     required this.typeLabel,
     required this.lastValue,
     required this.lastError,
-    required this.emissionCount,
     required this.listenerCount,
     required this.lastEmittedAt,
     required this.isClosed,
@@ -25,7 +24,6 @@ class StreamEntryDto {
         typeLabel: entry.entryIdentifier.typeLabel,
         lastValue: entry.data?.lastValue?.toString(),
         lastError: entry.data?.lastError?.toString(),
-        emissionCount: entry.metadata.emissionCount,
         listenerCount: entry.metadata.listenerCount,
         lastEmittedAt: entry.metadata.lastEmittedAt?.toIso8601String(),
         isClosed: entry.metadata.isClosed,
@@ -40,7 +38,6 @@ class StreamEntryDto {
   final String typeLabel;
   final String? lastValue;
   final String? lastError;
-  final int emissionCount;
   final int listenerCount;
   final String? lastEmittedAt;
   final bool isClosed;

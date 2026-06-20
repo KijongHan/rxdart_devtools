@@ -13,7 +13,6 @@ class StreamsService {
     final newEntry = StreamEntry<T>(
       entryIdentifier: identifier,
       metadata: StreamMetadata(
-        emissionCount: 0,
         listenerCount: 0,
         lastEmittedAt: null,
         isClosed: false,
@@ -29,7 +28,6 @@ class StreamsService {
     final currentEntry = _entries[identifier];
     final newEntry = currentEntry?.copyWith(
           metadata: currentEntry.metadata.copyWith(
-            emissionCount: currentEntry.metadata.emissionCount + 1,
             lastEmittedAt: _dateTime.now(),
           ),
           data: StreamData(lastValue: value, lastError: null),
@@ -45,7 +43,6 @@ class StreamsService {
     final newEntry = currentEntry?.copyWith(
           data: StreamData(lastValue: null, lastError: error),
           metadata: currentEntry.metadata.copyWith(
-            emissionCount: currentEntry.metadata.emissionCount + 1,
             lastEmittedAt: _dateTime.now(),
           ),
         ) ??
