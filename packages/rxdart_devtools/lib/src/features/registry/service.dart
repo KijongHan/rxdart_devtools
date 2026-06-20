@@ -1,27 +1,28 @@
 import 'dart:async';
+import 'package:rxdart_devtools/src/features/registry/providers.dart';
+import 'package:rxdart_devtools/src/providers/config.dart';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
 import 'package:rxdart_devtools/src/features/registry/types.dart';
-import 'package:uuid/uuid.dart';
 import '../streams/types.dart';
 
 class RegistryService {
+  final configProvider = getIt.get<ConfigProvider>();
   final streamsService = getIt.get<StreamsService>();
   final eventsService = getIt.get<EventsService>();
-  final Uuid uuid = Uuid();
+  final streamIdentifierProvider = getIt.get<StreamIdentifierProvider>();
 
   final Map<StreamIdentifier, StreamSubscription<dynamic>> _subscriptions = {};
+  final Map<String, StreamIdentifier> _streamIdentifiers = {};
 
   void register<T>(
     Stream<T> stream,
-    RegistryConfig config,
+    RegistryConfig registryConfig,
   ) {
-    final (:name, :historySize) = config;
-    final identifier = StreamIdentifier(
-      id: uuid.v4(),
-      name: name,
-      typeLabel: stream.runtimeType.toString(),
+    final identifier = streamIdentifierProvider.generateStreamIdentifier(
+      stream: stream,
+      registryConfig: registryConfig,
     );
 
     final subscription = stream.listen(
@@ -44,5 +45,8 @@ class RegistryService {
     streamsService.registerStream<dynamic>(identifier);
     eventsService.registerStream(identifier);
     _subscriptions[identifier] = subscription;
+    _streamIdentifiers[identifier.id] = identifier;
   }
+
+  StreamIdentifier? getStreamIdentifier(String id) => _streamIdentifiers[id];
 }

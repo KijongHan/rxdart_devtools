@@ -66,4 +66,7 @@ class EventsService {
   }
 
   Iterable<BaseEventLog> get all => _eventLogsByTimestamp;
+
+  Iterable<BaseEventLog> allForStream(StreamIdentifier streamIdentifier) =>
+      _eventLogsByStream[streamIdentifier] ?? [];
 }
