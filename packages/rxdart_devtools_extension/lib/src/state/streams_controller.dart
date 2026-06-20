@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
 
-import '../service_client.dart';
+import '../bridge/client.dart';
 
 class StreamsController extends ChangeNotifier {
   StreamsController({
@@ -31,7 +31,7 @@ class StreamsController extends ChangeNotifier {
   }
 
   Future<void> _refresh() async {
-    final next = await _client.listTracked();
+    final next = await _client.listStreamEntries();
     _streams = next;
     notifyListeners();
   }

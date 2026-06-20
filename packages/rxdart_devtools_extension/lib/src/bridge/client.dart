@@ -5,7 +5,7 @@ import 'package:vm_service/vm_service.dart';
 class ServiceClient {
   VmService? get _service => serviceManager.service;
 
-  Future<List<StreamEntryDto>> listTracked() async {
+  Future<List<StreamEntryDto>> listStreamEntries() async {
     final service = _service;
     if (service == null) return const [];
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
