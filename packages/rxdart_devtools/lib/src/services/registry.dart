@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:rxdart_devtools/src/services/events.dart';
 import 'package:rxdart_devtools/src/services/streams.dart';
 import 'package:rxdart_devtools/src/types/registry.dart';
 import 'package:uuid/uuid.dart';
@@ -27,18 +28,22 @@ class Registry {
     final subscription = stream.listen(
       (value) {
         Streams.instance.updateValue(identifier, value);
+        Events.instance.addValueEventLog(identifier, value);
       },
       onDone: () {
         _subscriptions[identifier]?.cancel();
         _subscriptions.remove(identifier);
-        Streams.instance.remove(identifier);
+        Streams.instance.deregisterStream(identifier);
+        Events.instance.deregisterStream(identifier);
       },
       onError: (Object error, stackTrace) {
         Streams.instance.updateError(identifier, error);
+        Events.instance.addErrorEventLog(identifier, error);
       },
     );
 
-    Streams.instance.insertEntry<dynamic>(identifier);
+    Streams.instance.registerStream<dynamic>(identifier);
+    Events.instance.registerStream(identifier);
     _subscriptions[identifier] = subscription;
   }
 }

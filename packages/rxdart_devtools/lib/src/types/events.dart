@@ -4,15 +4,13 @@ class EventLogIdentifier {
   EventLogIdentifier({
     required this.id,
     required this.timestamp,
-    required this.type,
   });
 
   final String id;
   final DateTime timestamp;
-  final String type;
 }
 
-abstract class BaseEventLog<T> {
+sealed class BaseEventLog {
   BaseEventLog({
     required this.eventLogIdentifier,
     required this.streamIdentifier,
@@ -22,7 +20,7 @@ abstract class BaseEventLog<T> {
   final StreamIdentifier streamIdentifier;
 }
 
-class ChangeEventLog<T> extends BaseEventLog<T> {
+final class ChangeEventLog<T> extends BaseEventLog {
   ChangeEventLog({
     required super.eventLogIdentifier,
     required super.streamIdentifier,
@@ -31,24 +29,29 @@ class ChangeEventLog<T> extends BaseEventLog<T> {
   });
 
   final T newValue;
-  final T oldValue;
+  final T? oldValue;
 }
 
-class AddEventLog<T> extends BaseEventLog<T> {
-  AddEventLog(
-      {required super.eventLogIdentifier,
-      required super.streamIdentifier,
-      required this.value});
-
-  final T value;
-}
-
-class RemoveEventLog<T> extends BaseEventLog<T> {
-  RemoveEventLog({
+final class ErrorEventLog extends BaseEventLog {
+  ErrorEventLog({
     required super.eventLogIdentifier,
     required super.streamIdentifier,
-    required this.value,
+    required this.error,
   });
 
-  final T value;
+  final Object error;
+}
+
+final class RegisterEventLog extends BaseEventLog {
+  RegisterEventLog({
+    required super.eventLogIdentifier,
+    required super.streamIdentifier,
+  });
+}
+
+final class DeregisterEventLog extends BaseEventLog {
+  DeregisterEventLog({
+    required super.eventLogIdentifier,
+    required super.streamIdentifier,
+  });
 }

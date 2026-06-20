@@ -7,7 +7,7 @@ class Streams {
 
   final Map<StreamIdentifier, StreamEntry<dynamic>> _entries = {};
 
-  StreamEntry<T> insertEntry<T>(
+  StreamEntry<T> registerStream<T>(
     StreamIdentifier identifier, {
     StreamData<T>? data,
   }) {
@@ -35,7 +35,7 @@ class Streams {
           ),
           data: currentEntry.data?.copyWith(lastValue: value, lastError: null),
         ) ??
-        insertEntry<T>(identifier,
+        registerStream<T>(identifier,
             data: StreamData(lastValue: value, lastError: null));
     _entries[identifier] = newEntry;
     return newEntry as StreamEntry<T>;
@@ -49,13 +49,13 @@ class Streams {
             lastEmittedAt: DateTime.now(),
           ),
         ) ??
-        insertEntry<dynamic>(identifier,
+        registerStream<dynamic>(identifier,
             data: StreamData(lastValue: null, lastError: error));
     _entries[identifier] = newEntry;
     return newEntry;
   }
 
-  void remove(StreamIdentifier identifier) {
+  void deregisterStream(StreamIdentifier identifier) {
     final currentEntry = _entries[identifier];
     if (currentEntry == null) return;
     final newEntry = currentEntry.copyWith(
