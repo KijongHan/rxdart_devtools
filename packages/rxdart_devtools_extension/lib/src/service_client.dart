@@ -5,7 +5,7 @@ import 'package:vm_service/vm_service.dart';
 class ServiceClient {
   VmService? get _service => serviceManager.service;
 
-  Future<List<TrackedSnapshot>> listTracked() async {
+  Future<List<StreamEntryDto>> listTracked() async {
     final service = _service;
     if (service == null) return const [];
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
@@ -20,7 +20,7 @@ class ServiceClient {
     final entries = (json['entries'] as List?) ?? const [];
     return entries
         .cast<Map<String, Object?>>()
-        .map(TrackedSnapshot.fromJson)
+        .map(StreamEntryDto.fromJson)
         .toList();
   }
 

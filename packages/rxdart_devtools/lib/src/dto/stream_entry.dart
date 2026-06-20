@@ -1,13 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rxdart_devtools/src/types/streams.dart';
 
-import 'emission.dart';
-
-part 'snapshot.g.dart';
+part 'stream_entry.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class TrackedSnapshot {
-  TrackedSnapshot({
+class StreamEntryDto {
+  StreamEntryDto({
     required this.id,
     required this.name,
     required this.typeLabel,
@@ -20,8 +18,8 @@ class TrackedSnapshot {
     required this.closedAt,
   });
 
-  factory TrackedSnapshot.fromEntry(StreamEntry<dynamic> entry) =>
-      TrackedSnapshot(
+  factory StreamEntryDto.fromEntry(StreamEntry<dynamic> entry) =>
+      StreamEntryDto(
         id: entry.entryIdentifier.id,
         name: entry.entryIdentifier.name,
         typeLabel: entry.entryIdentifier.typeLabel,
@@ -34,8 +32,8 @@ class TrackedSnapshot {
         closedAt: entry.metadata.closedAt?.toIso8601String(),
       );
 
-  factory TrackedSnapshot.fromJson(Map<String, dynamic> json) =>
-      _$TrackedSnapshotFromJson(json);
+  factory StreamEntryDto.fromJson(Map<String, dynamic> json) =>
+      _$StreamEntryDtoFromJson(json);
 
   final String id;
   final String name;
@@ -48,5 +46,5 @@ class TrackedSnapshot {
   final bool isClosed;
   final String? closedAt;
 
-  Map<String, dynamic> toJson() => _$TrackedSnapshotToJson(this);
+  Map<String, dynamic> toJson() => _$StreamEntryDtoToJson(this);
 }

@@ -16,9 +16,9 @@ class StreamsController extends ChangeNotifier {
   final Duration _pollInterval;
 
   Timer? _timer;
-  List<TrackedSnapshot> _streams = const [];
+  List<StreamEntryDto> _streams = const [];
 
-  List<TrackedSnapshot> get streams => _streams;
+  List<StreamEntryDto> get streams => _streams;
 
   void start() {
     _timer ??= Timer.periodic(_pollInterval, (_) => _refresh());

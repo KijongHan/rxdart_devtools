@@ -4,7 +4,7 @@ import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
 class StreamList extends StatelessWidget {
   const StreamList({required this.streams, super.key});
 
-  final List<TrackedSnapshot> streams;
+  final List<StreamEntryDto> streams;
 
   @override
   Widget build(BuildContext context) {

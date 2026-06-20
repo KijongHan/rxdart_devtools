@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'snapshot.dart';
+part of 'stream_entry.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-TrackedSnapshot _$TrackedSnapshotFromJson(Map<String, dynamic> json) =>
-    TrackedSnapshot(
+StreamEntryDto _$StreamEntryDtoFromJson(Map<String, dynamic> json) =>
+    StreamEntryDto(
       id: json['id'] as String,
       name: json['name'] as String,
       typeLabel: json['typeLabel'] as String,
@@ -20,7 +20,7 @@ TrackedSnapshot _$TrackedSnapshotFromJson(Map<String, dynamic> json) =>
       closedAt: json['closedAt'] as String?,
     );
 
-Map<String, dynamic> _$TrackedSnapshotToJson(TrackedSnapshot instance) =>
+Map<String, dynamic> _$StreamEntryDtoToJson(StreamEntryDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

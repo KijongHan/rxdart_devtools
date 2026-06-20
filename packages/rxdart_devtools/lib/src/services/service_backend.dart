@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 
 import 'package:rxdart_devtools/src/services/events.dart';
 import 'package:rxdart_devtools/src/services/streams.dart';
-import '../dto/snapshot.dart';
+import '../dto/stream_entry.dart';
 import '../devtools/constants.dart';
 
 abstract final class ServiceBackend {
@@ -18,7 +18,7 @@ abstract final class ServiceBackend {
     Map<String, String> parameters,
   ) async {
     final entries = Streams.instance.all
-        .map((entry) => TrackedSnapshot.fromEntry(entry).toJson())
+        .map((entry) => StreamEntryDto.fromEntry(entry).toJson())
         .toList();
     return developer.ServiceExtensionResponse.result(
       jsonEncode({'entries': entries}),
