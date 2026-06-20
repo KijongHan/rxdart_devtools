@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
 
-class StreamList extends StatelessWidget {
-  const StreamList({required this.streams, super.key});
+class StreamsList extends StatelessWidget {
+  const StreamsList({
+    required this.streams,
+    this.onSelect,
+    this.selectedStreamId,
+    super.key,
+  });
 
   final List<StreamEntryDto> streams;
+  final ValueChanged<StreamEntryDto>? onSelect;
+  final String? selectedStreamId;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +23,8 @@ class StreamList extends StatelessWidget {
         return ListTile(
           key: ValueKey(s.id),
           dense: true,
+          selected: s.id == selectedStreamId,
+          onTap: onSelect == null ? null : () => onSelect!(s),
           title: Text(s.name),
           subtitle: Text(s.typeLabel),
           trailing: Text(s.lastValue ?? '—'),

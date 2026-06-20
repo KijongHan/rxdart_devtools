@@ -81,6 +81,11 @@ class _ExampleAppState extends State<ExampleApp> {
                     _query.add('q-${DateTime.now().millisecondsSinceEpoch}'),
                 child: const Text('emit search.query'),
               ),
+              const SizedBox(height: 8),
+              ElevatedButton(
+                onPressed: () => _query.close(),
+                child: const Text('close search.query'),
+              ),
             ],
           ),
         ),

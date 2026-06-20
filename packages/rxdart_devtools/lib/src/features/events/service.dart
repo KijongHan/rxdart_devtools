@@ -61,7 +61,7 @@ class EventsService {
       ),
       streamIdentifier: streamIdentifier,
     );
-    _eventLogsByStream[streamIdentifier] = [deregisterEventLog];
+    _eventLogsByStream[streamIdentifier]?.add(deregisterEventLog);
     _eventLogsByTimestamp.add(deregisterEventLog);
   }
 
