@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:get_it/get_it.dart';
+import 'package:rxdart_devtools/src/providers/get_it.dart';
 
 import 'streams.dart';
 
@@ -11,7 +11,7 @@ final class Lifecycle {
 }
 
 class _HotReloadObserver with WidgetsBindingObserver {
-  final streamsService = GetIt.I.get<StreamsService>();
+  final streamsService = getIt.get<StreamsService>();
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {}

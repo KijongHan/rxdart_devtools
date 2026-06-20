@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:get_it/get_it.dart';
+import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/services/events.dart';
 import 'package:rxdart_devtools/src/services/streams.dart';
 import '../dto/stream_entry.dart';
 import '../devtools/constants.dart';
 
 final class ServiceBackend {
-  final streamsService = GetIt.I.get<StreamsService>();
-  final eventsService = GetIt.I.get<EventsService>();
+  final streamsService = getIt.get<StreamsService>();
+  final eventsService = getIt.get<EventsService>();
 
   ServiceBackend() {
     developer.registerExtension(

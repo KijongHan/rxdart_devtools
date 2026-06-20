@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:get_it/get_it.dart';
-import 'package:rxdart_devtools/src/services/config.dart';
+import 'package:rxdart_devtools/src/providers/config.dart';
+import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/services/events.dart';
 import 'package:rxdart_devtools/src/services/registry.dart';
 import 'package:rxdart_devtools/src/services/streams.dart';
@@ -31,11 +31,10 @@ abstract final class RxDartDevtools {
     bool captureStackTraces = true,
     bool enabled = true,
   }) {
-    if (kReleaseMode) return;
-    if (_initialized) return;
+    if (kReleaseMode || _initialized) return;
 
-    GetIt.I.registerSingleton(
-      ConfigService(
+    getIt.registerSingleton(
+      ConfigProvider(
         config: RxDartDevtoolsConfig(
           historySize: historySize,
           closedEntryCap: closedEntryCap,
@@ -44,12 +43,12 @@ abstract final class RxDartDevtools {
         ),
       ),
     );
-    GetIt.I.registerSingleton(StreamsService());
-    GetIt.I.registerSingleton(EventsService());
-    GetIt.I.registerSingleton(RegistryService());
+    getIt.registerSingleton(StreamsService());
+    getIt.registerSingleton(EventsService());
+    getIt.registerSingleton(RegistryService());
 
-    GetIt.I.registerSingleton(ServiceBackend());
-    GetIt.I.registerSingleton(Lifecycle());
+    getIt.registerSingleton(ServiceBackend());
+    getIt.registerSingleton(Lifecycle());
     _initialized = true;
   }
 }

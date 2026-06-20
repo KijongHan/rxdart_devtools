@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
+import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/services/streams.dart';
 import 'package:rxdart_devtools/src/types/streams.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
-  final streams = GetIt.I.get<StreamsService>();
+  final streams = getIt.get<StreamsService>();
   const uuid = Uuid();
 
   StreamIdentifier newIdentifier() => StreamIdentifier(

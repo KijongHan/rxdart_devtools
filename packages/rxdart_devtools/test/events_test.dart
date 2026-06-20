@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
+import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/services/events.dart';
 import 'package:rxdart_devtools/src/types/events.dart';
 import 'package:rxdart_devtools/src/types/streams.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
-  final events = GetIt.I.get<EventsService>();
+  final events = getIt.get<EventsService>();
   const uuid = Uuid();
 
   StreamIdentifier newIdentifier() => StreamIdentifier(
