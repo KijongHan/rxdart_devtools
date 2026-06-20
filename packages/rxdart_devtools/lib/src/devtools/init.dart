@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../services/lifecycle.dart';
-import '../services/service_backend.dart';
+import '../bridge/backend.dart';
 
 class RxDartDevtoolsConfig {
   const RxDartDevtoolsConfig({
