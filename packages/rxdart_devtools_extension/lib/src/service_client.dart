@@ -11,7 +11,7 @@ class ServiceClient {
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
     if (isolate == null) return const [];
     final response = await service.callServiceExtension(
-      Constants.list,
+      Constants.listStreamEntries,
       isolateId: isolate.id,
     );
 

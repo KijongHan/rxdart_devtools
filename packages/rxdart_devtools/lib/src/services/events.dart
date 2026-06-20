@@ -65,4 +65,6 @@ class Events {
     _eventLogsByStream[streamIdentifier] = [deregisterEventLog];
     _eventLogsByTimestamp.add(deregisterEventLog);
   }
+
+  Iterable<BaseEventLog> get all => _eventLogsByTimestamp;
 }
