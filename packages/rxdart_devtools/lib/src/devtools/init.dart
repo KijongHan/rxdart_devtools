@@ -2,12 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:rxdart_devtools/src/providers/config.dart';
 import 'package:rxdart_devtools/src/providers/datetime.dart';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
-import 'package:rxdart_devtools/src/services/events.dart';
-import 'package:rxdart_devtools/src/services/registry.dart';
-import 'package:rxdart_devtools/src/services/streams.dart';
+import 'package:rxdart_devtools/src/features/events/service.dart';
+import 'package:rxdart_devtools/src/features/registry/service.dart';
+import 'package:rxdart_devtools/src/features/streams/service.dart';
 
-import '../services/lifecycle.dart';
-import '../bridge/backend.dart';
+import '../providers/lifecycle.dart';
+import '../features/streams/backend.dart';
+import '../features/events/backend.dart';
 
 class RxDartDevtoolsConfig {
   const RxDartDevtoolsConfig({
@@ -50,7 +51,8 @@ abstract final class RxDartDevtools {
     getIt.registerSingleton(EventsService());
     getIt.registerSingleton(RegistryService());
 
-    getIt.registerSingleton(ServiceBackend());
+    getIt.registerSingleton(StreamsBackend());
+    getIt.registerSingleton(EventsBackend());
     getIt.registerSingleton(Lifecycle());
     _initialized = true;
   }

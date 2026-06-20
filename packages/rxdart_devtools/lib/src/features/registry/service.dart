@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
-import 'package:rxdart_devtools/src/services/events.dart';
-import 'package:rxdart_devtools/src/services/streams.dart';
-import 'package:rxdart_devtools/src/types/registry.dart';
+import 'package:rxdart_devtools/src/features/events/service.dart';
+import 'package:rxdart_devtools/src/features/streams/service.dart';
+import 'package:rxdart_devtools/src/features/registry/types.dart';
 import 'package:uuid/uuid.dart';
-import '../types/streams.dart';
+import '../streams/types.dart';
 
 class RegistryService {
   final streamsService = getIt.get<StreamsService>();

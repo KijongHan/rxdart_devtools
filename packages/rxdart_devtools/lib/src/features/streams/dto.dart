@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:rxdart_devtools/src/types/streams.dart';
+import 'package:rxdart_devtools/src/features/streams/types.dart';
 
-part 'stream_entry.g.dart';
+part 'dto.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class StreamEntryDto {

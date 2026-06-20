@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'stream_entry.dart';
+part of 'dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

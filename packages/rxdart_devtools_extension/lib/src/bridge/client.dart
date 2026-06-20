@@ -11,13 +11,13 @@ class ServiceClient {
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
     if (isolate == null) return const [];
     final response = await service.callServiceExtension(
-      Constants.listStreamEntries,
+      StreamsConstants.listStreamEntries,
       isolateId: isolate.id,
     );
 
     final json = response.json;
     if (json == null) return const [];
-    final entries = (json['entries'] as List?) ?? const [];
+    final entries = (json[StreamsConstants.jsonEntries] as List?) ?? const [];
     return entries
         .cast<Map<String, Object?>>()
         .map(StreamEntryDto.fromJson)
@@ -30,7 +30,7 @@ class ServiceClient {
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
     if (isolate == null) return;
     await service.callServiceExtension(
-      Constants.clearClosed,
+      StreamsConstants.clearClosed,
       isolateId: isolate.id,
     );
   }

@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:rxdart_devtools/src/types/events.dart';
+import 'package:rxdart_devtools/src/features/events/types.dart';
 
-part 'event_log.g.dart';
+part 'dto.g.dart';
 
 sealed class EventLogDto {
   const EventLogDto();
@@ -71,8 +71,7 @@ final class ErrorEventLogDto extends EventLogDto {
     required this.error,
   });
 
-  factory ErrorEventLogDto.fromEventLog(ErrorEventLog log) =>
-      ErrorEventLogDto(
+  factory ErrorEventLogDto.fromEventLog(ErrorEventLog log) => ErrorEventLogDto(
         id: log.eventLogIdentifier.id,
         timestamp: log.eventLogIdentifier.timestamp.toIso8601String(),
         streamId: log.streamIdentifier.id,

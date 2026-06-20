@@ -1,4 +1,4 @@
-import 'package:rxdart_devtools/src/types/streams.dart';
+import 'package:rxdart_devtools/src/features/streams/types.dart';
 
 class EventLogIdentifier {
   EventLogIdentifier({

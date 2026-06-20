@@ -1,6 +1,6 @@
 import 'package:rxdart_devtools/src/providers/datetime.dart';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
-import 'package:rxdart_devtools/src/types/streams.dart';
+import 'package:rxdart_devtools/src/features/streams/types.dart';
 
 class StreamsService {
   final DateTimeProvider _dateTime = getIt.get<DateTimeProvider>();

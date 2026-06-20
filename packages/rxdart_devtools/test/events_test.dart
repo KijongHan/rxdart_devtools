@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
-import 'package:rxdart_devtools/src/services/events.dart';
-import 'package:rxdart_devtools/src/types/events.dart';
-import 'package:rxdart_devtools/src/types/streams.dart';
+import 'package:rxdart_devtools/src/features/events/service.dart';
+import 'package:rxdart_devtools/src/features/events/types.dart';
+import 'package:rxdart_devtools/src/features/streams/types.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {

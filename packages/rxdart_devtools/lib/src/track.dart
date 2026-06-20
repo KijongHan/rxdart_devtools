@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:rxdart_devtools/src/providers/get_it.dart';
+import 'package:get_it/get_it.dart';
 import 'package:rxdart_devtools/src/features/registry/service.dart';
 
 extension RxDartDevtoolsTracking<T, S extends Stream<T>> on S {
@@ -10,7 +10,7 @@ extension RxDartDevtoolsTracking<T, S extends Stream<T>> on S {
       throw ArgumentError('name cannot be empty');
     }
 
-    getIt
+    GetIt.I
         .get<RegistryService>()
         .register<T>(this, (name: name, historySize: historySize));
     return this;

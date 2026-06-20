@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'event_log.dart';
+part of 'dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

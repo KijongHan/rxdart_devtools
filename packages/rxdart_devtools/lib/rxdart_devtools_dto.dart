@@ -1,5 +1,6 @@
 library;
 
-export 'src/dto/event_log.dart';
-export 'src/dto/stream_entry.dart';
-export 'src/devtools/constants.dart';
+export 'src/features/events/dto.dart';
+export 'src/features/streams/dto.dart';
+export 'src/features/streams/constants.dart';
+export 'src/features/events/constants.dart';

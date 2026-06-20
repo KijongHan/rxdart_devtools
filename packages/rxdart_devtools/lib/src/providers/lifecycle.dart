@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:rxdart_devtools/src/providers/get_it.dart';
 
-import 'streams.dart';
+import '../features/streams/service.dart';
 
 final class Lifecycle {
   Lifecycle() {
