@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart_devtools/rxdart_devtools.dart';
+import 'package:rxdart_devtools/sdk.dart';
 
 void main() {
   group('Stream.track()', () {

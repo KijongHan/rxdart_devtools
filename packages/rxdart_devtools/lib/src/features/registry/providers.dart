@@ -1,4 +1,4 @@
-import 'package:rxdart_devtools/src/devtools/init.dart';
+import 'package:rxdart_devtools/src/sdk/init.dart';
 import 'package:rxdart_devtools/src/features/registry/types.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
 import 'package:rxdart_devtools/src/providers/config.dart';
@@ -9,16 +9,21 @@ final class StreamIdentifierProvider {
   final Uuid uuid = Uuid();
   final ConfigProvider configProvider = getIt.get<ConfigProvider>();
 
-  StreamIdentifier generateStreamIdentifier<T>({
+  (String id, StreamIdentifier identifier) generateStreamIdentifier<T>({
     required Stream<T> stream,
     required RegistryConfig registryConfig,
-  }) =>
+  }) {
+    final id = configProvider.config.streamIdentifierStrategy ==
+            StreamIdentifierStrategy.uuid
+        ? uuid.v4()
+        : registryConfig.name;
+    return (
+      id,
       StreamIdentifier(
-        id: configProvider.config.streamIdentifierStrategy ==
-                StreamIdentifierStrategy.uuid
-            ? uuid.v4()
-            : registryConfig.name,
+        id: id,
         name: registryConfig.name,
         typeLabel: stream.runtimeType.toString(),
-      );
+      )
+    );
+  }
 }

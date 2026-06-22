@@ -4,4 +4,6 @@ final class EventsConstants {
 
   static const String jsonEventLogs = 'eventLogs';
   static const String jsonStreamId = 'streamId';
+  static const String sortField = 'sortField';
+  static const String sortDirection = 'sortDirection';
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart_devtools/rxdart_devtools.dart';
+import 'package:rxdart_devtools/sdk.dart';
 
 void main() {
   RxDartDevtools.init(historySize: 50);

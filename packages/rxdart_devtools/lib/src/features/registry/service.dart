@@ -20,7 +20,7 @@ class RegistryService {
     Stream<T> stream,
     RegistryConfig registryConfig,
   ) {
-    final identifier = streamIdentifierProvider.generateStreamIdentifier(
+    final (id, identifier) = streamIdentifierProvider.generateStreamIdentifier(
       stream: stream,
       registryConfig: registryConfig,
     );
@@ -45,7 +45,7 @@ class RegistryService {
     streamsService.registerStream<dynamic>(identifier);
     eventsService.registerStream(identifier);
     _subscriptions[identifier] = subscription;
-    _streamIdentifiers[identifier.id] = identifier;
+    _streamIdentifiers[id] = identifier;
   }
 
   StreamIdentifier? getStreamIdentifier(String id) => _streamIdentifiers[id];

@@ -144,3 +144,33 @@ final class DeregisterEventLogDto extends EventLogDto {
         ..._$DeregisterEventLogDtoToJson(this),
       };
 }
+
+enum SortField {
+  timestamp,
+  streamId;
+
+  static SortField fromJson(String json) {
+    try {
+      return values.byName(json);
+    } on ArgumentError {
+      return SortField.timestamp;
+    }
+  }
+
+  String toJson() => name;
+}
+
+enum SortDirection {
+  ascending,
+  descending;
+
+  static SortDirection fromJson(String json) {
+    try {
+      return values.byName(json);
+    } on ArgumentError {
+      return SortDirection.descending;
+    }
+  }
+
+  String toJson() => name;
+}

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
+import 'package:collection/collection.dart';
 import 'package:rxdart_devtools/src/features/events/constants.dart';
 import 'package:rxdart_devtools/src/features/events/dto.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
@@ -21,9 +22,22 @@ final class EventsBackend {
     String method,
     Map<String, String> parameters,
   ) async {
-    final eventLogs = eventsService.all
-        .map((log) => EventLogDto.fromEventLog(log).toJson())
-        .toList();
+    final sortField =
+        SortField.fromJson(parameters[EventsConstants.sortField] ?? '');
+    final sortDirection = SortDirection.fromJson(
+      parameters[EventsConstants.sortDirection] ?? '',
+    );
+
+    final eventLogs = [...eventsService.all].sorted((a, b) {
+      final (x, y) = sortDirection == SortDirection.ascending ? (a, b) : (b, a);
+      return switch (sortField) {
+        SortField.timestamp => x.eventLogIdentifier.timestamp
+            .compareTo(y.eventLogIdentifier.timestamp),
+        SortField.streamId =>
+          x.streamIdentifier.id.compareTo(y.streamIdentifier.id),
+      };
+    }).map((log) => EventLogDto.fromEventLog(log).toJson());
+
     return developer.ServiceExtensionResponse.result(
       jsonEncode({EventsConstants.jsonEventLogs: eventLogs}),
     );
