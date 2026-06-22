@@ -82,3 +82,17 @@ Map<String, dynamic> _$ListStreamEventLogsRequestDtoToJson(
     <String, dynamic>{
       'streamId': instance.streamId,
     };
+
+ListEventLogsResponseDto _$ListEventLogsResponseDtoFromJson(
+        Map<String, dynamic> json) =>
+    ListEventLogsResponseDto(
+      eventLogs: (json['eventLogs'] as List<dynamic>)
+          .map((e) => EventLogDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ListEventLogsResponseDtoToJson(
+        ListEventLogsResponseDto instance) =>
+    <String, dynamic>{
+      'eventLogs': instance.eventLogs.map((e) => e.toJson()).toList(),
+    };

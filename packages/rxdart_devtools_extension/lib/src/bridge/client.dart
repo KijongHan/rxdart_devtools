@@ -36,8 +36,7 @@ class ServiceClient {
 
     final json = response.json;
     if (json == null) return const [];
-    final logs = (json[EventsConstants.jsonEventLogs] as List?) ?? const [];
-    return logs.cast<Map<String, Object?>>().map(EventLogDto.fromJson).toList();
+    return ListEventLogsResponseDto.fromJson(json).eventLogs;
   }
 
   Future<List<EventLogDto>> listStreamEventLogs(String streamId) async {
@@ -45,16 +44,16 @@ class ServiceClient {
     if (service == null) return const [];
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
     if (isolate == null) return const [];
+    final request = ListStreamEventLogsRequestDto(streamId: streamId);
     final response = await service.callServiceExtension(
       EventsConstants.listStreamEventLogs,
       isolateId: isolate.id,
-      args: {EventsConstants.jsonStreamId: streamId},
+      args: request.toJson(),
     );
 
     final json = response.json;
     if (json == null) return const [];
-    final logs = (json[EventsConstants.jsonEventLogs] as List?) ?? const [];
-    return logs.cast<Map<String, Object?>>().map(EventLogDto.fromJson).toList();
+    return ListEventLogsResponseDto.fromJson(json).eventLogs;
   }
 
   Future<void> clearClosed() async {

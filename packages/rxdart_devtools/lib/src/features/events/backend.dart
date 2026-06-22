@@ -25,11 +25,14 @@ final class EventsBackend {
   ) async {
     final sortRequest = SortRequestDto.fromJson(parameters);
 
-    final eventLogs = eventsService.all
-        .sortedByRequest(sortRequest)
-        .map((log) => EventLogDto.fromEventLog(log).toJson());
+    final response = ListEventLogsResponseDto(
+      eventLogs: eventsService.all
+          .sortedByRequest(sortRequest)
+          .map(EventLogDto.fromEventLog)
+          .toList(),
+    );
     return developer.ServiceExtensionResponse.result(
-      jsonEncode({EventsConstants.jsonEventLogs: eventLogs}),
+      jsonEncode(response.toJson()),
     );
   }
 
@@ -50,13 +53,15 @@ final class EventsBackend {
       );
     }
 
-    final eventLogs = eventsService
-        .allForStream(streamIdentifier)
-        .sortedByRequest(sortRequest)
-        .map((log) => EventLogDto.fromEventLog(log).toJson())
-        .toList();
+    final response = ListEventLogsResponseDto(
+      eventLogs: eventsService
+          .allForStream(streamIdentifier)
+          .sortedByRequest(sortRequest)
+          .map(EventLogDto.fromEventLog)
+          .toList(),
+    );
     return developer.ServiceExtensionResponse.result(
-      jsonEncode({EventsConstants.jsonEventLogs: eventLogs}),
+      jsonEncode(response.toJson()),
     );
   }
 }

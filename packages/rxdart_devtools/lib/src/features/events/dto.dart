@@ -156,3 +156,15 @@ class ListStreamEventLogsRequestDto {
 
   Map<String, dynamic> toJson() => _$ListStreamEventLogsRequestDtoToJson(this);
 }
+
+@JsonSerializable(explicitToJson: true)
+class ListEventLogsResponseDto {
+  ListEventLogsResponseDto({required this.eventLogs});
+
+  final List<EventLogDto> eventLogs;
+
+  factory ListEventLogsResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$ListEventLogsResponseDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ListEventLogsResponseDtoToJson(this);
+}

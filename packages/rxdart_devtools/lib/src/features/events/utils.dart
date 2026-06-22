@@ -5,8 +5,7 @@ import 'package:rxdart_devtools/src/features/events/types.dart';
 extension BaseEventLogIterableX on Iterable<BaseEventLog> {
   Iterable<BaseEventLog> sortedByRequest(SortRequestDto sortRequest) {
     final sortField = sortRequest.sortField ?? SortField.timestamp;
-    final sortDirection =
-        sortRequest.sortDirection ?? SortDirection.descending;
+    final sortDirection = sortRequest.sortDirection ?? SortDirection.descending;
 
     return sorted((a, b) {
       final (x, y) = sortDirection == SortDirection.ascending ? (a, b) : (b, a);
