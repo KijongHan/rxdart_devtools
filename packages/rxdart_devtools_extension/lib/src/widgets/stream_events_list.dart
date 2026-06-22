@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
+import 'package:rxdart_devtools/dto.dart';
 
 import 'event_tile.dart';
 

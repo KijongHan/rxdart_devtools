@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
+import 'package:rxdart_devtools/dto.dart';
 
 import '../bridge/client.dart';
 
