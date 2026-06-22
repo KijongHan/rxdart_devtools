@@ -1,11 +1,10 @@
 import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/events/types.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
-import 'package:uuid/uuid.dart';
 
 class EventsService {
   final DateTimeProvider _dateTime = getIt.get<DateTimeProvider>();
-  final Uuid uuid = Uuid();
+  final UuidProvider uuidProvider = getIt.get<UuidProvider>();
 
   final List<BaseEventLog> _eventLogsByTimestamp = [];
   final Map<StreamIdentifier, List<BaseEventLog>> _eventLogsByStream = {};
@@ -16,7 +15,7 @@ class EventsService {
         .lastOrNull;
     final changeEventLog = ChangeEventLog(
       eventLogIdentifier: EventLogIdentifier(
-        id: uuid.v4(),
+        id: uuidProvider.generate(),
         timestamp: _dateTime.now(),
       ),
       streamIdentifier: streamIdentifier,
@@ -30,7 +29,7 @@ class EventsService {
   void addErrorEventLog(StreamIdentifier streamIdentifier, Object error) {
     final errorEventLog = ErrorEventLog(
       eventLogIdentifier: EventLogIdentifier(
-        id: uuid.v4(),
+        id: uuidProvider.generate(),
         timestamp: _dateTime.now(),
       ),
       streamIdentifier: streamIdentifier,
@@ -43,7 +42,7 @@ class EventsService {
   void registerStream(StreamIdentifier streamIdentifier) {
     final registerEventLog = RegisterEventLog(
       eventLogIdentifier: EventLogIdentifier(
-        id: uuid.v4(),
+        id: uuidProvider.generate(),
         timestamp: _dateTime.now(),
       ),
       streamIdentifier: streamIdentifier,
@@ -55,7 +54,7 @@ class EventsService {
   void deregisterStream(StreamIdentifier streamIdentifier) {
     final deregisterEventLog = DeregisterEventLog(
       eventLogIdentifier: EventLogIdentifier(
-        id: uuid.v4(),
+        id: uuidProvider.generate(),
         timestamp: _dateTime.now(),
       ),
       streamIdentifier: streamIdentifier,

@@ -32,6 +32,7 @@ abstract final class RxDartDevtools {
       ),
     );
     getIt.registerSingleton(DateTimeProvider());
+    getIt.registerSingleton(UuidProvider());
     getIt.registerSingleton(StreamIdentifierProvider());
 
     getIt.registerSingleton(StreamsService());
