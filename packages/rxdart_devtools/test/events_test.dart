@@ -11,6 +11,7 @@ void main() {
 
   setUpAll(() {
     getIt.registerSingleton(DateTimeProvider());
+    getIt.registerSingleton(UuidProvider());
     getIt.registerSingleton(EventsService());
     events = getIt.get<EventsService>();
   });
