@@ -1,5 +1,5 @@
 import 'package:devtools_extensions/devtools_extensions.dart';
-import 'package:rxdart_devtools/rxdart_devtools_dto.dart';
+import 'package:rxdart_devtools/dto.dart';
 import 'package:vm_service/vm_service.dart';
 
 class ServiceClient {
@@ -37,10 +37,7 @@ class ServiceClient {
     final json = response.json;
     if (json == null) return const [];
     final logs = (json[EventsConstants.jsonEventLogs] as List?) ?? const [];
-    return logs
-        .cast<Map<String, Object?>>()
-        .map(EventLogDto.fromJson)
-        .toList();
+    return logs.cast<Map<String, Object?>>().map(EventLogDto.fromJson).toList();
   }
 
   Future<List<EventLogDto>> listStreamEventLogs(String streamId) async {
@@ -57,10 +54,7 @@ class ServiceClient {
     final json = response.json;
     if (json == null) return const [];
     final logs = (json[EventsConstants.jsonEventLogs] as List?) ?? const [];
-    return logs
-        .cast<Map<String, Object?>>()
-        .map(EventLogDto.fromJson)
-        .toList();
+    return logs.cast<Map<String, Object?>>().map(EventLogDto.fromJson).toList();
   }
 
   Future<void> clearClosed() async {

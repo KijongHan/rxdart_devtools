@@ -145,32 +145,14 @@ final class DeregisterEventLogDto extends EventLogDto {
       };
 }
 
-enum SortField {
-  timestamp,
-  streamId;
+@JsonSerializable()
+class ListStreamEventLogsRequestDto {
+  ListStreamEventLogsRequestDto({required this.streamId});
 
-  static SortField fromJson(String json) {
-    try {
-      return values.byName(json);
-    } on ArgumentError {
-      return SortField.timestamp;
-    }
-  }
+  final String streamId;
 
-  String toJson() => name;
-}
+  factory ListStreamEventLogsRequestDto.fromJson(Map<String, dynamic> json) =>
+      _$ListStreamEventLogsRequestDtoFromJson(json);
 
-enum SortDirection {
-  ascending,
-  descending;
-
-  static SortDirection fromJson(String json) {
-    try {
-      return values.byName(json);
-    } on ArgumentError {
-      return SortDirection.descending;
-    }
-  }
-
-  String toJson() => name;
+  Map<String, dynamic> toJson() => _$ListStreamEventLogsRequestDtoToJson(this);
 }
