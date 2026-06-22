@@ -1,14 +1,14 @@
 import 'package:devtools_extensions/devtools_extensions.dart';
 import 'package:flutter/material.dart';
 
-import 'src/state/events_controller.dart';
-import 'src/state/stream_events_controller.dart';
-import 'src/state/streams_controller.dart';
+import 'src/features/events/controller.dart';
+import 'src/features/events/list.dart';
+import 'src/features/stream_details/controller.dart';
+import 'src/features/stream_details/list.dart';
+import 'src/features/streams/controller.dart';
+import 'src/features/streams/empty_state.dart';
+import 'src/features/streams/list.dart';
 import 'src/theme.dart';
-import 'src/widgets/empty_state.dart';
-import 'src/widgets/events_list.dart';
-import 'src/widgets/stream_events_list.dart';
-import 'src/widgets/streams_list.dart';
 
 void main() {
   runApp(const RxDartDevToolsExtension());

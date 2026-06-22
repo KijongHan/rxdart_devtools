@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
 
-import 'event_tile.dart';
+import '../events/tile.dart';
 
 class StreamEventsList extends StatelessWidget {
   const StreamEventsList({

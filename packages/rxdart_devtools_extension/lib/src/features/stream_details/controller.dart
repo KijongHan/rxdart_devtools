@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:rxdart_devtools/dto.dart';
 
-import '../bridge/client.dart';
+import 'client.dart';
 
 class StreamEventsController extends ChangeNotifier {
   StreamEventsController({
-    ServiceClient? client,
+    StreamDetailsClient? client,
     Duration pollInterval = const Duration(seconds: 1),
-  })  : _client = client ?? ServiceClient(),
+  })  : _client = client ?? StreamDetailsClient(),
         _pollInterval = pollInterval;
 
-  final ServiceClient _client;
+  final StreamDetailsClient _client;
   final Duration _pollInterval;
 
   Timer? _timer;

@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:rxdart_devtools/dto.dart';
 
-import '../bridge/client.dart';
+import 'client.dart';
 
 class EventsController extends ChangeNotifier {
   EventsController({
-    ServiceClient? client,
+    EventsClient? client,
     Duration pollInterval = const Duration(seconds: 1),
-  })  : _client = client ?? ServiceClient(),
+  })  : _client = client ?? EventsClient(),
         _pollInterval = pollInterval;
 
-  final ServiceClient _client;
+  final EventsClient _client;
   final Duration _pollInterval;
 
   Timer? _timer;

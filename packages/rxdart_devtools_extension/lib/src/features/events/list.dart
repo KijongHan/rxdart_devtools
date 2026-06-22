@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
 
-import 'event_tile.dart';
+import 'tile.dart';
 
 class EventsList extends StatelessWidget {
   const EventsList({required this.eventLogs, super.key});
