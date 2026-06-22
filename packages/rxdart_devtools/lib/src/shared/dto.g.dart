@@ -8,14 +8,16 @@ part of 'dto.dart';
 
 SortRequestDto _$SortRequestDtoFromJson(Map<String, dynamic> json) =>
     SortRequestDto(
-      sortField: $enumDecode(_$SortFieldEnumMap, json['sortField']),
-      sortDirection: SortDirection.fromJson(json['sortDirection'] as String),
+      sortField: $enumDecodeNullable(_$SortFieldEnumMap, json['sortField']),
+      sortDirection: json['sortDirection'] == null
+          ? null
+          : SortDirection.fromJson(json['sortDirection'] as String),
     );
 
 Map<String, dynamic> _$SortRequestDtoToJson(SortRequestDto instance) =>
     <String, dynamic>{
-      'sortField': _$SortFieldEnumMap[instance.sortField]!,
-      'sortDirection': _$SortDirectionEnumMap[instance.sortDirection]!,
+      'sortField': _$SortFieldEnumMap[instance.sortField],
+      'sortDirection': _$SortDirectionEnumMap[instance.sortDirection],
     };
 
 const _$SortFieldEnumMap = {

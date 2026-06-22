@@ -7,7 +7,6 @@ import 'package:rxdart_devtools/src/features/events/service.dart';
 import 'package:rxdart_devtools/src/features/registry/service.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
 
-import '../providers/lifecycle.dart';
 import '../features/streams/backend.dart';
 import '../features/events/backend.dart';
 
@@ -24,7 +23,7 @@ abstract final class RxDartDevtools {
 
     getIt.registerSingleton(
       ConfigProvider(
-        config: RxDartDevtoolsConfig(
+        config: SdkConfig(
           historySize: historySize,
           closedEntryCap: closedEntryCap,
           captureStackTraces: captureStackTraces,
@@ -41,7 +40,6 @@ abstract final class RxDartDevtools {
 
     getIt.registerSingleton(StreamsBackend());
     getIt.registerSingleton(EventsBackend());
-    getIt.registerSingleton(Lifecycle());
     _initialized = true;
   }
 }

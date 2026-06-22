@@ -17,13 +17,10 @@ enum SortField {
 
 @JsonSerializable()
 class SortRequestDto {
-  SortRequestDto({
-    required this.sortField,
-    required this.sortDirection,
-  });
+  SortRequestDto({this.sortField, this.sortDirection});
 
-  final SortField sortField;
-  final SortDirection sortDirection;
+  final SortField? sortField;
+  final SortDirection? sortDirection;
 
   factory SortRequestDto.fromJson(Map<String, dynamic> json) =>
       _$SortRequestDtoFromJson(json);

@@ -1,7 +1,7 @@
 import 'package:rxdart_devtools/src/features/registry/types.dart';
 
-class RxDartDevtoolsConfig {
-  const RxDartDevtoolsConfig({
+final class SdkConfig {
+  const SdkConfig({
     this.historySize = 20,
     this.closedEntryCap = 256,
     this.captureStackTraces = true,

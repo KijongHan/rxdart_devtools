@@ -3,7 +3,7 @@ import 'package:rxdart_devtools/src/features/config/types.dart';
 abstract final class Naming {
   static int _fallbackCounter = 0;
 
-  static String fromStackTrace(String typeLabel, RxDartDevtoolsConfig config) {
+  static String fromStackTrace(String typeLabel, SdkConfig config) {
     if (!config.captureStackTraces) {
       return '$typeLabel#${_fallbackCounter++}';
     }
