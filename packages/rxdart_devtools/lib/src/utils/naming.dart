@@ -1,4 +1,4 @@
-import '../sdk/init.dart';
+import 'package:rxdart_devtools/src/features/config/types.dart';
 
 abstract final class Naming {
   static int _fallbackCounter = 0;

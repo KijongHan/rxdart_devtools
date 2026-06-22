@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:rxdart_devtools/src/providers/get_it.dart';
+import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
 import 'package:rxdart_devtools/src/features/streams/dto.dart';
 import 'constants.dart';

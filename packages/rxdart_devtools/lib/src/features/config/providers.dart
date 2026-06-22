@@ -1,4 +1,4 @@
-import 'package:rxdart_devtools/src/sdk/init.dart';
+import 'package:rxdart_devtools/src/features/config/types.dart';
 
 final class ConfigProvider {
   ConfigProvider({required this.config});

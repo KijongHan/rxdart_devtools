@@ -1,8 +1,8 @@
 import 'package:rxdart_devtools/src/sdk/init.dart';
 import 'package:rxdart_devtools/src/features/registry/types.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
-import 'package:rxdart_devtools/src/providers/config.dart';
-import 'package:rxdart_devtools/src/providers/get_it.dart';
+import 'package:rxdart_devtools/src/features/config/providers.dart';
+import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:uuid/uuid.dart';
 
 final class StreamIdentifierProvider {

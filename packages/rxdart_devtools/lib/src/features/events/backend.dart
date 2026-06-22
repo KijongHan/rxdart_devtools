@@ -5,8 +5,8 @@ import 'package:rxdart_devtools/src/features/events/utils.dart';
 import 'package:rxdart_devtools/src/features/events/dto.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
 import 'package:rxdart_devtools/src/features/registry/service.dart';
-import 'package:rxdart_devtools/src/providers/get_it.dart';
 import 'package:rxdart_devtools/src/shared/dto.dart';
+import 'package:rxdart_devtools/src/shared/providers.dart';
 
 final class EventsBackend {
   final eventsService = getIt.get<EventsService>();

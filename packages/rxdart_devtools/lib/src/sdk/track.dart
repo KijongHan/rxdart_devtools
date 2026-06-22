@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:rxdart_devtools/src/providers/get_it.dart';
+import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/registry/service.dart';
 
 extension RxDartDevtoolsTracking<T, S extends Stream<T>> on S {

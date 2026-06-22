@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:rxdart_devtools/src/features/config/types.dart';
 import 'package:rxdart_devtools/src/features/registry/providers.dart';
-import 'package:rxdart_devtools/src/providers/config.dart';
-import 'package:rxdart_devtools/src/providers/datetime.dart';
-import 'package:rxdart_devtools/src/providers/get_it.dart';
+import 'package:rxdart_devtools/src/features/config/providers.dart';
+import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
 import 'package:rxdart_devtools/src/features/registry/service.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
@@ -10,27 +10,6 @@ import 'package:rxdart_devtools/src/features/streams/service.dart';
 import '../providers/lifecycle.dart';
 import '../features/streams/backend.dart';
 import '../features/events/backend.dart';
-
-enum StreamIdentifierStrategy {
-  uuid,
-  name,
-}
-
-class RxDartDevtoolsConfig {
-  const RxDartDevtoolsConfig({
-    this.historySize = 20,
-    this.closedEntryCap = 256,
-    this.captureStackTraces = true,
-    this.enabled = true,
-    this.streamIdentifierStrategy = StreamIdentifierStrategy.name,
-  });
-
-  final int historySize;
-  final int closedEntryCap;
-  final bool captureStackTraces;
-  final bool enabled;
-  final StreamIdentifierStrategy streamIdentifierStrategy;
-}
 
 abstract final class RxDartDevtools {
   static bool _initialized = false;

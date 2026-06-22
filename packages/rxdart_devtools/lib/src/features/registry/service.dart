@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:rxdart_devtools/src/features/registry/providers.dart';
-import 'package:rxdart_devtools/src/providers/config.dart';
-import 'package:rxdart_devtools/src/providers/get_it.dart';
+import 'package:rxdart_devtools/src/features/config/providers.dart';
+import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
 import 'package:rxdart_devtools/src/features/registry/types.dart';
