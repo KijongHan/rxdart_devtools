@@ -20,11 +20,11 @@ final class StreamsBackend {
     String method,
     Map<String, String> parameters,
   ) async {
-    final entries = streamsService.all
-        .map((entry) => StreamEntryDto.fromEntry(entry).toJson())
-        .toList();
+    final response = ListStreamEntriesResponseDto(
+      entries: streamsService.all.map(StreamEntryDto.fromEntry).toList(),
+    );
     return developer.ServiceExtensionResponse.result(
-      jsonEncode({StreamsConstants.jsonEntries: entries}),
+      jsonEncode(response.toJson()),
     );
   }
 

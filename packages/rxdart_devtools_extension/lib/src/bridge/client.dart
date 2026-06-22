@@ -17,11 +17,7 @@ class ServiceClient {
 
     final json = response.json;
     if (json == null) return const [];
-    final entries = (json[StreamsConstants.jsonEntries] as List?) ?? const [];
-    return entries
-        .cast<Map<String, Object?>>()
-        .map(StreamEntryDto.fromJson)
-        .toList();
+    return ListStreamEntriesResponseDto.fromJson(json).entries;
   }
 
   Future<List<EventLogDto>> listEventLogs() async {

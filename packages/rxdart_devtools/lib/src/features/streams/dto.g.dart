@@ -31,3 +31,17 @@ Map<String, dynamic> _$StreamEntryDtoToJson(StreamEntryDto instance) =>
       'isClosed': instance.isClosed,
       'closedAt': instance.closedAt,
     };
+
+ListStreamEntriesResponseDto _$ListStreamEntriesResponseDtoFromJson(
+        Map<String, dynamic> json) =>
+    ListStreamEntriesResponseDto(
+      entries: (json['entries'] as List<dynamic>)
+          .map((e) => StreamEntryDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$ListStreamEntriesResponseDtoToJson(
+        ListStreamEntriesResponseDto instance) =>
+    <String, dynamic>{
+      'entries': instance.entries.map((e) => e.toJson()).toList(),
+    };

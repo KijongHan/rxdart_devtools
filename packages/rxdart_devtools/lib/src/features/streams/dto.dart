@@ -45,3 +45,15 @@ class StreamEntryDto {
 
   Map<String, dynamic> toJson() => _$StreamEntryDtoToJson(this);
 }
+
+@JsonSerializable(explicitToJson: true)
+class ListStreamEntriesResponseDto {
+  ListStreamEntriesResponseDto({required this.entries});
+
+  final List<StreamEntryDto> entries;
+
+  factory ListStreamEntriesResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$ListStreamEntriesResponseDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ListStreamEntriesResponseDtoToJson(this);
+}
