@@ -45,3 +45,27 @@ Map<String, dynamic> _$ListStreamEntriesResponseDtoToJson(
     <String, dynamic>{
       'entries': instance.entries.map((e) => e.toJson()).toList(),
     };
+
+StreamEventDto _$StreamEventDtoFromJson(Map<String, dynamic> json) =>
+    StreamEventDto(
+      streamId: json['streamId'] as String,
+    );
+
+Map<String, dynamic> _$StreamEventDtoToJson(StreamEventDto instance) =>
+    <String, dynamic>{
+      'streamId': instance.streamId,
+    };
+
+StreamUpdatedEventDto _$StreamUpdatedEventDtoFromJson(
+        Map<String, dynamic> json) =>
+    StreamUpdatedEventDto(
+      streamId: json['streamId'] as String,
+      entry: StreamEntryDto.fromJson(json['entry'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$StreamUpdatedEventDtoToJson(
+        StreamUpdatedEventDto instance) =>
+    <String, dynamic>{
+      'streamId': instance.streamId,
+      'entry': instance.entry.toJson(),
+    };

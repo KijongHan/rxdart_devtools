@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:rxdart_devtools/src/features/streams/types.dart';
 import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
 import 'package:rxdart_devtools/src/features/streams/dto.dart';
@@ -34,5 +35,31 @@ final class StreamsBackend {
   ) async {
     streamsService.clearClosed();
     return developer.ServiceExtensionResponse.result(jsonEncode({'ok': true}));
+  }
+
+  void postStreamRegistered(StreamIdentifier identifier) {
+    developer.postEvent(
+      StreamsConstants.streamRegistered,
+      StreamEventDto(streamId: identifier.id).toJson(),
+    );
+  }
+
+  void postStreamClosed(StreamIdentifier identifier) {
+    developer.postEvent(
+      StreamsConstants.streamClosed,
+      StreamEventDto(streamId: identifier.id).toJson(),
+    );
+  }
+
+  void postStreamUpdated(
+    StreamEntry<dynamic> entry,
+  ) {
+    developer.postEvent(
+      StreamsConstants.streamUpdated,
+      StreamUpdatedEventDto(
+        streamId: entry.entryIdentifier.id,
+        entry: StreamEntryDto.fromEntry(entry),
+      ).toJson(),
+    );
   }
 }

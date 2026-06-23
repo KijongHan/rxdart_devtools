@@ -57,3 +57,28 @@ class ListStreamEntriesResponseDto {
 
   Map<String, dynamic> toJson() => _$ListStreamEntriesResponseDtoToJson(this);
 }
+
+@JsonSerializable()
+class StreamEventDto {
+  StreamEventDto({required this.streamId});
+
+  final String streamId;
+
+  factory StreamEventDto.fromJson(Map<String, dynamic> json) =>
+      _$StreamEventDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StreamEventDtoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class StreamUpdatedEventDto {
+  StreamUpdatedEventDto({required this.streamId, required this.entry});
+
+  final String streamId;
+  final StreamEntryDto entry;
+
+  factory StreamUpdatedEventDto.fromJson(Map<String, dynamic> json) =>
+      _$StreamUpdatedEventDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$StreamUpdatedEventDtoToJson(this);
+}
