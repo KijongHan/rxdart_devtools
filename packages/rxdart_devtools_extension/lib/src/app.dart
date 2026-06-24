@@ -63,6 +63,23 @@ class _AppState extends State<App> {
           if (streams == null || streams.isEmpty) {
             return const EmptyState();
           }
+          return const _ResponsiveAppLayout();
+        },
+      ),
+    );
+  }
+}
+
+class _ResponsiveAppLayout extends StatelessWidget {
+  const _ResponsiveAppLayout();
+
+  static const _wideBreakpoint = 800.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= _wideBreakpoint) {
           return const Row(
             children: [
               Expanded(child: StreamsList()),
@@ -72,8 +89,23 @@ class _AppState extends State<App> {
               Expanded(child: EventsList()),
             ],
           );
-        },
-      ),
+        }
+        return const Column(
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(child: StreamsList()),
+                  VerticalDivider(width: 1),
+                  Expanded(child: StreamDetailsPanel()),
+                ],
+              ),
+            ),
+            Divider(height: 1),
+            Expanded(child: EventsList()),
+          ],
+        );
+      },
     );
   }
 }
