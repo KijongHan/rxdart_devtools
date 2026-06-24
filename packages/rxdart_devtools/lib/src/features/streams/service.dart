@@ -1,4 +1,3 @@
-import 'package:rxdart_devtools/src/features/streams/backend.dart';
 import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
 import 'package:rxdart_devtools/src/features/streams/push.dart';
