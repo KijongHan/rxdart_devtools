@@ -30,8 +30,7 @@ class StreamsClient {
   void _onConnectedStateChanged(ConnectedState state) async {
     if (!state.connected) return;
 
-    await _vmServiceProvider.service
-        ?.streamListen(StreamsConstants.streamRegistered);
+    await _vmServiceProvider.service?.streamListen(EventStreams.kExtension);
     _pushSubscription =
         _vmServiceProvider.service?.onExtensionEvent.listen(_onExtensionEvent);
   }
