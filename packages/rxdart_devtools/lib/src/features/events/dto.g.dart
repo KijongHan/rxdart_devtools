@@ -71,14 +71,14 @@ Map<String, dynamic> _$DeregisterEventLogDtoToJson(
       'streamId': instance.streamId,
     };
 
-ListStreamEventLogsRequestDto _$ListStreamEventLogsRequestDtoFromJson(
+ListEventLogsRequestDto _$ListEventLogsRequestDtoFromJson(
         Map<String, dynamic> json) =>
-    ListStreamEventLogsRequestDto(
-      streamId: json['streamId'] as String,
+    ListEventLogsRequestDto(
+      streamId: json['streamId'] as String?,
     );
 
-Map<String, dynamic> _$ListStreamEventLogsRequestDtoToJson(
-        ListStreamEventLogsRequestDto instance) =>
+Map<String, dynamic> _$ListEventLogsRequestDtoToJson(
+        ListEventLogsRequestDto instance) =>
     <String, dynamic>{
       'streamId': instance.streamId,
     };

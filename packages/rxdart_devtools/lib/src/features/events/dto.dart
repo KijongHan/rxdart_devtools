@@ -146,15 +146,19 @@ final class DeregisterEventLogDto extends EventLogDto {
 }
 
 @JsonSerializable()
-class ListStreamEventLogsRequestDto {
-  ListStreamEventLogsRequestDto({required this.streamId});
+class ListEventLogsRequestDto {
+  ListEventLogsRequestDto({this.streamId});
 
-  final String streamId;
+  final String? streamId;
 
-  factory ListStreamEventLogsRequestDto.fromJson(Map<String, dynamic> json) =>
-      _$ListStreamEventLogsRequestDtoFromJson(json);
+  factory ListEventLogsRequestDto.fromJson(Map<String, dynamic> json) =>
+      _$ListEventLogsRequestDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ListStreamEventLogsRequestDtoToJson(this);
+  Map<String, dynamic> toJson() {
+    final json = _$ListEventLogsRequestDtoToJson(this);
+    json.removeWhere((_, value) => value == null);
+    return json;
+  }
 }
 
 @JsonSerializable(explicitToJson: true)

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/events/client.dart';
 import 'package:rxdart_devtools_extension/src/features/events/view_model.dart';
-import 'package:rxdart_devtools_extension/src/features/stream_details/client.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/client.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
@@ -53,7 +52,6 @@ class _PanelState extends State<_Panel> {
     getIt.registerSingleton(VmServiceProvider());
 
     getIt.registerSingleton(StreamsClient());
-    getIt.registerSingleton(StreamDetailsClient());
     getIt.registerSingleton(EventsClient());
 
     getIt.registerSingleton(EventsViewModel());
