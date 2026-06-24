@@ -54,3 +54,11 @@ melos:
     format:
       run: dart format .
       description: Format all Dart files in the workspace.
+
+    dev:docs:
+      run: cd docs && pnpm install && pnpm dev
+      description: Run the Starlight docs site locally with hot reload at http://localhost:4321/rxdart_devtools/.
+
+    build:docs:
+      run: cd docs && pnpm install --frozen-lockfile && pnpm build
+      description: Build the Starlight docs site into docs/dist (used by the GitHub Pages workflow).

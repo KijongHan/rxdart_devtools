@@ -1,0 +1,47 @@
+---
+title: Getting started
+description: Add rxdart_devtools to your Flutter app and see your first stream.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+This tutorial walks you from a fresh Flutter app to seeing a live `rxdart` stream in the DevTools panel.
+
+## Prerequisites
+
+- Flutter SDK installed (`flutter --version` works)
+- A Flutter app that already uses (or will use) `rxdart`
+
+<Steps>
+
+1. **Add the dependency** to your app's `pubspec.yaml`:
+
+   ```yaml
+   dev_dependencies:
+     rxdart_devtools: ^0.0.1
+   ```
+
+   Then fetch it:
+
+   ```bash
+   flutter pub get
+   ```
+
+2. **Run your app** and open DevTools:
+
+   ```bash
+   flutter run
+   ```
+
+   Press `d` in the terminal (or use your IDE's DevTools action) to open DevTools in a browser.
+
+3. **Open the rxdart panel** — look for the **rxdart** tab in the DevTools toolbar.
+
+4. **Track a stream** in your app code (API TBD — placeholder for the runtime `.track()` call). The stream appears in the panel as it activates, and recent events stream into the event log.
+
+</Steps>
+
+## Next steps
+
+- Browse the **How-to guides** for specific tasks
+- Open the [API reference](https://pub.dev/documentation/rxdart_devtools/latest/) for the full surface
