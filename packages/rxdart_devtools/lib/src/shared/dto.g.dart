@@ -30,3 +30,13 @@ const _$SortDirectionEnumMap = {
   SortDirection.ascending: 'ascending',
   SortDirection.descending: 'descending',
 };
+
+OkResponseDto _$OkResponseDtoFromJson(Map<String, dynamic> json) =>
+    OkResponseDto(
+      ok: json['ok'] as bool,
+    );
+
+Map<String, dynamic> _$OkResponseDtoToJson(OkResponseDto instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+    };

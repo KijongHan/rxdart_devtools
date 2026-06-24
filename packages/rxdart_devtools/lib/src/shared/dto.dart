@@ -27,3 +27,15 @@ class SortRequestDto {
 
   Map<String, dynamic> toJson() => _$SortRequestDtoToJson(this);
 }
+
+@JsonSerializable()
+class OkResponseDto {
+  OkResponseDto({required this.ok});
+
+  final bool ok;
+
+  factory OkResponseDto.fromJson(Map<String, dynamic> json) =>
+      _$OkResponseDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OkResponseDtoToJson(this);
+}
