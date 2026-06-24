@@ -30,24 +30,28 @@ class StreamMetadata {
     required this.lastEmittedAt,
     required this.isClosed,
     required this.closedAt,
+    this.isInjectable = false,
   });
 
   final int listenerCount;
   final DateTime? lastEmittedAt;
   final bool isClosed;
   final DateTime? closedAt;
+  final bool isInjectable;
 
   StreamMetadata copyWith({
     int? listenerCount,
     DateTime? lastEmittedAt,
     bool? isClosed,
     DateTime? closedAt,
+    bool? isInjectable,
   }) {
     return StreamMetadata(
       listenerCount: listenerCount ?? this.listenerCount,
       lastEmittedAt: lastEmittedAt ?? this.lastEmittedAt,
       isClosed: isClosed ?? this.isClosed,
       closedAt: closedAt ?? this.closedAt,
+      isInjectable: isInjectable ?? this.isInjectable,
     );
   }
 }

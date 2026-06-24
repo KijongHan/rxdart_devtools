@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/src/features/registry/providers.dart';
 import 'package:rxdart_devtools/src/features/config/providers.dart';
 import 'package:rxdart_devtools/src/shared/providers.dart';
@@ -15,8 +16,9 @@ class RegistryService {
 
   final Map<StreamIdentifier, StreamSubscription<dynamic>> _subscriptions = {};
   final Map<String, StreamIdentifier> _streamIdentifiers = {};
+  final Map<StreamIdentifier, SubjectInjector> _subjectInjectors = {};
 
-  void register<T>(
+  StreamIdentifier register<T>(
     Stream<T> stream,
     RegistryConfig registryConfig,
   ) {
@@ -33,6 +35,7 @@ class RegistryService {
       onDone: () {
         _subscriptions[identifier]?.cancel();
         _subscriptions.remove(identifier);
+        _subjectInjectors.remove(identifier);
         streamsService.deregisterStream(identifier);
         eventsService.deregisterStream(identifier);
       },
@@ -46,7 +49,26 @@ class RegistryService {
     eventsService.registerStream(identifier);
     _subscriptions[identifier] = subscription;
     _streamIdentifiers[id] = identifier;
+    return identifier;
   }
+
+  void enableInjection<T>(
+    Subject<T> subject,
+    T Function(String raw) parse,
+    StreamIdentifier identifier,
+  ) {
+    _subjectInjectors[identifier] = SubjectInjector(
+      add: (raw) => subject.add(parse(raw)),
+      addError: (message) => subject.addError(message),
+    );
+    streamsService.markInjectable(identifier);
+  }
+
+  void inject(StreamIdentifier identifier, String raw) =>
+      _subjectInjectors[identifier]?.add(raw);
+
+  void injectError(StreamIdentifier identifier, String message) =>
+      _subjectInjectors[identifier]?.addError(message);
 
   StreamIdentifier? getStreamIdentifier(String id) => _streamIdentifiers[id];
 
@@ -56,5 +78,6 @@ class RegistryService {
     }
     _subscriptions.clear();
     _streamIdentifiers.clear();
+    _subjectInjectors.clear();
   }
 }

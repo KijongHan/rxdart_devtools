@@ -8,22 +8,29 @@ void main() {
       RxDartDevtools.init(historySize: 5);
     });
 
-    test('returns the same Subject instance', () {
+    test('returns a wrapper exposing the original Subject via asSubject()', () {
       final subject = BehaviorSubject<int>.seeded(0);
       final tracked = subject.track('counter');
-      expect(identical(subject, tracked), isTrue);
+      expect(identical(subject, tracked.asSubject()), isTrue);
     });
 
-    test('is idempotent on repeated calls', () {
+    test('asSubject() returns the original subject', () {
       final subject = BehaviorSubject<int>.seeded(0);
-      final a = subject.track('counter');
-      final b = subject.track('counter');
-      expect(identical(a, b), isTrue);
+      final tracked = subject.track('counter');
+      expect(identical(subject, tracked.asSubject()), isTrue);
     });
 
     test('throws ArgumentError if name is empty', () {
       final subject = BehaviorSubject<int>.seeded(0);
       expect(() => subject.track(''), throwsArgumentError);
+    });
+
+    test('Subject.track() returns a TrackedSubject with enableInjection', () {
+      final subject = BehaviorSubject<int>.seeded(0);
+      final tracked = subject.track('counter');
+      // Compile-time check: enableInjection is only on TrackedSubject.
+      final chained = tracked.enableInjection(parse: int.parse);
+      expect(identical(chained.asSubject(), subject), isTrue);
     });
   });
 }

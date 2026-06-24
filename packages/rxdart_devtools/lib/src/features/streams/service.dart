@@ -61,6 +61,16 @@ class StreamsService {
     return newEntry;
   }
 
+  void markInjectable(StreamIdentifier identifier) {
+    final currentEntry = _entries[identifier];
+    if (currentEntry == null) return;
+    final newEntry = currentEntry.copyWith(
+      metadata: currentEntry.metadata.copyWith(isInjectable: true),
+    );
+    _entries[identifier] = newEntry;
+    _push.postStreamUpdated(newEntry);
+  }
+
   void deregisterStream(StreamIdentifier identifier) {
     final currentEntry = _entries[identifier];
     if (currentEntry == null) return;
