@@ -1,10 +1,11 @@
 import 'package:rxdart_devtools/src/features/streams/backend.dart';
 import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
+import 'package:rxdart_devtools/src/features/streams/push.dart';
 
 class StreamsService {
   final _dateTime = getIt.get<DateTimeProvider>();
-  final _backend = getIt.get<StreamsBackend>();
+  final _push = getIt.get<StreamsPush>();
 
   final Map<StreamIdentifier, StreamEntry<dynamic>> _entries = {};
 
@@ -23,7 +24,7 @@ class StreamsService {
       data: data,
     );
     _entries[identifier] = newEntry;
-    _backend.postStreamRegistered(identifier);
+    _push.postStreamRegistered(identifier);
     return newEntry;
   }
 
@@ -38,7 +39,7 @@ class StreamsService {
         registerStream<T>(identifier,
             data: StreamData(lastValue: value, lastError: null));
     _entries[identifier] = newEntry;
-    _backend.postStreamUpdated(newEntry);
+    _push.postStreamUpdated(newEntry);
     return newEntry;
   }
 
@@ -53,7 +54,7 @@ class StreamsService {
         registerStream<dynamic>(identifier,
             data: StreamData(lastValue: null, lastError: error));
     _entries[identifier] = newEntry;
-    _backend.postStreamErrored(newEntry);
+    _push.postStreamErrored(newEntry);
     return newEntry;
   }
 
@@ -67,7 +68,7 @@ class StreamsService {
       ),
     );
     _entries[identifier] = newEntry;
-    _backend.postStreamClosed(identifier);
+    _push.postStreamClosed(identifier);
   }
 
   void clearClosed() {

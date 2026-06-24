@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:rxdart_devtools/src/features/config/types.dart';
 import 'package:rxdart_devtools/src/features/registry/providers.dart';
 import 'package:rxdart_devtools/src/features/config/providers.dart';
+import 'package:rxdart_devtools/src/features/streams/push.dart';
 import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
 import 'package:rxdart_devtools/src/features/registry/service.dart';
@@ -34,6 +35,8 @@ abstract final class RxDartDevtools {
     getIt.registerSingleton(DateTimeProvider());
     getIt.registerSingleton(UuidProvider());
     getIt.registerSingleton(StreamIdentifierProvider());
+
+    getIt.registerSingleton(StreamsPush());
 
     getIt.registerSingleton(StreamsService());
     getIt.registerSingleton(EventsService());
