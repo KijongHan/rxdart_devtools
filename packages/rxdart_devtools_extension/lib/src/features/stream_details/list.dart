@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
-import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
+import 'package:rxdart_devtools_extension/src/shared/components/status_dot.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
+import 'package:rxdart_devtools_extension/src/shared/utils.dart';
 
-import '../events/tile.dart';
-
-typedef _StreamEventsListViewState = ({
-  String? selectedStreamId,
-  StreamEntryDto? selectedStream,
-  List<EventLogDto> eventLogs,
-});
+import '../events/components/event_log_tile.dart';
 
 class StreamEventsList extends StatefulWidget {
   const StreamEventsList({super.key});
@@ -21,36 +15,18 @@ class StreamEventsList extends StatefulWidget {
 }
 
 class _StreamEventsListState extends State<StreamEventsList> {
-  late final StreamsViewModel _streamsViewModel;
   late final StreamDetailsViewModel _streamDetailsViewModel;
-  late final Stream<_StreamEventsListViewState> _viewState;
 
   @override
   void initState() {
     super.initState();
-    _streamsViewModel = getIt.get<StreamsViewModel>();
     _streamDetailsViewModel = getIt.get<StreamDetailsViewModel>();
-    _viewState = Rx.combineLatest3(
-      _streamDetailsViewModel.selectedStreamId,
-      _streamsViewModel.streams,
-      _streamDetailsViewModel.eventLogs,
-      (selectedStreamId, streams, eventLogs) {
-        final selectedStream = selectedStreamId == null
-            ? null
-            : streams.where((s) => s.id == selectedStreamId).firstOrNull;
-        return (
-          selectedStreamId: selectedStreamId,
-          selectedStream: selectedStream,
-          eventLogs: eventLogs,
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<_StreamEventsListViewState>(
-      stream: _viewState,
+    return StreamBuilder<StreamDetailsViewState>(
+      stream: _streamDetailsViewModel.viewState,
       builder: (context, snapshot) {
         final state = snapshot.data;
         if (state == null) return const SizedBox.shrink();
@@ -75,7 +51,11 @@ class _StreamEventsListState extends State<StreamEventsList> {
                       separatorBuilder: (_, __) => const Divider(height: 1),
                       itemBuilder: (context, index) {
                         final log = state.eventLogs[index];
-                        return EventTile(key: ValueKey(log.id), log: log);
+                        return EventLogTile(
+                          key: ValueKey(log.id),
+                          log: log,
+                          showStreamName: false,
+                        );
                       },
                     ),
             ),
@@ -99,7 +79,15 @@ class _StreamDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(stream.name, style: textTheme.titleMedium),
+          Row(
+            children: [
+              StatusDot.forStreamEntry(stream),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(stream.name, style: textTheme.titleMedium),
+              ),
+            ],
+          ),
           const SizedBox(height: 6),
           _DetailRow(label: 'ID', value: stream.id),
           _DetailRow(label: 'Last value', value: stream.lastValue ?? '—'),
@@ -107,7 +95,7 @@ class _StreamDetails extends StatelessWidget {
             label: 'Last updated',
             value: stream.lastEmittedAt == null
                 ? '—'
-                : shortTimestamp(stream.lastEmittedAt!),
+                : DateTimeUtils.shortTimestamp(stream.lastEmittedAt!),
           ),
         ],
       ),

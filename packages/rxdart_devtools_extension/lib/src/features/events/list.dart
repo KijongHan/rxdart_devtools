@@ -3,7 +3,7 @@ import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/events/view_model.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
-import 'tile.dart';
+import 'components/event_log_tile.dart';
 
 class EventsList extends StatefulWidget {
   const EventsList({super.key});
@@ -37,7 +37,7 @@ class _EventsListState extends State<EventsList> {
           separatorBuilder: (_, __) => const Divider(height: 1),
           itemBuilder: (context, index) {
             final log = eventLogs[index];
-            return EventTile(key: ValueKey(log.id), log: log);
+            return EventLogTile(key: ValueKey(log.id), log: log);
           },
         );
       },

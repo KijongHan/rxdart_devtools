@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
+import 'package:rxdart_devtools_extension/src/shared/utils.dart';
 
-class EventTile extends StatelessWidget {
-  const EventTile({
+class EventLogTile extends StatelessWidget {
+  const EventLogTile({
     super.key,
     required this.log,
     this.onTap,
     this.selected = false,
+    this.showStreamName = true,
   });
 
   final EventLogDto log;
   final VoidCallback? onTap;
   final bool selected;
+  final bool showStreamName;
 
   @override
   Widget build(BuildContext context) {
-    final (label, subtitle, color) = switch (log) {
+    final (label, detail, color) = switch (log) {
       ChangeEventLogDto(:final newValue, :final oldValue) => (
           'change',
           '${oldValue ?? '—'} → ${newValue ?? '—'}',
@@ -38,28 +41,33 @@ class EventTile extends StatelessWidget {
         ),
     };
 
+    final Widget? title;
+    final Widget? subtitle;
+    if (showStreamName) {
+      title = Text(log.streamId);
+      subtitle = detail.isEmpty ? null : Text(detail);
+    } else {
+      title = detail.isEmpty ? null : Text(detail);
+      subtitle = null;
+    }
+
     return ListTile(
       dense: true,
       onTap: onTap,
       selected: selected,
       leading: _Badge(label: label, color: color),
-      title: Text(log.streamId),
-      subtitle: subtitle.isEmpty ? null : Text(subtitle),
-      trailing: Text(
-        shortTimestamp(log.timestamp),
-        style: Theme.of(context).textTheme.bodySmall,
+      title: title,
+      subtitle: subtitle,
+      trailing: Tooltip(
+        message: DateTimeUtils.fullTimestamp(log.timestamp),
+        waitDuration: const Duration(milliseconds: 300),
+        child: Text(
+          DateTimeUtils.shortTimestamp(log.timestamp),
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       ),
     );
   }
-}
-
-String shortTimestamp(String iso) {
-  final parsed = DateTime.tryParse(iso);
-  if (parsed == null) return iso;
-  final h = parsed.hour.toString().padLeft(2, '0');
-  final m = parsed.minute.toString().padLeft(2, '0');
-  final s = parsed.second.toString().padLeft(2, '0');
-  return '$h:$m:$s';
 }
 
 class _Badge extends StatelessWidget {

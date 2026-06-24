@@ -3,6 +3,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
+import 'package:rxdart_devtools_extension/src/shared/components/status_dot.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
 typedef _StreamsListViewState = ({
@@ -54,6 +55,7 @@ class _StreamsListState extends State<StreamsList> {
               dense: true,
               selected: s.id == state.selectedStreamId,
               onTap: () => _streamDetailsViewModel.selectStream(s.id),
+              leading: StatusDot.forStreamEntry(s),
               title: Text(s.name),
               subtitle: Text(s.typeLabel),
               trailing: Text(s.lastValue ?? '—'),
