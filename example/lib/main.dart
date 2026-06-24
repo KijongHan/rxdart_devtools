@@ -60,16 +60,18 @@ class _ExampleAppState extends State<ExampleApp> {
               ),
               const SizedBox(height: 24),
               StreamBuilder(
-                  stream: _counter,
-                  builder: (context, snapshot) {
-                    return Text('counter: ${snapshot.data}');
-                  }),
+                stream: _counter,
+                builder: (context, snapshot) {
+                  return Text('counter: ${snapshot.data}');
+                },
+              ),
               const SizedBox(height: 8),
               StreamBuilder(
-                  stream: _clock,
-                  builder: (context, snapshot) {
-                    return Text('clock: ${snapshot.data}');
-                  }),
+                stream: _clock,
+                builder: (context, snapshot) {
+                  return Text('clock: ${snapshot.data}');
+                },
+              ),
               const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: () => _counter.add(_counter.value + 1),

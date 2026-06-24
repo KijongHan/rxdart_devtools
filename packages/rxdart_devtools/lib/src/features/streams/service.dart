@@ -35,8 +35,10 @@ class StreamsService {
           ),
           data: StreamData(lastValue: value, lastError: null),
         ) ??
-        registerStream<T>(identifier,
-            data: StreamData(lastValue: value, lastError: null));
+        registerStream<T>(
+          identifier,
+          data: StreamData(lastValue: value, lastError: null),
+        );
     _entries[identifier] = newEntry;
     _push.postStreamUpdated(newEntry);
     return newEntry;
@@ -50,8 +52,10 @@ class StreamsService {
             lastEmittedAt: _dateTime.now(),
           ),
         ) ??
-        registerStream<dynamic>(identifier,
-            data: StreamData(lastValue: null, lastError: error));
+        registerStream<dynamic>(
+          identifier,
+          data: StreamData(lastValue: null, lastError: error),
+        );
     _entries[identifier] = newEntry;
     _push.postStreamErrored(newEntry);
     return newEntry;

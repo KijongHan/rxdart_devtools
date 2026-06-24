@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/repository.dart';
-import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
 import 'package:rxdart_devtools_extension/src/shared/components/status_dot.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';

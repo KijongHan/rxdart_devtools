@@ -3,7 +3,7 @@ import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/events/view_model.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
-import 'components/event_log_tile.dart';
+import 'event_log_tile.dart';
 
 class EventsList extends StatefulWidget {
   const EventsList({super.key});

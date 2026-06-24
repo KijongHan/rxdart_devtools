@@ -1,6 +1,9 @@
 class StreamIdentifier {
-  StreamIdentifier(
-      {required this.id, required this.name, required this.typeLabel});
+  StreamIdentifier({
+    required this.id,
+    required this.name,
+    required this.typeLabel,
+  });
 
   final String id;
   final String name;
