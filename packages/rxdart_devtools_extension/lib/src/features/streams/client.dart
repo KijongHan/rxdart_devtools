@@ -1,41 +1,42 @@
 import 'dart:async';
 
+import 'package:devtools_app_shared/service.dart';
 import 'package:devtools_extensions/devtools_extensions.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/dto.dart';
+import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 import 'package:vm_service/vm_service.dart';
 
 class StreamsClient {
   StreamsClient() {
-    _init();
+    _connectionSubscription =
+        _vmServiceProvider.connectedState.listen(_onConnectedStateChanged);
   }
-
-  VmService? get _service => serviceManager.service;
 
   final _registered = PublishSubject<StreamEventDto>();
   final _updated = PublishSubject<StreamUpdatedEventDto>();
   final _errored = PublishSubject<StreamUpdatedEventDto>();
   final _closed = PublishSubject<StreamEventDto>();
-
   Stream<StreamEventDto> get onRegistered => _registered.stream;
   Stream<StreamUpdatedEventDto> get onUpdated => _updated.stream;
   Stream<StreamUpdatedEventDto> get onErrored => _errored.stream;
   Stream<StreamEventDto> get onClosed => _closed.stream;
 
-  StreamSubscription<Event>? _sub;
+  late final StreamSubscription<Event>? _pushSubscription;
+  late final StreamSubscription<void> _connectionSubscription;
 
-  Future<void> _init() async {
-    final service = _service;
-    if (service == null) return;
-    try {
-      await service.streamListen(EventStreams.kExtension);
-    } on RPCError catch (e) {
-      if (e.code != 103) rethrow; // 103 = kStreamAlreadySubscribed
-    }
-    _sub = service.onExtensionEvent.listen(_dispatch);
+  final _vmServiceProvider = getIt.get<VmServiceProvider>();
+
+  void _onConnectedStateChanged(ConnectedState state) async {
+    if (!state.connected) return;
+
+    await _vmServiceProvider.service
+        ?.streamListen(StreamsConstants.streamRegistered);
+    _pushSubscription =
+        _vmServiceProvider.service?.onExtensionEvent.listen(_onExtensionEvent);
   }
 
-  void _dispatch(Event event) {
+  void _onExtensionEvent(Event event) {
     final kind = event.extensionKind;
     final data = event.extensionData?.data;
     if (kind == null || data == null) return;
@@ -53,7 +54,8 @@ class StreamsClient {
   }
 
   Future<void> dispose() async {
-    await _sub?.cancel();
+    await _connectionSubscription.cancel();
+    await _pushSubscription?.cancel();
     await _registered.close();
     await _updated.close();
     await _errored.close();
@@ -61,13 +63,13 @@ class StreamsClient {
   }
 
   Future<List<StreamEntryDto>> listStreamEntries() async {
-    final service = _service;
-    if (service == null) return const [];
-    final isolate = serviceManager.isolateManager.selectedIsolate.value;
-    if (isolate == null) return const [];
-    final response = await service.callServiceExtension(
+    if (_vmServiceProvider.service == null ||
+        serviceManager.isolateManager.selectedIsolate.value == null) {
+      return const [];
+    }
+    final response = await _vmServiceProvider.service!.callServiceExtension(
       StreamsConstants.listStreamEntries,
-      isolateId: isolate.id,
+      isolateId: serviceManager.isolateManager.selectedIsolate.value!.id,
     );
 
     final json = response.json;
@@ -76,13 +78,13 @@ class StreamsClient {
   }
 
   Future<void> clearClosed() async {
-    final service = _service;
-    if (service == null) return;
-    final isolate = serviceManager.isolateManager.selectedIsolate.value;
-    if (isolate == null) return;
-    await service.callServiceExtension(
+    if (_vmServiceProvider.service == null ||
+        serviceManager.isolateManager.selectedIsolate.value == null) {
+      return;
+    }
+    await _vmServiceProvider.service!.callServiceExtension(
       StreamsConstants.clearClosed,
-      isolateId: isolate.id,
+      isolateId: serviceManager.isolateManager.selectedIsolate.value!.id,
     );
   }
 }
