@@ -13,15 +13,8 @@ class EventsClient {
         _vmServiceProvider.connectedState.listen(_onConnectedStateChanged);
   }
 
-  final _registered = PublishSubject<StreamEventDto>();
-  final _updated = PublishSubject<StreamUpdatedEventDto>();
-  final _errored = PublishSubject<StreamUpdatedEventDto>();
-  final _closed = PublishSubject<StreamEventDto>();
-
-  Stream<StreamEventDto> get onRegistered => _registered.stream;
-  Stream<StreamUpdatedEventDto> get onUpdated => _updated.stream;
-  Stream<StreamUpdatedEventDto> get onErrored => _errored.stream;
-  Stream<StreamEventDto> get onClosed => _closed.stream;
+  final _eventAdded = PublishSubject<EventLogAddedEventDto>();
+  Stream<EventLogAddedEventDto> get onEventAdded => _eventAdded.stream;
 
   late final StreamSubscription<Event>? _sub;
   late final StreamSubscription<void> _connectionSubscription;
@@ -41,23 +34,14 @@ class EventsClient {
     if (kind == null || data == null) return;
     final json = Map<String, dynamic>.from(data);
     switch (kind) {
-      case StreamsConstants.streamRegistered:
-        _registered.add(StreamEventDto.fromJson(json));
-      case StreamsConstants.streamUpdated:
-        _updated.add(StreamUpdatedEventDto.fromJson(json));
-      case StreamsConstants.streamErrored:
-        _errored.add(StreamUpdatedEventDto.fromJson(json));
-      case StreamsConstants.streamClosed:
-        _closed.add(StreamEventDto.fromJson(json));
+      case EventsConstants.eventAdded:
+        _eventAdded.add(EventLogAddedEventDto.fromJson(json));
     }
   }
 
   Future<void> dispose() async {
     await _sub?.cancel();
-    await _registered.close();
-    await _updated.close();
-    await _errored.close();
-    await _closed.close();
+    await _eventAdded.close();
     await _connectionSubscription.cancel();
   }
 
