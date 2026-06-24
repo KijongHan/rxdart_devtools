@@ -26,8 +26,10 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   void initState() {
     super.initState();
-    _counter = BehaviorSubject<int>.seeded(0).track('counter');
-    _query = PublishSubject<String>().track('search.query', historySize: 200);
+    _counter = BehaviorSubject<int>.seeded(0).track('counter').asSubject();
+    _query = PublishSubject<String>()
+        .track('search.query', historySize: 200)
+        .asSubject();
     _clock = BehaviorSubject<DateTime>.seeded(DateTime.now());
 
     _tickTimer = Timer.periodic(const Duration(seconds: 1), (_) {

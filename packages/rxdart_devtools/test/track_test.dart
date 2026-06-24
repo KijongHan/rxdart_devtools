@@ -32,5 +32,12 @@ void main() {
       final chained = tracked.enableInjection(parse: int.parse);
       expect(identical(chained.asSubject(), subject), isTrue);
     });
+
+    test('asSubject() preserves the original Subject subtype', () {
+      final subject = BehaviorSubject<int>.seeded(7);
+      // Static type must be BehaviorSubject<int>, not Subject<int>.
+      final BehaviorSubject<int> back = subject.track('counter').asSubject();
+      expect(back.value, 7);
+    });
   });
 }

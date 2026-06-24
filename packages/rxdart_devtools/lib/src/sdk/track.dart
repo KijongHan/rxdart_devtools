@@ -26,8 +26,8 @@ extension StreamTrackingExtension<T> on Stream<T> {
   }
 }
 
-extension SubjectTrackingExtension<T> on Subject<T> {
-  TrackedSubject<T> track(String name, {int? historySize}) {
+extension SubjectTrackingExtension<T, S extends Subject<T>> on S {
+  TrackedSubject<T, S> track(String name, {int? historySize}) {
     final id = _registerForTracking<T>(this, name, historySize);
     return TrackedSubject._(this, id);
   }
@@ -41,15 +41,15 @@ class TrackedStream<T> {
   Stream<T> asStream() => _stream;
 }
 
-class TrackedSubject<T> {
+class TrackedSubject<T, S extends Subject<T>> {
   TrackedSubject._(this._subject, this._identifier);
 
-  final Subject<T> _subject;
+  final S _subject;
   final StreamIdentifier? _identifier;
 
-  Subject<T> asSubject() => _subject;
+  S asSubject() => _subject;
 
-  TrackedSubject<T> enableInjection({
+  TrackedSubject<T, S> enableInjection({
     required T Function(String raw) parse,
   }) {
     final id = _identifier;
