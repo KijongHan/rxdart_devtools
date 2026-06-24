@@ -53,7 +53,7 @@ class StreamsService {
         registerStream<dynamic>(identifier,
             data: StreamData(lastValue: null, lastError: error));
     _entries[identifier] = newEntry;
-    _backend.postStreamUpdated(newEntry);
+    _backend.postStreamErrored(newEntry);
     return newEntry;
   }
 

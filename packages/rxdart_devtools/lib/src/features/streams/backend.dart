@@ -62,4 +62,14 @@ final class StreamsBackend {
       ).toJson(),
     );
   }
+
+  void postStreamErrored(StreamEntry<dynamic> entry) {
+    developer.postEvent(
+      StreamsConstants.streamErrored,
+      StreamUpdatedEventDto(
+        streamId: entry.entryIdentifier.id,
+        entry: StreamEntryDto.fromEntry(entry),
+      ).toJson(),
+    );
+  }
 }
