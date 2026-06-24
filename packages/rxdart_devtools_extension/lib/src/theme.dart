@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PanelTheme extends StatelessWidget {
-  const PanelTheme({required this.child, super.key});
+class AppTheme extends StatelessWidget {
+  const AppTheme({super.key, required this.child});
 
   final Widget child;
 
