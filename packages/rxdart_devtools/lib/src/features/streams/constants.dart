@@ -6,6 +6,4 @@ abstract final class StreamsConstants {
   static const String streamClosed = 'ext.rxdart.streamClosed';
   static const String streamUpdated = 'ext.rxdart.streamUpdated';
   static const String streamErrored = 'ext.rxdart.streamErrored';
-
-  static const String jsonEntries = 'entries';
 }
