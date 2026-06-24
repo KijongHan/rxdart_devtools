@@ -11,9 +11,9 @@ final class StreamsBackend {
 
   StreamsBackend() {
     developer.registerExtension(
-        StreamsConstants.listStreamEntries, _handleListStreamEntries);
-    developer.registerExtension(
-        StreamsConstants.clearClosed, _handleClearClosed);
+      StreamsConstants.listStreamEntries,
+      _handleListStreamEntries,
+    );
   }
 
   Future<developer.ServiceExtensionResponse> _handleListStreamEntries(
@@ -26,13 +26,5 @@ final class StreamsBackend {
     return developer.ServiceExtensionResponse.result(
       jsonEncode(response.toJson()),
     );
-  }
-
-  Future<developer.ServiceExtensionResponse> _handleClearClosed(
-    String method,
-    Map<String, String> parameters,
-  ) async {
-    streamsService.clearClosed();
-    return developer.ServiceExtensionResponse.result(jsonEncode({'ok': true}));
   }
 }

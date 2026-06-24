@@ -76,15 +76,4 @@ class StreamsClient {
     if (json == null) return const [];
     return ListStreamEntriesResponseDto.fromJson(json).entries;
   }
-
-  Future<void> clearClosed() async {
-    if (_vmServiceProvider.service == null ||
-        serviceManager.isolateManager.selectedIsolate.value == null) {
-      return;
-    }
-    await _vmServiceProvider.service!.callServiceExtension(
-      StreamsConstants.clearClosed,
-      isolateId: serviceManager.isolateManager.selectedIsolate.value!.id,
-    );
-  }
 }

@@ -49,4 +49,12 @@ class RegistryService {
   }
 
   StreamIdentifier? getStreamIdentifier(String id) => _streamIdentifiers[id];
+
+  Future<void> clear() async {
+    for (final subscription in _subscriptions.values) {
+      await subscription.cancel();
+    }
+    _subscriptions.clear();
+    _streamIdentifiers.clear();
+  }
 }

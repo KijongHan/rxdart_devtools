@@ -11,6 +11,7 @@ import 'package:rxdart_devtools/src/features/streams/service.dart';
 import '../features/streams/backend.dart';
 import '../features/events/backend.dart';
 import '../features/events/push.dart';
+import '../features/registry/backend.dart';
 
 abstract final class RxDartDevtools {
   static bool _initialized = false;
@@ -46,6 +47,7 @@ abstract final class RxDartDevtools {
 
     getIt.registerSingleton(StreamsBackend());
     getIt.registerSingleton(EventsBackend());
+    getIt.registerSingleton(RegistryBackend());
     _initialized = true;
   }
 }

@@ -138,23 +138,4 @@ void main() {
       );
     });
   });
-
-  group('Streams.clearClosed', () {
-    test('removes closed entries and leaves open ones', () {
-      final openId = newIdentifier();
-      final closedId = newIdentifier();
-      streams.registerStream<int>(openId);
-      streams.registerStream<int>(closedId);
-      streams.deregisterStream(closedId);
-      streams.clearClosed();
-      expect(
-        streams.all.where((e) => e.entryIdentifier == closedId),
-        isEmpty,
-      );
-      expect(
-        streams.all.where((e) => e.entryIdentifier == openId),
-        isNotEmpty,
-      );
-    });
-  });
 }

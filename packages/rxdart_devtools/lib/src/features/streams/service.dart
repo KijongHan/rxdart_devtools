@@ -70,8 +70,8 @@ class StreamsService {
     _push.postStreamClosed(identifier);
   }
 
-  void clearClosed() {
-    _entries.removeWhere((_, entry) => entry.metadata.isClosed);
+  void clear() {
+    _entries.clear();
   }
 
   Iterable<StreamEntry<dynamic>> get all => _entries.values;

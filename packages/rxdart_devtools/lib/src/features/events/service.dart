@@ -69,6 +69,11 @@ class EventsService {
     eventsPush.postEventAdded(deregisterEventLog);
   }
 
+  void clear() {
+    _eventLogsByTimestamp.clear();
+    _eventLogsByStream.clear();
+  }
+
   Iterable<BaseEventLog> get all => _eventLogsByTimestamp;
 
   Iterable<BaseEventLog> allForStream(StreamIdentifier streamIdentifier) =>
