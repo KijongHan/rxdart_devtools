@@ -1,11 +1,16 @@
 import 'package:devtools_extensions/devtools_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:rxdart_devtools/dto.dart';
+import 'package:rxdart_devtools_extension/src/features/events/client.dart';
+import 'package:rxdart_devtools_extension/src/features/events/view_model.dart';
+import 'package:rxdart_devtools_extension/src/features/stream_details/client.dart';
+import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
+import 'package:rxdart_devtools_extension/src/features/streams/client.dart';
+import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
+import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
-import 'src/features/events/controller.dart';
 import 'src/features/events/list.dart';
-import 'src/features/stream_details/controller.dart';
 import 'src/features/stream_details/list.dart';
-import 'src/features/streams/controller.dart';
 import 'src/features/streams/empty_state.dart';
 import 'src/features/streams/list.dart';
 import 'src/theme.dart';
@@ -14,9 +19,15 @@ void main() {
   runApp(const RxDartDevToolsExtension());
 }
 
-class RxDartDevToolsExtension extends StatelessWidget {
-  const RxDartDevToolsExtension({super.key});
+class RxDartDevToolsExtension extends StatefulWidget {
+  const RxDartDevToolsExtension();
 
+  @override
+  State<RxDartDevToolsExtension> createState() =>
+      RxDartDevToolsExtensionState();
+}
+
+class RxDartDevToolsExtensionState extends State<RxDartDevToolsExtension> {
   @override
   Widget build(BuildContext context) {
     return const DevToolsExtension(
@@ -33,69 +44,45 @@ class _Panel extends StatefulWidget {
 }
 
 class _PanelState extends State<_Panel> {
-  late final StreamsController _streamsController;
-  late final EventsController _eventsController;
-  late final StreamEventsController _streamEventsController;
+  late final StreamsViewModel _streamsViewModel;
+  late final EventsViewModel _eventsViewModel;
 
   @override
   void initState() {
     super.initState();
-    _streamsController = StreamsController()..start();
-    _eventsController = EventsController()..start();
-    _streamEventsController = StreamEventsController()..start();
-  }
+    getIt.registerSingleton(VmServiceProvider());
 
-  @override
-  void dispose() {
-    _streamsController.dispose();
-    _eventsController.dispose();
-    _streamEventsController.dispose();
-    super.dispose();
+    getIt.registerSingleton(StreamsClient());
+    getIt.registerSingleton(StreamDetailsClient());
+    getIt.registerSingleton(EventsClient());
+
+    getIt.registerSingleton(EventsViewModel());
+    getIt.registerSingleton(StreamsViewModel());
+    getIt.registerSingleton(StreamDetailsViewModel());
+
+    _streamsViewModel = getIt.get<StreamsViewModel>();
+    _eventsViewModel = getIt.get<EventsViewModel>();
+    _streamsViewModel.refresh();
+    _eventsViewModel.refresh();
   }
 
   @override
   Widget build(BuildContext context) {
     return PanelTheme(
-      child: ListenableBuilder(
-        listenable: Listenable.merge([
-          _streamsController,
-          _eventsController,
-          _streamEventsController,
-        ]),
-        builder: (context, _) {
-          if (_streamsController.streams.isEmpty) {
+      child: StreamBuilder<List<StreamEntryDto>>(
+        stream: _streamsViewModel.streams,
+        builder: (context, snapshot) {
+          final streams = snapshot.data;
+          if (streams == null || streams.isEmpty) {
             return const EmptyState();
           }
-          final selectedStreamId = _streamEventsController.selectedStreamId;
-          final selectedStream = selectedStreamId == null
-              ? null
-              : _streamsController.streams
-                  .where((s) => s.id == selectedStreamId)
-                  .firstOrNull;
-          return Row(
+          return const Row(
             children: [
-              Expanded(
-                child: StreamsList(
-                  streams: _streamsController.streams,
-                  selectedStreamId: selectedStreamId,
-                  onSelect: (stream) =>
-                      _streamEventsController.selectStream(stream.id),
-                ),
-              ),
-              const VerticalDivider(width: 1),
-              Expanded(
-                child: StreamEventsList(
-                  selectedStreamId: selectedStreamId,
-                  selectedStream: selectedStream,
-                  eventLogs: _streamEventsController.eventLogs,
-                ),
-              ),
-              const VerticalDivider(width: 1),
-              Expanded(
-                child: EventsList(
-                  eventLogs: _eventsController.eventLogs,
-                ),
-              ),
+              Expanded(child: StreamsList()),
+              VerticalDivider(width: 1),
+              Expanded(child: StreamEventsList()),
+              VerticalDivider(width: 1),
+              Expanded(child: EventsList()),
             ],
           );
         },

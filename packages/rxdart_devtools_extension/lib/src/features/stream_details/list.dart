@@ -1,48 +1,87 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/dto.dart';
+import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
+import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
+import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
 import '../events/tile.dart';
 
-class StreamEventsList extends StatelessWidget {
-  const StreamEventsList({
-    required this.selectedStreamId,
-    required this.selectedStream,
-    required this.eventLogs,
-    super.key,
-  });
+typedef _StreamEventsListViewState = ({
+  String? selectedStreamId,
+  StreamEntryDto? selectedStream,
+  List<EventLogDto> eventLogs,
+});
 
-  final String? selectedStreamId;
-  final StreamEntryDto? selectedStream;
-  final List<EventLogDto> eventLogs;
+class StreamEventsList extends StatefulWidget {
+  const StreamEventsList({super.key});
+
+  @override
+  State<StreamEventsList> createState() => _StreamEventsListState();
+}
+
+class _StreamEventsListState extends State<StreamEventsList> {
+  late final StreamsViewModel _streamsViewModel;
+  late final StreamDetailsViewModel _streamDetailsViewModel;
+  late final Stream<_StreamEventsListViewState> _viewState;
+
+  @override
+  void initState() {
+    super.initState();
+    _streamsViewModel = getIt.get<StreamsViewModel>();
+    _streamDetailsViewModel = getIt.get<StreamDetailsViewModel>();
+    _viewState = Rx.combineLatest3(
+      _streamDetailsViewModel.selectedStreamId,
+      _streamsViewModel.streams,
+      _streamDetailsViewModel.eventLogs,
+      (selectedStreamId, streams, eventLogs) {
+        final selectedStream = selectedStreamId == null
+            ? null
+            : streams.where((s) => s.id == selectedStreamId).firstOrNull;
+        return (
+          selectedStreamId: selectedStreamId,
+          selectedStream: selectedStream,
+          eventLogs: eventLogs,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (selectedStreamId == null) {
-      return const Center(
-        child: Text('Select a stream to view its events'),
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (selectedStream != null)
-          _StreamDetails(stream: selectedStream!)
-        else
-          _MissingStream(streamId: selectedStreamId!),
-        const Divider(height: 1),
-        Expanded(
-          child: eventLogs.isEmpty
-              ? const Center(child: Text('No events for this stream'))
-              : ListView.separated(
-                  itemCount: eventLogs.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
-                  itemBuilder: (context, index) {
-                    final log = eventLogs[index];
-                    return EventTile(key: ValueKey(log.id), log: log);
-                  },
-                ),
-        ),
-      ],
+    return StreamBuilder<_StreamEventsListViewState>(
+      stream: _viewState,
+      builder: (context, snapshot) {
+        final state = snapshot.data;
+        if (state == null) return const SizedBox.shrink();
+        if (state.selectedStreamId == null) {
+          return const Center(
+            child: Text('Select a stream to view its events'),
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (state.selectedStream != null)
+              _StreamDetails(stream: state.selectedStream!)
+            else
+              _MissingStream(streamId: state.selectedStreamId!),
+            const Divider(height: 1),
+            Expanded(
+              child: state.eventLogs.isEmpty
+                  ? const Center(child: Text('No events for this stream'))
+                  : ListView.separated(
+                      itemCount: state.eventLogs.length,
+                      separatorBuilder: (_, __) => const Divider(height: 1),
+                      itemBuilder: (context, index) {
+                        final log = state.eventLogs[index];
+                        return EventTile(key: ValueKey(log.id), log: log);
+                      },
+                    ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
