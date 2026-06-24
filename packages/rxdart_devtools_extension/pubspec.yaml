@@ -18,6 +18,7 @@ dependencies:
   rxdart_devtools:
     path: ../rxdart_devtools
   vm_service: ^15.0.0
+  get_it: ^9.0.0
 
 dev_dependencies:
   flutter_test:
