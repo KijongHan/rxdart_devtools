@@ -3,7 +3,6 @@ import 'dart:developer' as developer;
 
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
-import 'package:rxdart_devtools/src/features/registry/dto.dart';
 import 'package:rxdart_devtools/src/features/registry/service.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
 import 'package:rxdart_devtools/src/shared/providers.dart';
@@ -41,9 +40,15 @@ final class RegistryBackend {
       );
     }
 
-    registryService.inject(identifier, request.raw);
-    return developer.ServiceExtensionResponse.result(
-      jsonEncode(OkResponseDto(ok: true).toJson()),
+    final result = registryService.inject(identifier, request.raw);
+    return result.fold(
+      (success) => developer.ServiceExtensionResponse.result(
+        jsonEncode(OkResponseDto(ok: true).toJson()),
+      ),
+      (failure) => developer.ServiceExtensionResponse.error(
+        developer.ServiceExtensionResponse.invalidParams,
+        failure.toString(),
+      ),
     );
   }
 
@@ -59,9 +64,15 @@ final class RegistryBackend {
         'Stream not found',
       );
     }
-    registryService.injectError(identifier, request.message);
-    return developer.ServiceExtensionResponse.result(
-      jsonEncode(OkResponseDto(ok: true).toJson()),
+    final result = registryService.injectError(identifier, request.message);
+    return result.fold(
+      (success) => developer.ServiceExtensionResponse.result(
+        jsonEncode(OkResponseDto(ok: true).toJson()),
+      ),
+      (failure) => developer.ServiceExtensionResponse.error(
+        developer.ServiceExtensionResponse.invalidParams,
+        failure.toString(),
+      ),
     );
   }
 

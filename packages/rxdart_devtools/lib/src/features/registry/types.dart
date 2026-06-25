@@ -1,3 +1,5 @@
+import 'package:result_dart/result_dart.dart';
+
 typedef RegistryConfig = ({String name, int? historySize});
 
 enum StreamIdentifierStrategy {
@@ -8,6 +10,6 @@ enum StreamIdentifierStrategy {
 class SubjectInjector {
   SubjectInjector({required this.add, required this.addError});
 
-  final void Function(String raw) add;
-  final void Function(String message) addError;
+  final Result<void> Function(String raw) add;
+  final Result<void> Function(String message) addError;
 }

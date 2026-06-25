@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/src/features/config/providers.dart';
 import 'package:rxdart_devtools/src/features/config/types.dart';
 import 'package:rxdart_devtools/src/features/events/push.dart';
@@ -149,6 +150,87 @@ void main() {
         events.allForStream(identifier).whereType<DeregisterEventLog>(),
         hasLength(1),
       );
+    });
+  });
+
+  group('Registry.inject', () {
+    test('returns Success and emits parsed value on the registered Subject',
+        () {
+      final subject = BehaviorSubject<int>.seeded(0);
+      addTearDown(subject.close);
+      final identifier = registry.register<int>(
+        subject,
+        (name: 'counter', historySize: null),
+      );
+      registry.enableInjection<int>(subject, int.tryParse, identifier);
+
+      final result = registry.inject(identifier, '42');
+
+      expect(result.isSuccess(), isTrue);
+      expect(subject.value, 42);
+    });
+
+    test('returns Failure with FormatException when the parser returns null',
+        () {
+      final subject = BehaviorSubject<int>.seeded(0);
+      addTearDown(subject.close);
+      final identifier = registry.register<int>(
+        subject,
+        (name: 'counter', historySize: null),
+      );
+      registry.enableInjection<int>(subject, int.tryParse, identifier);
+
+      final result = registry.inject(identifier, 'not-a-number');
+
+      expect(result.isError(), isTrue);
+      expect(result.exceptionOrNull(), isA<FormatException>());
+    });
+
+    test('returns Failure when no injector is registered for the stream', () {
+      final subject = BehaviorSubject<int>.seeded(0);
+      addTearDown(subject.close);
+      final identifier = registry.register<int>(
+        subject,
+        (name: 'counter', historySize: null),
+      );
+      // intentionally not calling enableInjection
+
+      final result = registry.inject(identifier, '42');
+
+      expect(result.isError(), isTrue);
+    });
+  });
+
+  group('Registry.injectError', () {
+    test('returns Success and forwards the error to the registered Subject',
+        () {
+      final subject = BehaviorSubject<int>.seeded(0);
+      addTearDown(subject.close);
+      final identifier = registry.register<int>(
+        subject,
+        (name: 'counter', historySize: null),
+      );
+      registry.enableInjection<int>(subject, int.tryParse, identifier);
+
+      final result = registry.injectError(identifier, 'boom');
+
+      expect(result.isSuccess(), isTrue);
+      expect(subject.hasError, isTrue);
+      expect(subject.error, 'boom');
+    });
+
+    test('returns Failure when no injector is registered for the stream', () {
+      final subject = BehaviorSubject<int>.seeded(0);
+      addTearDown(subject.close);
+      final identifier = registry.register<int>(
+        subject,
+        (name: 'counter', historySize: null),
+      );
+      // intentionally not calling enableInjection
+
+      final result = registry.injectError(identifier, 'boom');
+
+      expect(result.isError(), isTrue);
     });
   });
 

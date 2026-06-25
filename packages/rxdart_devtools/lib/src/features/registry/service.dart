@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:result_dart/result_dart.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/src/features/registry/providers.dart';
 import 'package:rxdart_devtools/src/features/config/providers.dart';
@@ -54,21 +55,39 @@ class RegistryService {
 
   void enableInjection<T>(
     Subject<T> subject,
-    T Function(String raw) parse,
+    T? Function(String raw) parse,
     StreamIdentifier identifier,
   ) {
     _subjectInjectors[identifier] = SubjectInjector(
-      add: (raw) => subject.add(parse(raw)),
-      addError: (message) => subject.addError(message),
+      add: (raw) {
+        final value = parse(raw);
+        if (value == null) {
+          return Failure(FormatException(
+            "Could not parse '$raw' as ${identifier.typeLabel}",
+          ));
+        }
+        subject.add(value);
+        return Success.unit();
+      },
+      addError: (message) {
+        subject.addError(message);
+        return Success.unit();
+      },
     );
     streamsService.markInjectable(identifier);
   }
 
-  void inject(StreamIdentifier identifier, String raw) =>
-      _subjectInjectors[identifier]?.add(raw);
+  Result<void> inject(StreamIdentifier identifier, String raw) =>
+      _subjectInjectors[identifier]?.add(raw) ??
+      Failure(Exception(
+        "Could not inject value into '$identifier'",
+      ));
 
-  void injectError(StreamIdentifier identifier, String message) =>
-      _subjectInjectors[identifier]?.addError(message);
+  Result<void> injectError(StreamIdentifier identifier, String message) =>
+      _subjectInjectors[identifier]?.addError(message) ??
+      Failure(Exception(
+        "Could not inject error into '$identifier'",
+      ));
 
   StreamIdentifier? getStreamIdentifier(String id) => _streamIdentifiers[id];
 

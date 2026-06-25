@@ -19,6 +19,7 @@ dependencies:
   uuid: ^4.5.3
   get_it: ^9.0.0
   collection: ^1.19.1
+  result_dart: ^2.2.0
 
 dev_dependencies:
   build_runner: ^2.4.13
