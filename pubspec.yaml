@@ -34,13 +34,13 @@ melos:
       description: Build the Flutter web panel and copy artifacts into the runtime package's extension/devtools/build directory.
 
     dev:example:chrome:
-      run: melos exec -c 1 --scope="rxdart_devtools_example" -- "flutter run -d chrome"
+      run: cd example && flutter run -d chrome
       description: |
         Run the example app on Chrome (web). Note the VM service URI it prints,
         then paste it into the simulator launched by `dev:panel`.
 
     dev:example:android:
-      run: melos exec -c 1 --scope="rxdart_devtools_example" -- "flutter run -d emulator"
+      run: cd example && flutter run -d emulator
       description: |
         Run the example app on a running Android emulator. Matches device IDs
         of the form `emulator-<port>` (ADB's convention). For a physical Android
@@ -48,7 +48,7 @@ melos:
         `cd example && flutter run -d <id>` (see `flutter devices`).
 
     dev:panel:
-      run: melos exec -c 1 --scope="rxdart_devtools_extension" -- "flutter run -d chrome --dart-define=use_simulated_environment=true"
+      run: cd packages/rxdart_devtools_extension && flutter run -d chrome --dart-define=use_simulated_environment=true
       description: Run the extension panel in Chrome under the simulated DevTools environment for hot-reload iteration. Paste the example app's VM service URI into the simulator UI.
 
     format:

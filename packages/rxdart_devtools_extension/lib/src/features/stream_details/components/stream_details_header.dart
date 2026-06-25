@@ -19,20 +19,37 @@ class StreamDetailsHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              StatusDot.forStreamEntry(stream),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(stream.name, style: textTheme.titleMedium),
+              Container(
+                child: Row(
+                  children: [
+                    StatusDot.forStreamEntry(stream),
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(stream.name, style: textTheme.titleMedium),
+                        Text(
+                          stream.typeLabel,
+                          style: textTheme.bodySmall
+                              ?.copyWith(color: theme.hintColor),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              OutlinedButton.icon(
+                onPressed: () {
+                  // TODO(inject): open inject dialog and call the
+                  // ext.rxdart.inject service extension via RegistryClient.
+                },
+                icon: const Icon(Icons.add, size: 8),
+                label: const Text('Inject'),
               ),
             ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18),
-            child: Text(
-              stream.typeLabel,
-              style: textTheme.bodySmall?.copyWith(color: theme.hintColor),
-            ),
           ),
           const SizedBox(height: 6),
           DetailRow(label: 'ID', value: stream.id),
