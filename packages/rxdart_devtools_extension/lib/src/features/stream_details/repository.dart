@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/events/client.dart';
+import 'package:rxdart_devtools_extension/src/features/registry/client.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
 class StreamDetailsRepository {
@@ -21,6 +22,7 @@ class StreamDetailsRepository {
   String? get currentSelectedStreamId => _selectedStreamId.valueOrNull;
 
   final EventsClient _eventsClient = getIt.get<EventsClient>();
+  final RegistryClient _registryClient = getIt.get<RegistryClient>();
 
   StreamDetailsRepository() {
     _selectionSubscription = _selectedStreamId.distinct().listen((id) {
@@ -37,6 +39,14 @@ class StreamDetailsRepository {
 
   void _refreshIfMatches(String streamId) {
     if (_selectedStreamId.valueOrNull == streamId) refresh();
+  }
+
+  void inject(String streamId, String value) {
+    _registryClient.inject(streamId, value);
+  }
+
+  void injectError(String streamId, String message) {
+    _registryClient.injectError(streamId, message);
   }
 
   void refresh() {

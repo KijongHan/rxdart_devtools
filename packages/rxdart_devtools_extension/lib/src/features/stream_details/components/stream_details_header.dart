@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/detail_row.dart';
+import 'package:rxdart_devtools_extension/src/features/stream_details/components/inject_dialog.dart';
 import 'package:rxdart_devtools_extension/src/shared/components/status_dot.dart';
 import 'package:rxdart_devtools_extension/src/shared/utils.dart';
 
@@ -43,8 +44,10 @@ class StreamDetailsHeader extends StatelessWidget {
               ),
               OutlinedButton.icon(
                 onPressed: () {
-                  // TODO(inject): open inject dialog and call the
-                  // ext.rxdart.inject service extension via RegistryClient.
+                  showDialog<void>(
+                    context: context,
+                    builder: (_) => InjectDialog(stream: stream),
+                  );
                 },
                 icon: const Icon(Icons.add, size: 8),
                 label: const Text('Inject'),

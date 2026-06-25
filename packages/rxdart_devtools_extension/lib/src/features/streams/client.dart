@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:devtools_app_shared/service.dart';
-import 'package:devtools_extensions/devtools_extensions.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
@@ -63,12 +62,14 @@ class StreamsClient {
 
   Future<List<StreamEntryDto>> listStreamEntries() async {
     if (_vmServiceProvider.service == null ||
-        serviceManager.isolateManager.selectedIsolate.value == null) {
+        _vmServiceProvider.manager.isolateManager.selectedIsolate.value ==
+            null) {
       return const [];
     }
     final response = await _vmServiceProvider.service!.callServiceExtension(
       StreamsConstants.listStreamEntries,
-      isolateId: serviceManager.isolateManager.selectedIsolate.value!.id,
+      isolateId:
+          _vmServiceProvider.manager.isolateManager.selectedIsolate.value!.id,
     );
 
     final json = response.json;
