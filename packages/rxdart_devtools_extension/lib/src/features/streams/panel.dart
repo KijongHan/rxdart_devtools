@@ -3,6 +3,7 @@ import 'package:rxdart_devtools_extension/src/features/stream_details/repository
 import 'package:rxdart_devtools_extension/src/features/streams/components/list.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
+import 'package:rxdart_devtools_extension/src/shared/spacing.dart';
 
 class StreamsPanel extends StatefulWidget {
   const StreamsPanel({super.key});
@@ -39,7 +40,7 @@ class _StreamsPanelState extends State<StreamsPanel> {
                   .titleLarge!
                   .copyWith(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: Spacing.md),
             Expanded(
               child: StreamsList(
                 viewState: state,

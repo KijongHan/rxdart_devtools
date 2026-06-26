@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart_devtools_extension/src/shared/spacing.dart';
 
 class EmptyState extends StatelessWidget {
   const EmptyState({super.key});
@@ -10,7 +11,7 @@ class EmptyState extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.stream, size: 48, color: Theme.of(context).disabledColor),
-          const SizedBox(height: 12),
+          const SizedBox(height: Spacing.md),
           const Text('No tracked streams'),
           const SizedBox(height: 4),
           Text(

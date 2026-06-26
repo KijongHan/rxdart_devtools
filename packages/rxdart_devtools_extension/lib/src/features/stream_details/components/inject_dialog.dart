@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/registry/client.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
+import 'package:rxdart_devtools_extension/src/shared/spacing.dart';
 
 class InjectDialog extends StatefulWidget {
   const InjectDialog({required this.stream});
@@ -52,7 +53,7 @@ class _InjectDialogState extends State<InjectDialog> {
               style:
                   theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: Spacing.md),
             SegmentedButton<bool>(
               segments: const [
                 ButtonSegment(value: false, label: Text('Value')),
@@ -63,7 +64,7 @@ class _InjectDialogState extends State<InjectDialog> {
                 setState(() => _asError = selection.first);
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: Spacing.md),
             TextField(
               controller: _controller,
               autofocus: true,

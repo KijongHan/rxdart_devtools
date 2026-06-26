@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/detail_row.dart';
+import 'package:rxdart_devtools_extension/src/shared/spacing.dart';
 
 class MissingStreamHeader extends StatelessWidget {
   const MissingStreamHeader({super.key, required this.streamId});
@@ -9,7 +10,7 @@ class MissingStreamHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(Spacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

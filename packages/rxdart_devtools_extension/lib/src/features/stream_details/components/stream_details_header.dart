@@ -3,6 +3,7 @@ import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/detail_row.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/inject_dialog.dart';
 import 'package:rxdart_devtools_extension/src/shared/components/status_dot.dart';
+import 'package:rxdart_devtools_extension/src/shared/spacing.dart';
 import 'package:rxdart_devtools_extension/src/shared/utils.dart';
 
 class StreamDetailsHeader extends StatelessWidget {
@@ -15,7 +16,7 @@ class StreamDetailsHeader extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(Spacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
