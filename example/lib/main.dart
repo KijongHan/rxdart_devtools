@@ -26,7 +26,10 @@ class _ExampleAppState extends State<ExampleApp> {
   @override
   void initState() {
     super.initState();
-    _counter = BehaviorSubject<int>.seeded(0).track('counter').asSubject();
+    _counter = BehaviorSubject<int>.seeded(0)
+        .track('counter')
+        .enableInjection(parse: int.tryParse)
+        .asSubject();
     _query = PublishSubject<String>()
         .track('search.query', historySize: 200)
         .asSubject();

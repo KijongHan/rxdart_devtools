@@ -3,6 +3,7 @@ import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/events/client.dart';
 import 'package:rxdart_devtools_extension/src/features/events/components/event_log_list.dart';
 import 'package:rxdart_devtools_extension/src/features/events/view_model.dart';
+import 'package:rxdart_devtools_extension/src/features/registry/client.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/panel.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/repository.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
@@ -32,6 +33,7 @@ class _AppState extends State<App> {
 
     getIt.registerSingleton(StreamsClient());
     getIt.registerSingleton(EventsClient());
+    getIt.registerSingleton(RegistryClient());
 
     getIt.registerSingleton(StreamsRepository());
     getIt.registerSingleton(StreamDetailsRepository());

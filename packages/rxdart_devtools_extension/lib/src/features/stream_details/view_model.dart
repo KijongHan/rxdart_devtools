@@ -16,15 +16,28 @@ class StreamDetailsViewModel {
   final _streamDetailsRepository = getIt.get<StreamDetailsRepository>();
   final _streamsRepository = getIt.get<StreamsRepository>();
 
-  late final Stream<StreamDetailsViewState> viewState = Rx.combineLatest3(
-    _streamDetailsRepository.selectedStreamId,
-    _streamsRepository.streams,
-    _streamDetailsRepository.eventLogs,
-    (selectedStreamId, streams, eventLogs) => (
-      selectedStreamId: selectedStreamId,
-      selectedStream:
-          streams.where((s) => s.id == selectedStreamId).firstOrNull,
-      eventLogs: eventLogs,
-    ),
-  );
+  final _viewState = BehaviorSubject<StreamDetailsViewState>();
+  late final StreamSubscription<StreamDetailsViewState> _viewStateSubscription;
+
+  Stream<StreamDetailsViewState> get viewState => _viewState.stream;
+
+  StreamDetailsViewModel() {
+    _viewStateSubscription = Rx.combineLatest3(
+      _streamDetailsRepository.selectedStreamId,
+      _streamsRepository.streams,
+      _streamDetailsRepository.eventLogs,
+      (selectedStreamId, streams, eventLogs) => (
+        selectedStreamId: selectedStreamId,
+        selectedStream:
+            streams.where((s) => s.id == selectedStreamId).firstOrNull,
+        eventLogs: eventLogs,
+      ),
+    ).listen((state) {
+      _viewState.add(state);
+    });
+  }
+
+  void dispose() {
+    _viewStateSubscription.cancel();
+  }
 }

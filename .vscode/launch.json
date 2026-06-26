@@ -57,6 +57,14 @@
             "type": "dart"
         },
         {
+            "name": "rxdart_devtools_extension (simulated)",
+            "cwd": "packages/rxdart_devtools_extension",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "toolArgs": ["--dart-define=use_simulated_environment=true"]
+        },
+        {
             "name": "rxdart_devtools_extension (profile mode)",
             "cwd": "packages/rxdart_devtools_extension",
             "request": "launch",

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
+import 'package:rxdart_devtools_extension/src/features/registry/client.dart';
+import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
 class InjectDialog extends StatefulWidget {
   const InjectDialog({required this.stream});
@@ -21,12 +23,13 @@ class _InjectDialogState extends State<InjectDialog> {
   }
 
   void _submit() {
-    // TODO(inject): wire to ext.rxdart.inject / ext.rxdart.injectError
-    // service extension via RegistryClient.
-    debugPrint(
-      'Inject ${_asError ? "error" : "value"} into ${widget.stream.id}: '
-      '${_controller.text}',
-    );
+    if (_asError) {
+      getIt
+          .get<RegistryClient>()
+          .injectError(widget.stream.id, _controller.text);
+    } else {
+      getIt.get<RegistryClient>().inject(widget.stream.id, _controller.text);
+    }
     Navigator.of(context).pop();
   }
 
