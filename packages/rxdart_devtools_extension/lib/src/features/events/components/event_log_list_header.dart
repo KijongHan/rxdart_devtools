@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart_devtools/dto.dart';
 
 class EventLogListHeader extends StatefulWidget {
-  const EventLogListHeader({super.key});
+  const EventLogListHeader({super.key, required this.onSort});
+
+  final void Function(SortField sortField, SortDirection sortDirection) onSort;
 
   @override
   State<EventLogListHeader> createState() => _EventLogListHeaderState();
@@ -9,13 +12,35 @@ class EventLogListHeader extends StatefulWidget {
 
 class _EventLogListHeaderState extends State<EventLogListHeader> {
   final _searchController = TextEditingController();
-  bool _ascending = false;
+  SortDirection _sortDirection = SortDirection.descending;
+  SortField _sortField = SortField.timestamp;
   String _query = '';
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  static const _fieldLabels = {
+    SortField.timestamp: 'Timestamp',
+    SortField.streamId: 'Stream',
+    SortField.lastUpdated: 'Last updated',
+  };
+
+  void _onFieldChanged(SortField? field) {
+    if (field == null || field == _sortField) return;
+    setState(() => _sortField = field);
+    widget.onSort(_sortField, _sortDirection);
+  }
+
+  void _toggleDirection() {
+    setState(() {
+      _sortDirection = _sortDirection == SortDirection.ascending
+          ? SortDirection.descending
+          : SortDirection.ascending;
+    });
+    widget.onSort(_sortField, _sortDirection);
   }
 
   @override
@@ -51,12 +76,27 @@ class _EventLogListHeaderState extends State<EventLogListHeader> {
           ),
         ),
         const SizedBox(width: 8),
+        DropdownButton<SortField>(
+          value: _sortField,
+          isDense: true,
+          underline: const SizedBox.shrink(),
+          items: [
+            for (final entry in _fieldLabels.entries)
+              DropdownMenuItem(value: entry.key, child: Text(entry.value)),
+          ],
+          onChanged: _onFieldChanged,
+        ),
+        const SizedBox(width: 8),
         IconButton(
-          tooltip: _ascending ? 'Sort newest first' : 'Sort oldest first',
+          tooltip: _sortDirection == SortDirection.ascending
+              ? 'Sort newest first'
+              : 'Sort oldest first',
           icon: Icon(
-            _ascending ? Icons.arrow_upward : Icons.arrow_downward,
+            _sortDirection == SortDirection.ascending
+                ? Icons.arrow_upward
+                : Icons.arrow_downward,
           ),
-          onPressed: () => setState(() => _ascending = !_ascending),
+          onPressed: _toggleDirection,
         ),
       ],
     );

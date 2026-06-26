@@ -25,7 +25,11 @@ class SortRequestDto {
   factory SortRequestDto.fromJson(Map<String, dynamic> json) =>
       _$SortRequestDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SortRequestDtoToJson(this);
+  Map<String, dynamic> toJson() {
+    final json = _$SortRequestDtoToJson(this);
+    json.removeWhere((_, value) => value == null);
+    return json;
+  }
 }
 
 @JsonSerializable()

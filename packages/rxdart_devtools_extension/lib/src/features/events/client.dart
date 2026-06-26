@@ -45,14 +45,25 @@ class EventsClient {
     await _connectionSubscription.cancel();
   }
 
-  Future<List<EventLogDto>> listEventLogs({String? streamId}) async {
+  Future<List<EventLogDto>> listEventLogs(
+      {String? streamId,
+      SortField? sortField,
+      SortDirection? sortDirection}) async {
     final service = _vmServiceProvider.service;
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
     if (service == null || isolate == null) return const [];
     final response = await service.callServiceExtension(
       EventsConstants.listEventLogs,
       isolateId: isolate.id,
-      args: ListEventLogsRequestDto(streamId: streamId).toJson(),
+      args: {
+        ...ListEventLogsRequestDto(
+          streamId: streamId,
+        ).toJson(),
+        ...SortRequestDto(
+          sortField: sortField,
+          sortDirection: sortDirection,
+        ).toJson(),
+      },
     );
 
     final json = response.json;

@@ -16,6 +16,7 @@ class InjectDialog extends StatefulWidget {
 class _InjectDialogState extends State<InjectDialog> {
   final _controller = TextEditingController();
   bool _asError = false;
+  bool _isSubmitting = false;
   String? _error;
 
   @override
@@ -25,6 +26,9 @@ class _InjectDialogState extends State<InjectDialog> {
   }
 
   void _submit() async {
+    if (_isSubmitting) return;
+    setState(() => _isSubmitting = true);
+
     final client = getIt.get<RegistryClient>();
     final result = _asError
         ? await client.injectError(widget.stream.id, _controller.text)
@@ -32,8 +36,14 @@ class _InjectDialogState extends State<InjectDialog> {
 
     if (!mounted) return;
     result.fold(
-      (_) => Navigator.of(context).pop(),
-      (failure) => setState(() => _error = failure.toString()),
+      (_) {
+        setState(() => _isSubmitting = false);
+        Navigator.of(context).pop();
+      },
+      (failure) => setState(() {
+        _error = failure.toString();
+        _isSubmitting = false;
+      }),
     );
   }
 
@@ -86,7 +96,16 @@ class _InjectDialogState extends State<InjectDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
-        FilledButton(onPressed: _submit, child: const Text('Send')),
+        FilledButton(
+          onPressed: _isSubmitting ? null : _submit,
+          child: _isSubmitting
+              ? const SizedBox(
+                  height: 16,
+                  width: 16,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : const Text('Send'),
+        ),
       ],
     );
   }

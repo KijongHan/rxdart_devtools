@@ -39,4 +39,13 @@ class EventsRepository {
       _eventLogs.add(eventLogs);
     });
   }
+
+  void sort(
+      {required SortField sortField, required SortDirection sortDirection}) {
+    _eventsClient
+        .listEventLogs(sortField: sortField, sortDirection: sortDirection)
+        .then((eventLogs) {
+      _eventLogs.add(eventLogs);
+    });
+  }
 }
