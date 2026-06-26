@@ -15,6 +15,7 @@ class InjectDialog extends StatefulWidget {
 class _InjectDialogState extends State<InjectDialog> {
   final _controller = TextEditingController();
   bool _asError = false;
+  String? _error;
 
   @override
   void dispose() {
@@ -23,27 +24,16 @@ class _InjectDialogState extends State<InjectDialog> {
   }
 
   void _submit() async {
-    if (_asError) {
-      final result = await getIt
-          .get<RegistryClient>()
-          .injectError(widget.stream.id, _controller.text);
-      result.fold(
-        (success) => Navigator.of(context).pop(),
-        (failure) => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(failure.toString())),
-        ),
-      );
-    } else {
-      final result = await getIt
-          .get<RegistryClient>()
-          .inject(widget.stream.id, _controller.text);
-      result.fold(
-        (success) => Navigator.of(context).pop(),
-        (failure) => ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(failure.toString())),
-        ),
-      );
-    }
+    final client = getIt.get<RegistryClient>();
+    final result = _asError
+        ? await client.injectError(widget.stream.id, _controller.text)
+        : await client.inject(widget.stream.id, _controller.text);
+
+    if (!mounted) return;
+    result.fold(
+      (_) => Navigator.of(context).pop(),
+      (failure) => setState(() => _error = failure.toString()),
+    );
   }
 
   @override
@@ -80,7 +70,11 @@ class _InjectDialogState extends State<InjectDialog> {
               decoration: InputDecoration(
                 labelText: _asError ? 'Error message' : 'Raw value',
                 border: const OutlineInputBorder(),
+                errorText: _error,
               ),
+              onChanged: (_) {
+                if (_error != null) setState(() => _error = null);
+              },
               onSubmitted: (_) => _submit(),
             ),
           ],
