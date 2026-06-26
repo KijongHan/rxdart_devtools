@@ -22,15 +22,28 @@ class _InjectDialogState extends State<InjectDialog> {
     super.dispose();
   }
 
-  void _submit() {
+  void _submit() async {
     if (_asError) {
-      getIt
+      final result = await getIt
           .get<RegistryClient>()
           .injectError(widget.stream.id, _controller.text);
+      result.fold(
+        (success) => Navigator.of(context).pop(),
+        (failure) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(failure.toString())),
+        ),
+      );
     } else {
-      getIt.get<RegistryClient>().inject(widget.stream.id, _controller.text);
+      final result = await getIt
+          .get<RegistryClient>()
+          .inject(widget.stream.id, _controller.text);
+      result.fold(
+        (success) => Navigator.of(context).pop(),
+        (failure) => ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(failure.toString())),
+        ),
+      );
     }
-    Navigator.of(context).pop();
   }
 
   @override
