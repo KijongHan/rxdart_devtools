@@ -6,7 +6,7 @@ import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/events/client.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
-class EventsViewModel {
+class EventsRepository {
   final BehaviorSubject<List<EventLogDto>> _eventLogs =
       BehaviorSubject<List<EventLogDto>>();
 
@@ -18,7 +18,7 @@ class EventsViewModel {
   final EventsClient _eventsClient = getIt.get<EventsClient>();
   final _vmServiceProvider = getIt.get<VmServiceProvider>();
 
-  EventsViewModel() {
+  EventsRepository() {
     _onEventAddedSubscription =
         _eventsClient.onEventAdded.listen((_) => refresh());
     _clientConnectedSubscription =

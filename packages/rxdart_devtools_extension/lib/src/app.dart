@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/events/client.dart';
-import 'package:rxdart_devtools_extension/src/features/events/components/event_log_list.dart';
-import 'package:rxdart_devtools_extension/src/features/events/view_model.dart';
+import 'package:rxdart_devtools_extension/src/features/events/panel.dart';
+import 'package:rxdart_devtools_extension/src/features/events/repository.dart';
 import 'package:rxdart_devtools_extension/src/features/registry/client.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/panel.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/repository.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/client.dart';
+import 'package:rxdart_devtools_extension/src/features/streams/panel.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/repository.dart';
 import 'package:rxdart_devtools_extension/src/shared/components/empty_state.dart';
-import 'package:rxdart_devtools_extension/src/features/streams/list.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 import 'package:rxdart_devtools_extension/src/theme.dart';
@@ -38,7 +38,7 @@ class _AppState extends State<App> {
     getIt.registerSingleton(StreamsRepository());
     getIt.registerSingleton(StreamDetailsRepository());
 
-    getIt.registerSingleton(EventsViewModel());
+    getIt.registerSingleton(EventsRepository());
     getIt.registerSingleton(StreamsViewModel());
     getIt.registerSingleton(StreamDetailsViewModel());
 
@@ -84,11 +84,11 @@ class _ResponsiveAppLayout extends StatelessWidget {
         if (constraints.maxWidth >= _wideBreakpoint) {
           return const Row(
             children: [
-              Expanded(child: StreamsList()),
+              Expanded(child: StreamsPanel()),
               VerticalDivider(width: 1),
               Expanded(child: StreamDetailsPanel()),
               VerticalDivider(width: 1),
-              Expanded(child: EventsList()),
+              Expanded(child: EventsPanel()),
             ],
           );
         }
@@ -97,14 +97,14 @@ class _ResponsiveAppLayout extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  Expanded(child: StreamsList()),
+                  Expanded(child: StreamsPanel()),
                   VerticalDivider(width: 1),
                   Expanded(child: StreamDetailsPanel()),
                 ],
               ),
             ),
             Divider(height: 1),
-            Expanded(child: EventsList()),
+            Expanded(child: EventsPanel()),
           ],
         );
       },
