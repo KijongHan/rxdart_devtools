@@ -3,6 +3,7 @@ import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/events/client.dart';
 import 'package:rxdart_devtools_extension/src/features/events/panel.dart';
 import 'package:rxdart_devtools_extension/src/features/events/repository.dart';
+import 'package:rxdart_devtools_extension/src/features/events/view_model.dart';
 import 'package:rxdart_devtools_extension/src/features/registry/client.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/panel.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/repository.dart';
@@ -25,6 +26,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   late final StreamsRepository _streamsRepository;
   late final StreamDetailsRepository _streamDetailsRepository;
+  late final EventsRepository _eventsRepository;
 
   @override
   void initState() {
@@ -37,21 +39,25 @@ class _AppState extends State<App> {
 
     getIt.registerSingleton(StreamsRepository());
     getIt.registerSingleton(StreamDetailsRepository());
-
     getIt.registerSingleton(EventsRepository());
+
     getIt.registerSingleton(StreamsViewModel());
     getIt.registerSingleton(StreamDetailsViewModel());
+    getIt.registerSingleton(EventsViewModel());
 
     _streamsRepository = getIt.get<StreamsRepository>();
     _streamDetailsRepository = getIt.get<StreamDetailsRepository>();
+    _eventsRepository = getIt.get<EventsRepository>();
     _streamsRepository.refresh();
     _streamDetailsRepository.refresh();
+    _eventsRepository.refresh();
   }
 
   @override
   void dispose() {
     _streamsRepository.dispose();
     _streamDetailsRepository.dispose();
+    _eventsRepository.dispose();
     super.dispose();
   }
 

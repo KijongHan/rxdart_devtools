@@ -6,6 +6,8 @@ import 'package:rxdart_devtools_extension/src/features/events/repository.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
 final class EventsViewModel {
+  static const _searchDebounce = Duration(milliseconds: 300);
+
   final _eventsRepository = getIt.get<EventsRepository>();
   final _searchQuery = BehaviorSubject<String>();
   final _filteredEventLogs = BehaviorSubject<List<EventLogDto>>();
@@ -17,7 +19,7 @@ final class EventsViewModel {
   EventsViewModel() {
     _filteredEventLogsSubscription = Rx.combineLatest2(
       _eventsRepository.eventLogs,
-      _searchQuery.startWith(''),
+      _searchQuery.debounceTime(_searchDebounce).startWith(''),
       _filter,
     ).listen(_filteredEventLogs.add);
   }
