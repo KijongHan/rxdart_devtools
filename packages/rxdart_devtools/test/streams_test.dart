@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rxdart_devtools/src/features/streams/push.dart';
 import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/streams/service.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
@@ -10,6 +11,7 @@ void main() {
 
   setUpAll(() {
     getIt.registerSingleton(DateTimeProvider());
+    getIt.registerSingleton(StreamsPush());
     getIt.registerSingleton(StreamsService());
     streams = getIt.get<StreamsService>();
   });

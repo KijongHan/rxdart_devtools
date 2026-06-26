@@ -46,7 +46,10 @@ class RegistryService {
       },
     );
 
-    streamsService.registerStream<dynamic>(identifier);
+    streamsService.registerStream<dynamic>(
+      identifier,
+      isSubject: stream is Subject<T>,
+    );
     eventsService.registerStream(identifier);
     _subscriptions[identifier] = subscription;
     _streamIdentifiers[id] = identifier;

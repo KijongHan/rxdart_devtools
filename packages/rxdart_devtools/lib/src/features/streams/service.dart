@@ -10,6 +10,7 @@ class StreamsService {
 
   StreamEntry<dynamic> registerStream<T>(
     StreamIdentifier identifier, {
+    bool isSubject = false,
     StreamData<T>? data,
   }) {
     final newEntry = StreamEntry<T>(
@@ -19,6 +20,7 @@ class StreamsService {
         lastEmittedAt: null,
         isClosed: false,
         closedAt: null,
+        isSubject: isSubject,
       ),
       data: data,
     );
@@ -65,7 +67,10 @@ class StreamsService {
     final currentEntry = _entries[identifier];
     if (currentEntry == null) return;
     final newEntry = currentEntry.copyWith(
-      metadata: currentEntry.metadata.copyWith(isInjectable: true),
+      metadata: currentEntry.metadata.copyWith(
+        isInjectable: true,
+        isSubject: true,
+      ),
     );
     _entries[identifier] = newEntry;
     _push.postStreamUpdated(newEntry);

@@ -3,6 +3,7 @@ import 'package:rxdart_devtools_extension/src/features/stream_details/components
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/selected_stream_event_logs.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/stream_details_header.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
+import 'package:rxdart_devtools_extension/src/shared/constants.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 
 class StreamDetailsPanel extends StatefulWidget {
@@ -33,18 +34,21 @@ class _StreamDetailsPanelState extends State<StreamDetailsPanel> {
             child: Text('Select a stream to view its events'),
           );
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (state.selectedStream != null)
-              StreamDetailsHeader(stream: state.selectedStream!)
-            else
-              MissingStreamHeader(streamId: state.selectedStreamId!),
-            const Divider(height: 1),
-            Expanded(
-              child: SelectedStreamEventLogs(eventLogs: state.eventLogs),
-            ),
-          ],
+        return Container(
+          padding: const EdgeInsets.all(Spacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (state.selectedStream != null)
+                StreamDetailsHeader(stream: state.selectedStream!)
+              else
+                MissingStreamHeader(streamId: state.selectedStreamId!),
+              const Divider(height: 1),
+              Expanded(
+                child: SelectedStreamEventLogs(eventLogs: state.eventLogs),
+              ),
+            ],
+          ),
         );
       },
     );

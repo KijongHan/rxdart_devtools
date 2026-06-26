@@ -9,7 +9,11 @@ class StreamIdentifier {
   final String name;
   final String typeLabel;
 
-  StreamIdentifier copyWith({String? id, String? name, String? typeLabel}) {
+  StreamIdentifier copyWith({
+    String? id,
+    String? name,
+    String? typeLabel,
+  }) {
     return StreamIdentifier(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -31,6 +35,7 @@ class StreamMetadata {
     required this.isClosed,
     required this.closedAt,
     this.isInjectable = false,
+    this.isSubject = false,
   });
 
   final int listenerCount;
@@ -38,6 +43,7 @@ class StreamMetadata {
   final bool isClosed;
   final DateTime? closedAt;
   final bool isInjectable;
+  final bool isSubject;
 
   StreamMetadata copyWith({
     int? listenerCount,
@@ -45,6 +51,7 @@ class StreamMetadata {
     bool? isClosed,
     DateTime? closedAt,
     bool? isInjectable,
+    bool? isSubject,
   }) {
     return StreamMetadata(
       listenerCount: listenerCount ?? this.listenerCount,
@@ -52,6 +59,7 @@ class StreamMetadata {
       isClosed: isClosed ?? this.isClosed,
       closedAt: closedAt ?? this.closedAt,
       isInjectable: isInjectable ?? this.isInjectable,
+      isSubject: isSubject ?? this.isSubject,
     );
   }
 }

@@ -15,6 +15,8 @@ class StreamEntryDto {
     required this.lastEmittedAt,
     required this.isClosed,
     required this.closedAt,
+    required this.isInjectable,
+    required this.isSubject,
   });
 
   factory StreamEntryDto.fromEntry(StreamEntry<dynamic> entry) =>
@@ -28,6 +30,8 @@ class StreamEntryDto {
         lastEmittedAt: entry.metadata.lastEmittedAt?.toIso8601String(),
         isClosed: entry.metadata.isClosed,
         closedAt: entry.metadata.closedAt?.toIso8601String(),
+        isInjectable: entry.metadata.isInjectable,
+        isSubject: entry.metadata.isSubject,
       );
 
   factory StreamEntryDto.fromJson(Map<String, dynamic> json) =>
@@ -42,6 +46,8 @@ class StreamEntryDto {
   final String? lastEmittedAt;
   final bool isClosed;
   final String? closedAt;
+  final bool isInjectable;
+  final bool isSubject;
 
   Map<String, dynamic> toJson() => _$StreamEntryDtoToJson(this);
 }

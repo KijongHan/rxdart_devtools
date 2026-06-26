@@ -43,16 +43,19 @@ class StreamDetailsHeader extends StatelessWidget {
                   ],
                 ),
               ),
-              OutlinedButton.icon(
-                onPressed: () {
-                  showDialog<void>(
-                    context: context,
-                    builder: (_) => InjectDialog(stream: stream),
-                  );
-                },
-                icon: const Icon(Icons.add, size: 8),
-                label: const Text('Inject'),
-              ),
+              if (stream.isSubject)
+                OutlinedButton.icon(
+                  onPressed: stream.isInjectable
+                      ? () {
+                          showDialog<void>(
+                            context: context,
+                            builder: (_) => InjectDialog(stream: stream),
+                          );
+                        }
+                      : null,
+                  icon: const Icon(Icons.add, size: 8),
+                  label: const Text('Inject'),
+                ),
             ],
           ),
           const SizedBox(height: 6),

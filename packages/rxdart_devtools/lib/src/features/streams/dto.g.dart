@@ -17,6 +17,8 @@ StreamEntryDto _$StreamEntryDtoFromJson(Map<String, dynamic> json) =>
       lastEmittedAt: json['lastEmittedAt'] as String?,
       isClosed: json['isClosed'] as bool,
       closedAt: json['closedAt'] as String?,
+      isInjectable: json['isInjectable'] as bool? ?? false,
+      isSubject: json['isSubject'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$StreamEntryDtoToJson(StreamEntryDto instance) =>
@@ -30,6 +32,8 @@ Map<String, dynamic> _$StreamEntryDtoToJson(StreamEntryDto instance) =>
       'lastEmittedAt': instance.lastEmittedAt,
       'isClosed': instance.isClosed,
       'closedAt': instance.closedAt,
+      'isInjectable': instance.isInjectable,
+      'isSubject': instance.isSubject,
     };
 
 ListStreamEntriesResponseDto _$ListStreamEntriesResponseDtoFromJson(
