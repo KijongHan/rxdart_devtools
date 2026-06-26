@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
+import 'package:rxdart_devtools_extension/src/features/events/components/event_log_list_filter_menu.dart';
 
 class EventLogListHeader extends StatefulWidget {
   const EventLogListHeader({
@@ -35,24 +36,15 @@ class _EventLogListHeaderState extends State<EventLogListHeader> {
     super.dispose();
   }
 
-  static const _fieldLabels = {
-    SortField.timestamp: 'Timestamp',
-    SortField.streamId: 'Stream',
-    SortField.lastUpdated: 'Last updated',
-  };
-
-  void _onFieldChanged(SortField? field) {
-    if (field == null || field == _sortField) return;
+  void _setField(SortField field) {
+    if (field == _sortField) return;
     setState(() => _sortField = field);
     widget.onSort(_sortField, _sortDirection);
   }
 
-  void _toggleDirection() {
-    setState(() {
-      _sortDirection = _sortDirection == SortDirection.ascending
-          ? SortDirection.descending
-          : SortDirection.ascending;
-    });
+  void _setDirection(SortDirection direction) {
+    if (direction == _sortDirection) return;
+    setState(() => _sortDirection = direction);
     widget.onSort(_sortField, _sortDirection);
   }
 
@@ -93,27 +85,11 @@ class _EventLogListHeaderState extends State<EventLogListHeader> {
           ),
         ),
         const SizedBox(width: 8),
-        DropdownButton<SortField>(
-          value: _sortField,
-          isDense: true,
-          underline: const SizedBox.shrink(),
-          items: [
-            for (final entry in _fieldLabels.entries)
-              DropdownMenuItem(value: entry.key, child: Text(entry.value)),
-          ],
-          onChanged: _onFieldChanged,
-        ),
-        const SizedBox(width: 8),
-        IconButton(
-          tooltip: _sortDirection == SortDirection.ascending
-              ? 'Sort newest first'
-              : 'Sort oldest first',
-          icon: Icon(
-            _sortDirection == SortDirection.ascending
-                ? Icons.arrow_upward
-                : Icons.arrow_downward,
-          ),
-          onPressed: _toggleDirection,
+        EventLogListFilterMenu(
+          sortDirection: _sortDirection,
+          sortField: _sortField,
+          onSetSortDirection: _setDirection,
+          onSetSortField: _setField,
         ),
       ],
     );
