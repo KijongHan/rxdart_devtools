@@ -1,102 +1,22 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/sdk.dart';
+
+import 'ui/examples_list_page.dart';
 
 void main() {
   RxDartDevtools.init(historySize: 50);
   runApp(const ExampleApp());
 }
 
-class ExampleApp extends StatefulWidget {
+class ExampleApp extends StatelessWidget {
   const ExampleApp({super.key});
-
-  @override
-  State<ExampleApp> createState() => _ExampleAppState();
-}
-
-class _ExampleAppState extends State<ExampleApp> {
-  late final BehaviorSubject<int> _counter;
-  late final PublishSubject<String> _query;
-  late final BehaviorSubject<DateTime> _clock;
-
-  Timer? _tickTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    _counter = BehaviorSubject<int>.seeded(0)
-        .track('counter')
-        .enableInjection(parse: int.tryParse)
-        .asSubject();
-    _query = PublishSubject<String>()
-        .track('search.query', historySize: 200)
-        .asSubject();
-    _clock = BehaviorSubject<DateTime>.seeded(DateTime.now());
-
-    _tickTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-      _clock.add(DateTime.now());
-    });
-  }
-
-  @override
-  void dispose() {
-    _tickTimer?.cancel();
-    _counter.close();
-    _query.close();
-    _clock.close();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'rxdart_devtools example',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('rxdart_devtools example')),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Open DevTools → RxDart tab to inspect tracked streams.',
-              ),
-              const SizedBox(height: 24),
-              StreamBuilder(
-                stream: _counter,
-                builder: (context, snapshot) {
-                  return Text('counter: ${snapshot.data}');
-                },
-              ),
-              const SizedBox(height: 8),
-              StreamBuilder(
-                stream: _clock,
-                builder: (context, snapshot) {
-                  return Text('clock: ${snapshot.data}');
-                },
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () => _counter.add(_counter.value + 1),
-                child: const Text('counter++'),
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () =>
-                    _query.add('q-${DateTime.now().millisecondsSinceEpoch}'),
-                child: const Text('emit search.query'),
-              ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () => _query.close(),
-                child: const Text('close search.query'),
-              ),
-            ],
-          ),
-        ),
-      ),
+      theme: ThemeData(useMaterial3: true),
+      home: const ExamplesListPage(),
     );
   }
 }
