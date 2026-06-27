@@ -57,7 +57,6 @@ class StreamDetailsHeader extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         DetailRow(label: 'ID', value: stream.id),
-        DetailRow(label: 'Last value', value: stream.lastValue ?? '—'),
         DetailRow(label: 'Last error', value: stream.lastError ?? '—'),
         DetailRow(
           label: 'Last updated',

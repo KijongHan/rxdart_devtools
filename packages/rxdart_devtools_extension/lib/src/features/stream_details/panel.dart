@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart_devtools_extension/src/features/stream_details/components/current_value_panel.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/missing_stream_header.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/selected_stream_event_logs.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/stream_details_header.dart';
@@ -47,9 +48,11 @@ class _StreamDetailsPanelState extends State<StreamDetailsPanel> {
                     .copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: Spacing.md),
-              if (state.selectedStream != null)
-                StreamDetailsHeader(stream: state.selectedStream!)
-              else
+              if (state.selectedStream != null) ...[
+                StreamDetailsHeader(stream: state.selectedStream!),
+                const SizedBox(height: Spacing.md),
+                CurrentValuePanel(value: state.selectedStream!.lastValue),
+              ] else
                 MissingStreamHeader(streamId: state.selectedStreamId!),
               const SizedBox(height: Spacing.md),
               const Divider(height: 1),

@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
+import 'package:rxdart_devtools/src/shared/serialization.dart';
 
 part 'dto.g.dart';
 
@@ -24,7 +25,7 @@ class StreamEntryDto {
         id: entry.entryIdentifier.id,
         name: entry.entryIdentifier.name,
         typeLabel: entry.entryIdentifier.typeLabel,
-        lastValue: entry.data?.lastValue?.toString(),
+        lastValue: encodeValue(entry.data?.lastValue),
         lastError: entry.data?.lastError?.toString(),
         listenerCount: entry.metadata.listenerCount,
         lastEmittedAt: entry.metadata.lastEmittedAt?.toIso8601String(),

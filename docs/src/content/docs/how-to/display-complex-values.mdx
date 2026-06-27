@@ -1,0 +1,71 @@
+---
+title: Display complex values
+description: How tracked stream values are serialized for the DevTools panel, and how to make custom classes render as structured JSON.
+---
+
+The DevTools panel shows the latest value of each tracked stream in a **Current value** card, and prior values in the **Event log**. The way a value is rendered depends on how it serializes.
+
+## How values are serialized
+
+When a value flows through a tracked stream, the runtime encodes it as a string for transport to the DevTools UI. The encoder calls `jsonEncode` with a `toString()` fallback for anything that can't be serialized:
+
+```dart
+jsonEncode(value, toEncodable: (nonEncodable) => nonEncodable.toString());
+```
+
+On the UI side, the panel tries to JSON-decode that string. If the decoded result is a `Map` or `List`, it's rendered as a pretty-printed JSON tree. Anything else is rendered as plain text.
+
+## What this means for your classes
+
+| Value type | Result on the panel |
+| --- | --- |
+| `num`, `bool`, `String`, `null` | Shown as the primitive value. |
+| `Map<String, …>` / `List<…>` of JSON-encodable values | Pretty-printed JSON tree. |
+| Custom class **with** a `toJson()` method | `toJson()` is called; result is rendered as JSON. |
+| Custom class **without** a `toJson()` method | Falls back to `toString()`. By default that's `Instance of 'YourClass'`. |
+| `DateTime`, `Uri`, enums, etc. | Falls back to `toString()` (e.g., `2026-06-27 14:32:00.000`). |
+
+The fallback only applies at the leaf where serialization can't continue. A `Map<String, User>` where `User` has no `toJson()` still renders as a structured map — each `User` becomes the result of `User.toString()` inside the otherwise-structured tree.
+
+## Make a custom class render as JSON
+
+Add a `toJson()` method to your class. Any of these work:
+
+### Hand-written
+
+```dart
+class User {
+  User({required this.name, required this.age});
+
+  final String name;
+  final int age;
+
+  Map<String, dynamic> toJson() => {'name': name, 'age': age};
+}
+```
+
+### With [`json_serializable`](https://pub.dev/packages/json_serializable)
+
+```dart
+@JsonSerializable()
+class User {
+  User({required this.name, required this.age});
+
+  final String name;
+  final int age;
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+}
+```
+
+### With [`freezed`](https://pub.dev/packages/freezed)
+
+`freezed` generates a `toJson()` automatically when you opt in. No manual work needed once the model is annotated.
+
+## Limitations
+
+Dart doesn't support runtime reflection in Flutter, so the runtime can't automatically introspect the fields of a class it doesn't know about. If you want structured JSON for your domain objects, you have to provide `toJson()` — either by hand or via code generation. There's no `toEncodable` trick that can unfold arbitrary objects into maps for you; this is a Dart-level constraint, not a `rxdart_devtools` limitation.
+
+## Related
+
+- [Track a stream](/rxdart_devtools/how-to/track-a-stream/) — surface a stream in the panel.
