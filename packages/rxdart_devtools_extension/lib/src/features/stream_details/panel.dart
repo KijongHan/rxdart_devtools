@@ -39,10 +39,19 @@ class _StreamDetailsPanelState extends State<StreamDetailsPanel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Text(
+                'Stream details',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: Spacing.md),
               if (state.selectedStream != null)
                 StreamDetailsHeader(stream: state.selectedStream!)
               else
                 MissingStreamHeader(streamId: state.selectedStreamId!),
+              const SizedBox(height: Spacing.md),
               const Divider(height: 1),
               Expanded(
                 child: SelectedStreamEventLogs(eventLogs: state.eventLogs),

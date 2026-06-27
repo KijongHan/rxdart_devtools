@@ -3,7 +3,6 @@ import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/detail_row.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/components/inject_dialog.dart';
 import 'package:rxdart_devtools_extension/src/shared/components/status_dot.dart';
-import 'package:rxdart_devtools_extension/src/shared/spacing.dart';
 import 'package:rxdart_devtools_extension/src/shared/utils.dart';
 
 class StreamDetailsHeader extends StatelessWidget {
@@ -15,61 +14,58 @@ class StreamDetailsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-    return Padding(
-      padding: const EdgeInsets.all(Spacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: Row(
-                  children: [
-                    StatusDot.forStreamEntry(stream),
-                    const SizedBox(width: 8),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(stream.name, style: textTheme.titleMedium),
-                        Text(
-                          stream.typeLabel,
-                          style: textTheme.bodySmall
-                              ?.copyWith(color: theme.hintColor),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              child: Row(
+                children: [
+                  StatusDot.forStreamEntry(stream),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(stream.name, style: textTheme.titleMedium),
+                      Text(
+                        stream.typeLabel,
+                        style: textTheme.bodySmall
+                            ?.copyWith(color: theme.hintColor),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              if (stream.isSubject)
-                OutlinedButton.icon(
-                  onPressed: stream.isInjectable
-                      ? () {
-                          showDialog<void>(
-                            context: context,
-                            builder: (_) => InjectDialog(stream: stream),
-                          );
-                        }
-                      : null,
-                  icon: const Icon(Icons.add, size: 8),
-                  label: const Text('Inject'),
-                ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          DetailRow(label: 'ID', value: stream.id),
-          DetailRow(label: 'Last value', value: stream.lastValue ?? '—'),
-          DetailRow(label: 'Last error', value: stream.lastError ?? '—'),
-          DetailRow(
-            label: 'Last updated',
-            value: stream.lastEmittedAt == null
-                ? '—'
-                : DateTimeUtils.shortTimestamp(stream.lastEmittedAt!),
-          ),
-        ],
-      ),
+            ),
+            if (stream.isSubject)
+              OutlinedButton.icon(
+                onPressed: stream.isInjectable
+                    ? () {
+                        showDialog<void>(
+                          context: context,
+                          builder: (_) => InjectDialog(stream: stream),
+                        );
+                      }
+                    : null,
+                icon: const Icon(Icons.add, size: 8),
+                label: const Text('Inject'),
+              ),
+          ],
+        ),
+        const SizedBox(height: 6),
+        DetailRow(label: 'ID', value: stream.id),
+        DetailRow(label: 'Last value', value: stream.lastValue ?? '—'),
+        DetailRow(label: 'Last error', value: stream.lastError ?? '—'),
+        DetailRow(
+          label: 'Last updated',
+          value: stream.lastEmittedAt == null
+              ? '—'
+              : DateTimeUtils.shortTimestamp(stream.lastEmittedAt!),
+        ),
+      ],
     );
   }
 }
