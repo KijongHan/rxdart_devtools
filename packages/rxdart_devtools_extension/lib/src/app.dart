@@ -81,7 +81,7 @@ class _AppState extends State<App> {
 class _ResponsiveAppLayout extends StatelessWidget {
   const _ResponsiveAppLayout();
 
-  static const _wideBreakpoint = 800.0;
+  static const _wideBreakpoint = 1200.0;
 
   @override
   Widget build(BuildContext context) {

@@ -28,7 +28,15 @@ class StreamsList extends StatelessWidget {
           leading: StatusDot.forStreamEntry(s),
           title: Text(s.name),
           subtitle: Text(s.typeLabel),
-          trailing: Text(s.lastValue ?? '—'),
+          trailing: SizedBox(
+            width: 96,
+            child: Text(
+              s.lastValue ?? '—',
+              softWrap: false,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end,
+            ),
+          ),
         );
       },
     );
