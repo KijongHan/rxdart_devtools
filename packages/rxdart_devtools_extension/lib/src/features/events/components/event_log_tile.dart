@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/dto.dart';
+import 'package:rxdart_devtools_extension/src/shared/constants.dart';
 import 'package:rxdart_devtools_extension/src/shared/utils.dart';
 
 class EventLogTile extends StatelessWidget {
@@ -66,6 +67,7 @@ class EventLogTile extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: Spacing.xs),
     );
   }
 }

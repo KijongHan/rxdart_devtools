@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/view_model.dart';
 import 'package:rxdart_devtools_extension/src/shared/components/status_dot.dart';
+import 'package:rxdart_devtools_extension/src/shared/constants.dart';
 
 class StreamsList extends StatelessWidget {
   const StreamsList(
@@ -21,6 +22,7 @@ class StreamsList extends StatelessWidget {
         return ListTile(
           key: ValueKey(s.id),
           dense: true,
+          contentPadding: const EdgeInsets.symmetric(horizontal: Spacing.xs),
           selected: s.id == viewState.selectedStreamId,
           onTap: () => onSelectedStreamChanged(s.id),
           leading: StatusDot.forStreamEntry(s),
