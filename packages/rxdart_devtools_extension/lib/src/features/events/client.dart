@@ -48,7 +48,7 @@ class EventsClient {
   Future<List<EventLogDto>> listEventLogs(
       {String? streamId,
       SortField? sortField,
-      SortDirection? sortDirection}) async {
+      SortDirection? sortDirection,}) async {
     final service = _vmServiceProvider.service;
     final isolate = serviceManager.isolateManager.selectedIsolate.value;
     if (service == null || isolate == null) return const [];

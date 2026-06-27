@@ -41,7 +41,7 @@ class EventsRepository {
   }
 
   void sort(
-      {required SortField sortField, required SortDirection sortDirection}) {
+      {required SortField sortField, required SortDirection sortDirection,}) {
     _eventsClient
         .listEventLogs(sortField: sortField, sortDirection: sortDirection)
         .then((eventLogs) {

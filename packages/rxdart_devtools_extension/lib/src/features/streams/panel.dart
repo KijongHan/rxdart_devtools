@@ -90,7 +90,7 @@ class _StreamsPanelState extends State<StreamsPanel> {
                   ),
                 ),
               ],
-            ));
+            ),);
       },
     );
   }

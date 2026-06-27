@@ -67,7 +67,7 @@ class RegistryService {
         if (value == null) {
           return Failure(FormatException(
             "Could not parse '$raw' as ${identifier.typeLabel}",
-          ));
+          ),);
         }
         subject.add(value);
         return Success.unit();
@@ -84,13 +84,13 @@ class RegistryService {
       _subjectInjectors[identifier]?.add(raw) ??
       Failure(Exception(
         "Could not inject value into '$identifier'",
-      ));
+      ),);
 
   Result<void> injectError(StreamIdentifier identifier, String message) =>
       _subjectInjectors[identifier]?.addError(message) ??
       Failure(Exception(
         "Could not inject error into '$identifier'",
-      ));
+      ),);
 
   StreamIdentifier? getStreamIdentifier(String id) => _streamIdentifiers[id];
 

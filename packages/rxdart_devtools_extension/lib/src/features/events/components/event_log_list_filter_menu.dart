@@ -7,7 +7,7 @@ class EventLogListFilterMenu extends StatelessWidget {
       required this.sortDirection,
       required this.sortField,
       required this.onSetSortDirection,
-      required this.onSetSortField});
+      required this.onSetSortField,});
 
   final SortDirection sortDirection;
   final SortField sortField;

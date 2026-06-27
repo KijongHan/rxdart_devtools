@@ -1,7 +1,5 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:rxdart_devtools/dto.dart';
-import 'package:rxdart_devtools_extension/src/features/events/repository.dart';
-import 'package:rxdart_devtools_extension/src/features/streams/repository.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 import 'package:vm_service/vm_service.dart' hide Success;
 

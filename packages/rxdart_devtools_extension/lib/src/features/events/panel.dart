@@ -51,13 +51,13 @@ class _EventsPanelState extends State<EventsPanel> {
                 const SizedBox(height: Spacing.md),
                 EventLogListHeader(
                   onSort: (sortField, sortDirection) => _eventsRepository.sort(
-                      sortField: sortField, sortDirection: sortDirection),
+                      sortField: sortField, sortDirection: sortDirection,),
                   onSearch: (query) => _eventsViewModel.setSearchQuery(query),
                 ),
                 const SizedBox(height: Spacing.md),
                 Expanded(child: content),
               ],
-            ));
+            ),);
       },
     );
   }

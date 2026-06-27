@@ -7,7 +7,7 @@ class StreamsList extends StatelessWidget {
   const StreamsList(
       {super.key,
       required this.viewState,
-      required this.onSelectedStreamChanged});
+      required this.onSelectedStreamChanged,});
 
   final StreamsViewState viewState;
   final void Function(String streamId) onSelectedStreamChanged;
