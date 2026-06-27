@@ -5,6 +5,7 @@ import 'package:rxdart_devtools_extension/src/features/events/panel.dart';
 import 'package:rxdart_devtools_extension/src/features/events/repository.dart';
 import 'package:rxdart_devtools_extension/src/features/events/view_model.dart';
 import 'package:rxdart_devtools_extension/src/features/registry/client.dart';
+import 'package:rxdart_devtools_extension/src/features/registry/repository.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/panel.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/repository.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/view_model.dart';
@@ -40,6 +41,7 @@ class _AppState extends State<App> {
     getIt.registerSingleton(StreamsRepository());
     getIt.registerSingleton(StreamDetailsRepository());
     getIt.registerSingleton(EventsRepository());
+    getIt.registerSingleton(RegistryRepository());
 
     getIt.registerSingleton(StreamsViewModel());
     getIt.registerSingleton(StreamDetailsViewModel());

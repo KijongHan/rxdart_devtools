@@ -1,5 +1,7 @@
 import 'package:result_dart/result_dart.dart';
 import 'package:rxdart_devtools/dto.dart';
+import 'package:rxdart_devtools_extension/src/features/events/repository.dart';
+import 'package:rxdart_devtools_extension/src/features/streams/repository.dart';
 import 'package:rxdart_devtools_extension/src/shared/providers.dart';
 import 'package:vm_service/vm_service.dart' hide Success;
 
@@ -39,6 +41,24 @@ final class RegistryClient {
             _vmServiceProvider.manager.isolateManager.selectedIsolate.value!.id,
         args: InjectErrorRequestDto(identifier: streamId, message: message)
             .toJson(),
+      );
+      return Success.unit();
+    } on RPCError catch (e) {
+      return Failure(Exception(e.message));
+    }
+  }
+
+  Future<Result<void>> clearAll() async {
+    if (_vmServiceProvider.service == null ||
+        _vmServiceProvider.manager.isolateManager.selectedIsolate.value ==
+            null) {
+      return Failure(Exception('No VM service available'));
+    }
+    try {
+      await _vmServiceProvider.service!.callServiceExtension(
+        RegistryConstants.clearAll,
+        isolateId:
+            _vmServiceProvider.manager.isolateManager.selectedIsolate.value!.id,
       );
       return Success.unit();
     } on RPCError catch (e) {

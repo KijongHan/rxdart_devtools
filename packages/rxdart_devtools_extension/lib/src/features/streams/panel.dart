@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart_devtools_extension/src/features/registry/repository.dart';
 import 'package:rxdart_devtools_extension/src/features/stream_details/repository.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/components/list.dart';
 import 'package:rxdart_devtools_extension/src/features/streams/components/stream_search.dart';
@@ -16,12 +17,35 @@ class StreamsPanel extends StatefulWidget {
 class _StreamsPanelState extends State<StreamsPanel> {
   late final StreamsViewModel _streamsViewModel;
   late final StreamDetailsRepository _streamDetailsRepository;
+  late final RegistryRepository _registryRepository;
 
   @override
   void initState() {
     super.initState();
     _streamsViewModel = getIt.get<StreamsViewModel>();
     _streamDetailsRepository = getIt.get<StreamDetailsRepository>();
+    _registryRepository = getIt.get<RegistryRepository>();
+  }
+
+  Future<void> _onClearAll() async {
+    final result = await _registryRepository.clearAll();
+    if (!mounted) return;
+    result.fold(
+      (_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Streams cleared'),
+          ),
+        );
+      },
+      (_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to clear streams'),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -36,12 +60,22 @@ class _StreamsPanelState extends State<StreamsPanel> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Streams',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    Text(
+                      'Streams',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      tooltip: 'Clear all tracked streams',
+                      icon: const Icon(Icons.delete),
+                      onPressed: _onClearAll,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: Spacing.md),
                 StreamSearch(
