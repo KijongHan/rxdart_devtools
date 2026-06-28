@@ -1,18 +1,7 @@
 # Contributing to rxdart_devtools
-
-## Repo layout
-
-```
-rxdart_devtools/                       # workspace root
-├── packages/
-│   ├── rxdart_devtools/               # published runtime package
-│   └── rxdart_devtools_extension/     # Flutter web panel (publish_to: none)
-├── example/                           # dogfood Flutter app
-└── tool/
-    └── build_panel.dart               # build panel into runtime package
-```
-
-Only `packages/rxdart_devtools/` is published. The panel and example are workspace siblings — they never enter a consumer's dependency graph.
+All contributions are welcome! Please follow some simple guidelines below that'd help with the review process.
+- Please make sure to raise an issue first before making a PR.
+- Please be prepared to answer technical questions and provide context for the changes you are making (not just AI generated responses)
 
 ## Prerequisites
 
@@ -116,30 +105,3 @@ cd packages/rxdart_devtools
 dart run build_runner build       # one-shot
 dart run build_runner watch       # rebuild on save
 ```
-
-## Conventions
-
-### `kReleaseMode` guards on public entry points
-
-Every public entry point in `package:rxdart_devtools` must begin with a `kReleaseMode` guard so the Dart AOT compiler dead-code-eliminates the debug-only machinery from consumers' release builds:
-
-```dart
-Stream<T> track(String? name, {int? historySize}) {
-  if (kReleaseMode) return this;
-  return impl.trackImpl(this, name, historySize);
-}
-```
-
-This applies to `Stream<T>.track`, `RxDartDevtools.init`, and any future public surface that touches the registry, lifecycle hooks, service extensions, or stack-derived naming.
-
-### Wire DTOs are shared via the runtime package
-
-Wire types live at `packages/rxdart_devtools/lib/src/wire/` and are re-exported via `packages/rxdart_devtools/lib/wire.dart`. The panel imports them through its `path: ../rxdart_devtools` dev-dependency. Do not duplicate DTOs in the panel package.
-
-### Built panel output is not committed
-
-`packages/rxdart_devtools/extension/devtools/build/` is `.gitignore`d. The directory is populated by `tool/build_panel.dart` at publish time.
-
-### `config.yaml` version tracks the runtime package
-
-Keep `packages/rxdart_devtools/extension/devtools/config.yaml`'s `version` field in sync with `packages/rxdart_devtools/pubspec.yaml`'s `version` on every release.
