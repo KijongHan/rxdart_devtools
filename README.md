@@ -2,8 +2,7 @@
 
 A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Streams.
 
-<!-- TODO: drop a GIF/screenshot of the panel here. -->
-<!-- Suggested: build via `melos run build:panel:simulated`, record a 5-10s capture of streams updating + an injection. -->
+![rxdart_devtools panel in action](https://raw.githubusercontent.com/KijongHan/rxdart_devtools/main/assets/panel-demo.gif)
 
 - 📦 [Package on pub.dev](https://pub.dev/packages/rxdart_devtools)
 - 📖 [Documentation](https://kijonghan.github.io/rxdart_devtools/)
