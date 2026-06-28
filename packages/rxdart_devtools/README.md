@@ -17,9 +17,23 @@ Flutter has awesome first class support for Streams, and RxDart is a great exten
 
 ## Install
 
+Install the latest published package:
+
+```bash
+flutter pub add rxdart_devtools
+```
+
+Or add the dependency to your `pubspec.yaml`:
+
 ```yaml
 dependencies:
   rxdart_devtools: ^0.1.0
+```
+
+then fetch it:
+
+```bash
+flutter pub get
 ```
 
 ## Quick start
@@ -58,16 +72,6 @@ If the rxdart tab doesn't appear, your app needs to depend on `rxdart_devtools` 
 ## Production safety
 
 `RxDartDevtools.init()` and `.track()` are `kReleaseMode`-guarded no-ops. The Dart AOT compiler dead-code-eliminates the registry and supporting code, so nothing ships in a release build.
-
-Verify with:
-
-```bash
-flutter build appbundle --analyze-size
-```
-
-The output should contain no `RxDartDevtools*` symbols.
-
-The pre-built panel assets live under `extension/devtools/build/` and are loaded by DevTools at debug time on the host — they are never bundled into your app.
 
 ## Compatibility
 
