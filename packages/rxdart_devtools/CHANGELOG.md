@@ -2,7 +2,7 @@
 
 ### Changed
 
-- DevTools tab icon updated to the Material **build** (wrench) glyph.
+- Make published package more readable and easier to understand.
 
 ### Documentation
 
