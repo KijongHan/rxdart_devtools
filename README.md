@@ -1,6 +1,6 @@
 # rxdart_devtools
 
-A Dart DevTools extension for inspecting RxDart streams.
+A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Streams.
 
 <!-- TODO: drop a GIF/screenshot of the panel here. -->
 <!-- Suggested: build via `melos run build:panel:simulated`, record a 5-10s capture of streams updating + an injection. -->
