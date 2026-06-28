@@ -1,6 +1,6 @@
 # rxdart_devtools
 
-A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Streams — current value, listener count, emission history, and one-click value injection.
+A Dart & Flutter DevTools extension for inspecting and debugging RxDart Subjects and Dart Streams. It provides a user friendly UI to see the current value, emission history, and value or error injection.
 
 [![pub package](https://img.shields.io/pub/v/rxdart_devtools.svg)](https://pub.dev/packages/rxdart_devtools)
 [![pub points](https://img.shields.io/pub/points/rxdart_devtools)](https://pub.dev/packages/rxdart_devtools/score)
@@ -11,7 +11,7 @@ A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Stre
 
 ## Why
 
-Streams are first-class in Flutter, but debugging them isn't. `print` ladders inside `.listen` callbacks don't scale — and when something stops emitting, you're guessing whether the producer broke or the subscription got cancelled.
+Flutter has awesome first class support for Streams, and RxDart is a great extension on top of it that lets you write Reactive code. But, debugging them is currently not easy. `print` ladders inside `.listen` callbacks don't scale when you want to quickly identify a Stream or Subject and have a user friendly UI to see the current value, emission history, and inject values or errors to see how the app responds.
 
 `rxdart_devtools` adds a **RxDart** tab to DevTools that lists every stream you've tagged with `.track('name')`, shows its current value, counts listeners and emissions, and lets you push values *into* injectable subjects without touching app code.
 

@@ -24,7 +24,7 @@ rxdart_devtools/                       # workspace root
 
 ## Contributing
 
-Thank you for your interest in contributing to rxdart_devtools! See [CONTRIBUTING.md](CONTRIBUTING.md) for prerequisites, local dev setup, and the melos scripts used during development.
+Appreciate any contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for prerequisites, local dev setup, and the melos scripts used during development.
 
 ## License
 
@@ -32,4 +32,4 @@ Thank you for your interest in contributing to rxdart_devtools! See [CONTRIBUTIN
 
 ## Status
 
-Early release. v0.x — API may change before 1.0. Tracking, panel UI, value injection, and clear-all are wired end-to-end; edge cases are being shaken out.
+Currently early release and actively being improved on
