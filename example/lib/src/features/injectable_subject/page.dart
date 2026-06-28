@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/sdk.dart';
 
-class InjectableSubjectExample extends StatefulWidget {
-  const InjectableSubjectExample({super.key});
+class InjectableSubjectExamplePage extends StatefulWidget {
+  const InjectableSubjectExamplePage({super.key});
 
   @override
-  State<InjectableSubjectExample> createState() =>
-      _InjectableSubjectExampleState();
+  State<InjectableSubjectExamplePage> createState() =>
+      _InjectableSubjectExamplePageState();
 }
 
-class _InjectableSubjectExampleState extends State<InjectableSubjectExample> {
+class _InjectableSubjectExamplePageState
+    extends State<InjectableSubjectExamplePage> {
   late final BehaviorSubject<int> _count;
 
   @override

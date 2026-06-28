@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/sdk.dart';
 
-class RegistrationExample extends StatefulWidget {
-  const RegistrationExample({super.key});
+class RegistrationExamplePage extends StatefulWidget {
+  const RegistrationExamplePage({super.key});
 
   @override
-  State<RegistrationExample> createState() => _RegistrationExampleState();
+  State<RegistrationExamplePage> createState() =>
+      _RegistrationExamplePageState();
 }
 
-class _RegistrationExampleState extends State<RegistrationExample> {
+class _RegistrationExamplePageState extends State<RegistrationExamplePage> {
   final List<_TrackedEntry> _entries = <_TrackedEntry>[];
   int _nextId = 1;
 
   void _register() {
     final id = _nextId++;
     final name = 'registration.subject-$id';
-    final subject =
-        BehaviorSubject<int>.seeded(0).track(name).asSubject();
+    final subject = BehaviorSubject<int>.seeded(0).track(name).asSubject();
     setState(() {
       _entries.add(_TrackedEntry(name: name, subject: subject));
     });

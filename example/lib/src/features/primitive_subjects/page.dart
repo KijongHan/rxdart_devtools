@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/sdk.dart';
 
-class PrimitiveSubjectsExample extends StatefulWidget {
-  const PrimitiveSubjectsExample({super.key});
+class PrimitiveSubjectsExamplePage extends StatefulWidget {
+  const PrimitiveSubjectsExamplePage({super.key});
 
   @override
-  State<PrimitiveSubjectsExample> createState() =>
-      _PrimitiveSubjectsExampleState();
+  State<PrimitiveSubjectsExamplePage> createState() =>
+      _PrimitiveSubjectsExamplePageState();
 }
 
-class _PrimitiveSubjectsExampleState extends State<PrimitiveSubjectsExample> {
+class _PrimitiveSubjectsExamplePageState
+    extends State<PrimitiveSubjectsExamplePage> {
   late final BehaviorSubject<int> _behavior;
   late final PublishSubject<String> _publish;
   late final ReplaySubject<bool> _replay;
@@ -21,14 +22,11 @@ class _PrimitiveSubjectsExampleState extends State<PrimitiveSubjectsExample> {
   @override
   void initState() {
     super.initState();
-    _behavior = BehaviorSubject<int>.seeded(0)
-        .track('primitives.behavior')
-        .asSubject();
-    _publish =
-        PublishSubject<String>().track('primitives.publish').asSubject();
-    _replay = ReplaySubject<bool>(maxSize: 5)
-        .track('primitives.replay')
-        .asSubject();
+    _behavior =
+        BehaviorSubject<int>.seeded(0).track('primitives.behavior').asSubject();
+    _publish = PublishSubject<String>().track('primitives.publish').asSubject();
+    _replay =
+        ReplaySubject<bool>(maxSize: 5).track('primitives.replay').asSubject();
   }
 
   @override
@@ -57,8 +55,7 @@ class _PrimitiveSubjectsExampleState extends State<PrimitiveSubjectsExample> {
         const SizedBox(height: 16),
         _SubjectCard<String>(
           title: 'PublishSubject<String>',
-          subtitle:
-              'Only delivers events emitted after a listener subscribes. '
+          subtitle: 'Only delivers events emitted after a listener subscribes. '
               'Late subscribers see nothing until the next emission.',
           stream: _publish,
           format: (v) => v == null ? 'waiting…' : 'last: $v',

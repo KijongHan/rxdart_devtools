@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-/// Metadata + builder for a single example shown in the demo app.
 class Example {
   const Example({
     required this.id,

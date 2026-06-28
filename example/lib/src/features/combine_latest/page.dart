@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/sdk.dart';
 
-class CombineLatestExample extends StatefulWidget {
-  const CombineLatestExample({super.key});
+class CombineLatestExamplePage extends StatefulWidget {
+  const CombineLatestExamplePage({super.key});
 
   @override
-  State<CombineLatestExample> createState() => _CombineLatestExampleState();
+  State<CombineLatestExamplePage> createState() =>
+      _CombineLatestExamplePageState();
 }
 
-class _CombineLatestExampleState extends State<CombineLatestExample> {
+class _CombineLatestExamplePageState extends State<CombineLatestExamplePage> {
   late final BehaviorSubject<int> _a;
   late final BehaviorSubject<int> _b;
   late final Stream<int> _sum;

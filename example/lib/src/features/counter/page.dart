@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/sdk.dart';
 
-class CounterExample extends StatefulWidget {
-  const CounterExample({super.key});
+class CounterExamplePage extends StatefulWidget {
+  const CounterExamplePage({super.key});
 
   @override
-  State<CounterExample> createState() => _CounterExampleState();
+  State<CounterExamplePage> createState() => _CounterExamplePageState();
 }
 
-class _CounterExampleState extends State<CounterExample> {
+class _CounterExamplePageState extends State<CounterExamplePage> {
   late final BehaviorSubject<int> _counter;
   Timer? _timer;
   bool _isRunning = true;

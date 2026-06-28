@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart_devtools/sdk.dart';
 
-import 'ui/examples_list_page.dart';
+import 'src/app.dart';
 
 void main() {
   RxDartDevtools.init();
@@ -16,7 +16,7 @@ class ExampleApp extends StatelessWidget {
     return MaterialApp(
       title: 'rxdart_devtools example',
       theme: ThemeData(useMaterial3: true),
-      home: const ExamplesListPage(),
+      home: const ExamplesApp(),
     );
   }
 }

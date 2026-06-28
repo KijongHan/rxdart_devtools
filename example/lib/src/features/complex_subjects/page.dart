@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_devtools/sdk.dart';
 
-class ComplexSubjectsExample extends StatefulWidget {
-  const ComplexSubjectsExample({super.key});
+class ComplexSubjectsExamplePage extends StatefulWidget {
+  const ComplexSubjectsExamplePage({super.key});
 
   @override
-  State<ComplexSubjectsExample> createState() => _ComplexSubjectsExampleState();
+  State<ComplexSubjectsExamplePage> createState() =>
+      _ComplexSubjectsExamplePageState();
 }
 
-class _ComplexSubjectsExampleState extends State<ComplexSubjectsExample> {
+class _ComplexSubjectsExamplePageState
+    extends State<ComplexSubjectsExamplePage> {
   late final BehaviorSubject<Map<String, dynamic>> _map;
   late final BehaviorSubject<List<int>> _list;
   late final BehaviorSubject<UserWithJson> _userWithJson;
