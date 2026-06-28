@@ -14,9 +14,22 @@ import '../features/events/backend.dart';
 import '../features/events/push.dart';
 import '../features/registry/backend.dart';
 
+/// Entry point for the `rxdart_devtools` runtime.
+///
+/// Call [init] once from `main()` before `runApp` to wire up the services that
+/// surface tracked streams to the DevTools panel. The call is a no-op in
+/// release builds and when invoked more than once, so it is safe to leave in
+/// production code.
 abstract final class RxDartDevtools {
   static bool _initialized = false;
 
+  /// Initialises the DevTools runtime.
+  ///
+  /// In release builds and on repeated calls this returns immediately without
+  /// registering any services. Pass [streamIdentifierStrategy] to control how
+  /// tracked streams are identified across hot reloads — defaults to
+  /// [StreamIdentifierStrategy.name], which keys by the name passed to
+  /// `.track()`.
   static void init({
     StreamIdentifierStrategy streamIdentifierStrategy =
         StreamIdentifierStrategy.name,

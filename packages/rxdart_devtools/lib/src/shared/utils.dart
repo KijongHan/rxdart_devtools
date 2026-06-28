@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'dart:convert';
 
 import 'package:rxdart_devtools/src/features/config/types.dart';

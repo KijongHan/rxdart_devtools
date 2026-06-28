@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:collection/collection.dart';
 import 'package:rxdart_devtools/dto.dart';
 import 'package:rxdart_devtools/src/features/events/types.dart';

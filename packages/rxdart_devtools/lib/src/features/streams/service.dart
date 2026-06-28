@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/streams/types.dart';
 import 'package:rxdart_devtools/src/features/streams/push.dart';

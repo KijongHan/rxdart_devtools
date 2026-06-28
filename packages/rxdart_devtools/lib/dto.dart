@@ -1,3 +1,8 @@
+/// Wire-format DTOs and service-extension constant names shared between the
+/// `rxdart_devtools` runtime and its DevTools extension panel.
+///
+/// You normally do not need to import this from app code — it's exposed
+/// primarily for the panel and for advanced integrations.
 library;
 
 export 'src/features/events/dto.dart';
