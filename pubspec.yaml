@@ -78,3 +78,18 @@ melos:
         Build the simulated panel bundle (via `build:panel:simulated`) and then serve it
         at http://localhost:3474. The build step always runs first so the served bundle
         reflects the latest panel source.
+
+    publish:dry:
+      run: melos run build_panel && cd packages/rxdart_devtools && dart pub publish --dry-run
+      description: |
+        Build the panel (via `build_panel`) and run `dart pub publish --dry-run` against the runtime package.
+        Surfaces anything pub.dev would reject — missing LICENSE, oversize description, malformed pubspec,
+        invalid dependencies, etc. — without uploading anything. Run this before `publish`.
+
+    publish:
+      run: melos run build_panel && cd packages/rxdart_devtools && dart pub publish
+      description: |
+        Build the panel (via `build_panel`) and publish the runtime package to pub.dev.
+        IRREVERSIBLE: published versions cannot be deleted (only retracted). Interactive — pub
+        prints the upload manifest, asks for confirmation, then opens a browser for Google sign-in.
+        Always run `publish:dry` first.

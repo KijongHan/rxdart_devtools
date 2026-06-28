@@ -19,7 +19,7 @@ Streams are first-class in Flutter, but debugging them isn't. `print` ladders in
 
 ```yaml
 dependencies:
-  rxdart_devtools: ^0.0.1
+  rxdart_devtools: ^0.1.0
 ```
 
 ## Quick start
