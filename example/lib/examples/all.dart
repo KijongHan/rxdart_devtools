@@ -1,9 +1,11 @@
 import 'package:flutter/widgets.dart';
 
+import 'combine_latest.dart';
 import 'complex_subjects.dart';
 import 'example.dart';
 import 'injectable_subject.dart';
 import 'primitive_subjects.dart';
+import 'readonly_streams.dart';
 import 'registration.dart';
 
 /// Central list of every example surfaced on the home page.
@@ -41,6 +43,22 @@ const List<Example> kExamples = <Example>[
         'into via enableInjection().',
     builder: _buildInjectableSubject,
   ),
+  Example(
+    id: 'readonly-streams',
+    title: 'Read-only streams',
+    description:
+        'Plain Stream<T> sources (Stream.periodic and StreamController) '
+        'tracked as read-only — observable in the panel, no injection.',
+    builder: _buildReadonlyStreams,
+  ),
+  Example(
+    id: 'combine-latest',
+    title: 'Rx.combineLatest',
+    description:
+        'Two injectable BehaviorSubjects feeding a derived sum stream via '
+        'Rx.combineLatest2; the combined output is tracked as read-only.',
+    builder: _buildCombineLatest,
+  ),
 ];
 
 Widget _buildRegistration(BuildContext context) => const RegistrationExample();
@@ -50,3 +68,7 @@ Widget _buildComplexSubjects(BuildContext context) =>
     const ComplexSubjectsExample();
 Widget _buildInjectableSubject(BuildContext context) =>
     const InjectableSubjectExample();
+Widget _buildReadonlyStreams(BuildContext context) =>
+    const ReadonlyStreamsExample();
+Widget _buildCombineLatest(BuildContext context) =>
+    const CombineLatestExample();
