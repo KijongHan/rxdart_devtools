@@ -1,11 +1,11 @@
 ---
 title: Getting started
-description: Add rxdart_devtools to your Flutter app and see your first stream.
+description: Add rxdart_devtools to your Flutter app and see your first Subject in the panel.
 ---
 
 import { Steps } from '@astrojs/starlight/components';
 
-This tutorial walks you from a fresh Flutter app to seeing a live `rxdart` stream in the DevTools panel.
+This tutorial walks you from a fresh Flutter app to seeing a live `rxdart` Subject in the DevTools panel.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ This tutorial walks you from a fresh Flutter app to seeing a live `rxdart` strea
 1. **Add the dependency** to your app's `pubspec.yaml`:
 
    ```yaml
-   dev_dependencies:
+   dependencies:
      rxdart_devtools: ^0.1.0
    ```
 
@@ -27,7 +27,36 @@ This tutorial walks you from a fresh Flutter app to seeing a live `rxdart` strea
    flutter pub get
    ```
 
-2. **Run your app** and open DevTools:
+   `rxdart_devtools` is a runtime dependency — its public API is called from your app code. The runtime is a no-op in release builds (see [Track a subject — release mode](/rxdart_devtools/how-to/track-a-subject/#what-happens-in-release-mode)), so leaving it in production is safe.
+
+2. **Initialise the SDK** in `main()` before `runApp`:
+
+   ```dart
+   import 'package:flutter/material.dart';
+   import 'package:rxdart_devtools/sdk.dart';
+
+   void main() {
+     RxDartDevtools.init();
+     runApp(const MyApp());
+   }
+   ```
+
+   `init()` registers the runtime services that surface tracked streams to DevTools. It's also a no-op in release mode.
+
+3. **Track a Subject** in your app code:
+
+   ```dart
+   import 'package:rxdart/rxdart.dart';
+   import 'package:rxdart_devtools/sdk.dart';
+
+   final counter = BehaviorSubject<int>.seeded(0)
+       .track('counter')
+       .asSubject();
+   ```
+
+   `counter` is a normal `BehaviorSubject<int>` — the rest of your code is unchanged. Every `counter.add(...)` will now be visible in the DevTools panel.
+
+4. **Run your app** and open DevTools:
 
    ```bash
    flutter run
@@ -35,13 +64,13 @@ This tutorial walks you from a fresh Flutter app to seeing a live `rxdart` strea
 
    Press `d` in the terminal (or use your IDE's DevTools action) to open DevTools in a browser.
 
-3. **Open the rxdart panel** — look for the **rxdart** tab in the DevTools toolbar.
-
-4. **Track a stream** in your app code (API TBD — placeholder for the runtime `.track()` call). The stream appears in the panel as it activates, and recent events stream into the event log.
+5. **Open the rxdart_devtools panel** — look for the **rxdart_devtools** tab (wrench icon) in the DevTools toolbar. You should see `counter` listed with its current value (`0`). Push values to it from your app and they'll appear live in the **Current value** card and **Event log**.
 
 </Steps>
 
 ## Next steps
 
-- Browse the **How-to guides** for specific tasks
-- Open the [API reference](https://pub.dev/documentation/rxdart_devtools/latest/) for the full surface
+- [Track a stream](/rxdart_devtools/how-to/track-a-stream/) — surface derived or external streams.
+- [Track a subject](/rxdart_devtools/how-to/track-a-subject/) — enable panel-driven injection.
+- [Display complex values](/rxdart_devtools/how-to/display-complex-values/) — render custom types as JSON.
+- [API reference on pub.dev](https://pub.dev/documentation/rxdart_devtools/latest/) — the full surface.

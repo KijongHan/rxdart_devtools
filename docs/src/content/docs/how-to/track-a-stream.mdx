@@ -1,21 +1,74 @@
 ---
 title: Track a stream
-description: Surface a specific rxdart stream in the DevTools panel.
+description: Surface a plain Dart Stream in the DevTools panel.
+sidebar:
+  order: 1
 ---
 
-:::note[Placeholder]
-This how-to is a stub. The runtime `.track()` API is still scaffolding — content will be filled in once the API surface stabilises.
-:::
+`.track()` is also available on plain Dart `Stream`s — useful for derived streams (the output of `Rx.combineLatest`, `.map`, `.where`, `.switchMap`, etc.) and for streams coming from sources you don't own, like Firestore snapshots, WebSocket events, or platform channels. The panel shows the latest value and the event log, the same way as for a tracked Subject — just read-only.
 
-## Goal
+## Quick example
 
-You have an existing `rxdart` stream in your app and want it to show up in the rxdart DevTools panel with a recognisable name.
+Wrap the stream at the point you build the derived pipeline:
 
-## Steps
+```dart
+import 'package:rxdart/rxdart.dart';
+import 'package:rxdart_devtools/sdk.dart';
 
-1. _TBD — placeholder for the API call._
-2. _TBD — placeholder for verifying it appears in the panel._
+final sum = Rx.combineLatest2<int, int, int>(a, b, (x, y) => x + y)
+    .shareValue()
+    .track('combineLatest.sum')
+    .asStream();
+```
+
+`sum` is the original `Stream<int>` — `.asStream()` unwraps the `TrackedStream<T>` wrapper. The stream appears in the panel labelled `combineLatest.sum`, and every emission flows into the **Current value** card and the **Event log**.
+
+## When to use this vs `Track a subject`
+
+| Situation | Use |
+| --- | --- |
+| You own the Subject and want to push/seed values from it | [Track a subject](/rxdart_devtools/how-to/track-a-subject/) |
+| You also want to inject values from the DevTools panel | [Track a subject](/rxdart_devtools/how-to/track-a-subject/) — only Subjects can be injected into |
+| The stream is derived from operators (`map`, `combineLatest`, `switchMap`, …) | `.track()` on the `Stream` |
+| The stream comes from an external source (Firestore, WebSocket, platform channel) | `.track()` on the `Stream` |
+
+If you have a Subject, prefer the Subject extension — you get subtype preservation and the option to enable injection later.
+
+## Mind single-subscription streams
+
+`.track()` internally subscribes to the stream to forward events to DevTools. For **single-subscription** streams (the default in Dart for things like file reads, HTTP responses, and most non-Rx pipelines), this consumes the only allowed subscription — your own listener will throw `Bad state: Stream has already been listened to.`
+
+For derived RxDart pipelines you almost always want to broadcast before tracking. The example above uses `.shareValue()` so both `.track()`'s internal listener and any UI subscribers can consume the same stream:
+
+```dart
+final stream = source
+    .map(transform)
+    .shareValue()           // ← broadcast
+    .track('my-stream')
+    .asStream();
+```
+
+Alternatives to `.shareValue()`:
+
+- `.publishValue().refCount()` — same effect, more explicit
+- `.share()` — broadcast without value caching, fine if late subscribers don't need the last value
+- `.asBroadcastStream()` — for non-Rx streams
+
+If the stream is already broadcast (e.g., a `StreamController.broadcast()`), no extra step is needed.
+
+## Choosing a name
+
+The string you pass to `.track()` is the row label in DevTools.
+
+- Use a stable, **identifier-style** name: `cart.total`, `combineLatest.sum`, `userPresence`. Hot reloads re-register under the same name, so the panel correlates events across the reload.
+- Keep it short — long names crowd the row layout.
+- Namespace with `.` when you have many derived streams: `search.query`, `search.results`, `search.suggestions`.
+
+## What happens in release mode
+
+`.track()` is a **no-op in release builds** — it returns the `TrackedStream<T>` wrapper without registering anything with the DevTools runtime. There's no runtime cost, no extra subscription, and the DevTools wiring is tree-shaken away. Safe to leave the call in production code.
 
 ## Related
 
-- [Getting started](/rxdart_devtools/tutorial/getting-started/) — initial setup
+- [Track a subject](/rxdart_devtools/how-to/track-a-subject/) — the richer version for Subjects, with optional panel-driven injection.
+- [Display complex values](/rxdart_devtools/how-to/display-complex-values/) — how the panel renders the values your stream emits.
