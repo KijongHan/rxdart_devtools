@@ -1,5 +1,5 @@
 name: rxdart_devtools
-issueTracker: https://github.com/thomashan/rxdart_devtools/issues
+issueTracker: https://github.com/KijongHan/rxdart_devtools/issues
 version: 0.1.0
 materialIconCodePoint: '0xe116'
 requiresConnection: true
