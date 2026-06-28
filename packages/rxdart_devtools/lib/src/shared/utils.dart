@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:rxdart_devtools/src/features/config/types.dart';
 
 abstract final class Naming {
@@ -23,5 +25,15 @@ abstract final class Naming {
       return '$file:${match.group(2)}';
     }
     return null;
+  }
+}
+
+abstract final class Serialization {
+  static String? encodeValue(Object? value) {
+    if (value == null) return null;
+    return jsonEncode(
+      value,
+      toEncodable: (nonEncodable) => nonEncodable.toString(),
+    );
   }
 }

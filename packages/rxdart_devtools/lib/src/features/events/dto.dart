@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:rxdart_devtools/src/features/events/types.dart';
-import 'package:rxdart_devtools/src/shared/serialization.dart';
+import 'package:rxdart_devtools/src/shared/utils.dart';
 
 part 'dto.g.dart';
 
@@ -51,8 +51,8 @@ final class ChangeEventLogDto extends EventLogDto {
         id: log.eventLogIdentifier.id,
         timestamp: log.eventLogIdentifier.timestamp.toIso8601String(),
         streamId: log.streamIdentifier.id,
-        newValue: encodeValue(log.newValue),
-        oldValue: encodeValue(log.oldValue),
+        newValue: Serialization.encodeValue(log.newValue),
+        oldValue: Serialization.encodeValue(log.oldValue),
       );
 
   factory ChangeEventLogDto.fromJson(Map<String, dynamic> json) =>

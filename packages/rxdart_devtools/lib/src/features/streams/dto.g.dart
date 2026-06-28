@@ -17,8 +17,8 @@ StreamEntryDto _$StreamEntryDtoFromJson(Map<String, dynamic> json) =>
       lastEmittedAt: json['lastEmittedAt'] as String?,
       isClosed: json['isClosed'] as bool,
       closedAt: json['closedAt'] as String?,
-      isInjectable: json['isInjectable'] as bool? ?? false,
-      isSubject: json['isSubject'] as bool? ?? false,
+      isInjectable: json['isInjectable'] as bool,
+      isSubject: json['isSubject'] as bool,
     );
 
 Map<String, dynamic> _$StreamEntryDtoToJson(StreamEntryDto instance) =>
