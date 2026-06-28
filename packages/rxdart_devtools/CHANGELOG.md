@@ -1,3 +1,7 @@
+# Changelog
+
+All notable changes to `rxdart_devtools` are documented in this file.
+
 ## [0.1.1]
 
 ### Changed
