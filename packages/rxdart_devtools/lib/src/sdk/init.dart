@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:rxdart_devtools/src/features/config/types.dart';
 import 'package:rxdart_devtools/src/features/registry/providers.dart';
 import 'package:rxdart_devtools/src/features/config/providers.dart';
+import 'package:rxdart_devtools/src/features/registry/types.dart';
 import 'package:rxdart_devtools/src/features/streams/push.dart';
 import 'package:rxdart_devtools/src/shared/providers.dart';
 import 'package:rxdart_devtools/src/features/events/service.dart';
@@ -17,20 +18,15 @@ abstract final class RxDartDevtools {
   static bool _initialized = false;
 
   static void init({
-    int historySize = 20,
-    int closedEntryCap = 256,
-    bool captureStackTraces = true,
-    bool enabled = true,
+    StreamIdentifierStrategy streamIdentifierStrategy =
+        StreamIdentifierStrategy.name,
   }) {
     if (kReleaseMode || _initialized) return;
 
     getIt.registerSingleton(
       ConfigProvider(
         config: SdkConfig(
-          historySize: historySize,
-          closedEntryCap: closedEntryCap,
-          captureStackTraces: captureStackTraces,
-          enabled: enabled,
+          streamIdentifierStrategy: streamIdentifierStrategy,
         ),
       ),
     );

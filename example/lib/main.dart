@@ -4,7 +4,7 @@ import 'package:rxdart_devtools/sdk.dart';
 import 'ui/examples_list_page.dart';
 
 void main() {
-  RxDartDevtools.init(historySize: 50);
+  RxDartDevtools.init();
   runApp(const ExampleApp());
 }
 

@@ -4,9 +4,6 @@ abstract final class Naming {
   static int _fallbackCounter = 0;
 
   static String fromStackTrace(String typeLabel, SdkConfig config) {
-    if (!config.captureStackTraces) {
-      return '$typeLabel#${_fallbackCounter++}';
-    }
     final frame = _firstUserFrame(StackTrace.current);
     if (frame == null) return '$typeLabel#${_fallbackCounter++}';
     return '$frame · $typeLabel';

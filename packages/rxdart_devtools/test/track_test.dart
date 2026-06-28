@@ -5,7 +5,7 @@ import 'package:rxdart_devtools/sdk.dart';
 void main() {
   group('Stream.track()', () {
     setUp(() {
-      RxDartDevtools.init(historySize: 5);
+      RxDartDevtools.init();
     });
 
     test('returns a wrapper exposing the original Subject via asSubject()', () {
