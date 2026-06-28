@@ -1,4 +1,4 @@
-## 0.1.1
+## [0.1.1]
 
 ### Changed
 
@@ -11,7 +11,7 @@
   `Stream`, tracking a `Subject`, and tracking a `Subject` with injection
   enabled.
 
-## 0.1.0
+## [0.1.0]
 
 First usable release.
 
@@ -28,6 +28,6 @@ First usable release.
 - `kReleaseMode` guards on all public entry points; the Dart AOT compiler
   dead-code-eliminates the registry and supporting code from release builds.
 
-## 0.0.1
+## [0.0.1]
 
 - Initial scaffold (never published).
