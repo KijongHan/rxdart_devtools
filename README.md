@@ -2,6 +2,15 @@
 
 A Dart DevTools extension for inspecting RxDart streams.
 
+<!-- TODO: drop a GIF/screenshot of the panel here. -->
+<!-- Suggested: build via `melos run build:panel:simulated`, record a 5-10s capture of streams updating + an injection. -->
+
+- 📦 [Package on pub.dev](https://pub.dev/packages/rxdart_devtools)
+- 📖 [Documentation](https://kijonghan.github.io/rxdart_devtools/)
+- 🐛 [Issues](https://github.com/KijongHan/rxdart_devtools/issues)
+
+> Looking to *use* the extension? See the [package README](packages/rxdart_devtools/README.md). This file is for working on the codebase.
+
 ## Repo layout
 
 ```
@@ -42,4 +51,4 @@ Output lands in `packages/rxdart_devtools/extension/devtools/build/`, which ship
 
 ## Status
 
-Scaffold only. The runtime `.track()` API, registry, and panel UI are stubs that compile but do not yet wire end-to-end.
+Early release. v0.x — API may change before 1.0. Tracking, panel UI, value injection, and clear-all are wired end-to-end; edge cases are being shaken out. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to develop locally.
