@@ -23,32 +23,14 @@ rxdart_devtools/                       # workspace root
     └── build_panel.dart               # build the panel into the runtime package
 ```
 
-## Getting started
+## Contributing
 
-Requires Dart SDK ^3.6.0 (for workspaces) and the Flutter SDK.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for prerequisites, local dev setup, and the melos scripts used during development.
 
-```bash
-flutter pub get                        # resolves all workspace packages
-melos bootstrap                        # optional, if using melos
-```
+## License
 
-## Developing the panel
-
-Run the panel against a simulated DevTools environment:
-
-```bash
-cd packages/rxdart_devtools_extension
-flutter run -d chrome --dart-define=use_simulated_environment=true
-```
-
-## Building the panel for release
-
-```bash
-dart tool/build_panel.dart
-```
-
-Output lands in `packages/rxdart_devtools/extension/devtools/build/`, which ships with the runtime package on pub.
+[MIT](LICENSE). This is a community project, not affiliated with or endorsed by the rxdart maintainers or ReactiveX.
 
 ## Status
 
-Early release. v0.x — API may change before 1.0. Tracking, panel UI, value injection, and clear-all are wired end-to-end; edge cases are being shaken out. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to develop locally.
+Early release. v0.x — API may change before 1.0. Tracking, panel UI, value injection, and clear-all are wired end-to-end; edge cases are being shaken out.
