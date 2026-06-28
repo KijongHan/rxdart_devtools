@@ -27,7 +27,7 @@ Or add the dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  rxdart_devtools: ^0.1.0
+  rxdart_devtools: ^0.1.1
 ```
 
 then fetch it:

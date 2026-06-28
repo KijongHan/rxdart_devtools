@@ -1,6 +1,6 @@
 name: rxdart_devtools
 description: A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Streams. Simple SDK to set up for value/error introspection and injection.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/KijongHan/rxdart_devtools
 issue_tracker: https://github.com/KijongHan/rxdart_devtools/issues
 topics:

@@ -1,3 +1,16 @@
+## 0.1.1
+
+### Changed
+
+- DevTools tab icon updated to the Material **build** (wrench) glyph.
+
+### Documentation
+
+- Full dartdoc coverage across the public API (`sdk.dart` and `dto.dart`).
+- Added `example/README.md` covering the three core scenarios — tracking a
+  `Stream`, tracking a `Subject`, and tracking a `Subject` with injection
+  enabled.
+
 ## 0.1.0
 
 First usable release.
