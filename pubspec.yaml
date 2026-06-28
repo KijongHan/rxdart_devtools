@@ -62,3 +62,19 @@ melos:
     build:docs:
       run: cd docs && pnpm install --frozen-lockfile && pnpm build
       description: Build the Starlight docs site into docs/dist (used by the GitHub Pages workflow).
+
+    build:panel:simulated:
+      run: cd packages/rxdart_devtools_extension && flutter build web --profile --output build/simulated --dart-define=use_simulated_environment=true
+      description: |
+        Build the extension panel as a static web bundle with the simulated DevTools environment wrapper enabled,
+        into packages/rxdart_devtools_extension/build/simulated. Intended for docs/tutorial previewing only —
+        NOT the publish artifact (that's produced by `build_panel` and lives at packages/rxdart_devtools/extension/devtools/build).
+        Uses --profile because the simulator wrapper is gated on !kReleaseMode in devtools_extensions; a default
+        --release build silently strips the simulator even with the dart-define flag set.
+
+    run:panel:simulated:
+      run: melos run build:panel:simulated && npx serve packages/rxdart_devtools_extension/build/simulated -l 3474
+      description: |
+        Build the simulated panel bundle (via `build:panel:simulated`) and then serve it
+        at http://localhost:3474. The build step always runs first so the served bundle
+        reflects the latest panel source.
