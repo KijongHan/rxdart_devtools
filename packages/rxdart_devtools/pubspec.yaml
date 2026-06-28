@@ -1,8 +1,8 @@
 name: rxdart_devtools
 description: Dart DevTools extension for inspecting RxDart streams — Subject values, listener counts, emission history.
 version: 0.0.1
-repository: https://github.com/thomashan/rxdart_devtools
-issue_tracker: https://github.com/thomashan/rxdart_devtools/issues
+repository: https://github.com/KijongHan/rxdart_devtools
+issue_tracker: https://github.com/KijongHan/rxdart_devtools/issues
 
 resolution: workspace
 

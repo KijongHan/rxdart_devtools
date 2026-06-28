@@ -2,7 +2,7 @@
 
 A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Streams.
 
-![rxdart_devtools panel in action](https://raw.githubusercontent.com/KijongHan/rxdart_devtools/main/assets/panel-demo.gif)
+![rxdart_devtools panel in action](https://raw.githubusercontent.com/KijongHan/rxdart_devtools/main/assets/panel-demo-subjects.gif)
 
 - 📦 [Package on pub.dev](https://pub.dev/packages/rxdart_devtools)
 - 📖 [Documentation](https://kijonghan.github.io/rxdart_devtools/)

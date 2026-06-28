@@ -7,7 +7,7 @@ A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Stre
 [![pub likes](https://img.shields.io/pub/likes/rxdart_devtools)](https://pub.dev/packages/rxdart_devtools/score)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-![rxdart_devtools panel in action](https://raw.githubusercontent.com/KijongHan/rxdart_devtools/main/assets/panel-demo.gif)
+![rxdart_devtools panel in action](https://raw.githubusercontent.com/KijongHan/rxdart_devtools/main/assets/panel-demo-subjects.gif)
 
 ## Why
 
