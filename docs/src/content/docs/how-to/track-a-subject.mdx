@@ -58,18 +58,6 @@ In the panel, the inject dialog has a **Value / Error** toggle:
 - **Value** — runs `parse(rawText)` then `subject.add(...)`.
 - **Error** — calls `subject.addError(rawText)` with the typed string. Useful for exercising error-handling code paths without changing your app source.
 
-## Choosing a name
-
-The string you pass to `.track()` is what shows up as the row label in DevTools. Some recommendations:
-
-- Use a stable, **identifier-style** name: `counter`, `auth.session`, `cart.items`. Hot reloads re-register under the same name, so the panel correlates events across the reload.
-- Keep it short — long names crowd the row layout.
-- Namespace with `.` when you have many Subjects: `cart.items`, `cart.total`, `cart.discountCode`.
-
-## What happens in release mode
-
-`.track()` and `.enableInjection()` are **no-ops in release builds** — no DevTools registration happens, no subscription is taken on the Subject, and `.asSubject()` returns the same Subject your code would have used without any of the tracking calls. Safe to leave the chain in production code.
-
 ## Related
 
 - [Track a stream](/rxdart_devtools/how-to/track-a-stream/) — the read-only equivalent for plain `Stream`s.

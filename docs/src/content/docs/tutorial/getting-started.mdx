@@ -66,6 +66,23 @@ This tutorial walks you from a fresh Flutter app to seeing a live `rxdart` Subje
 
 5. **Open the rxdart_devtools panel** — look for the **rxdart_devtools** tab (wrench icon) in the DevTools toolbar. You should see `counter` listed with its current value (`0`). Push values to it from your app and they'll appear live in the **Current value** card and **Event log**.
 
+6. **Watch the Subject update live**. As your app calls `counter.add(...)`, the **Current value** card refreshes and each emission lands in the **Event log**:
+
+   ![rxdart_devtools panel showing tracked Subjects](https://raw.githubusercontent.com/KijongHan/rxdart_devtools/main/assets/panel-demo-subjects.gif)
+
+7. **Try injecting from the panel** — add `.enableInjection(parse: ...)` to your Subject and the panel becomes a two-way surface. Type a value, hit **Inject**, and your stream receives it as if your app had pushed it:
+
+   ```dart
+   final counter = BehaviorSubject<int>.seeded(0)
+       .track('counter')
+       .enableInjection(parse: int.tryParse)
+       .asSubject();
+   ```
+
+   ![Injecting values from the DevTools panel](https://raw.githubusercontent.com/KijongHan/rxdart_devtools/main/assets/panel-demo-injection.gif)
+
+   See [Track a subject](/rxdart_devtools/how-to/track-a-subject/) for more injection patterns.
+
 </Steps>
 
 ## Next steps

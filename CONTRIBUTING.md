@@ -1,7 +1,7 @@
 # Contributing to rxdart_devtools
 All contributions are welcome! Please follow some simple guidelines below that'd help with the review process.
 - Please make sure to raise an issue first before making a PR.
-- Please be prepared to answer technical questions and provide context for the changes you are making (not just AI generated responses)
+- If you are raising a bug, please provide a minimal reproducible example or screenshot
 
 ## Prerequisites
 
