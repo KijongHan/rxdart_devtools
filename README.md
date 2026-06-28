@@ -24,7 +24,7 @@ rxdart_devtools/                       # workspace root
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for prerequisites, local dev setup, and the melos scripts used during development.
+Thank you for your interest in contributing to rxdart_devtools! See [CONTRIBUTING.md](CONTRIBUTING.md) for prerequisites, local dev setup, and the melos scripts used during development.
 
 ## License
 

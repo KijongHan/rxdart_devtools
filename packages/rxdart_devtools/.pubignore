@@ -1,0 +1,15 @@
+# Overrides .gitignore for `dart pub publish`.
+# Without this, the workspace .gitignore strips
+# packages/rxdart_devtools/extension/devtools/build/ (the panel binary
+# DevTools loads at runtime) from the upload.
+
+.dart_tool/
+.idea/
+.DS_Store
+*.iml
+
+# Exclude the package-level build/ (Flutter test artifacts etc.)
+# but keep the extension panel's build dir.
+build/
+!extension/devtools/build/
+!extension/devtools/build/**
