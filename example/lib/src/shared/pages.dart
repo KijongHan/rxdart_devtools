@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'types.dart';
+import 'package:rxdart_devtools_example/src/shared/types.dart';
 
 class ExamplePage extends StatelessWidget {
   const ExamplePage({required this.example, super.key});
