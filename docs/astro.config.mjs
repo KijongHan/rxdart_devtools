@@ -10,6 +10,7 @@ export default defineConfig({
       title: 'rxdart_devtools',
       description:
         'A DevTools extension for inspecting RxDart streams in your Flutter app.',
+      favicon: '/favicon.svg',
       social: {
         github: 'https://github.com/KijongHan/rxdart_devtools',
       },
