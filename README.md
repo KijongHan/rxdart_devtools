@@ -1,6 +1,6 @@
 # rxdart_devtools
 
-A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Streams.
+A Dart & Flutter DevTools extension for inspecting RxDart Subjects and Dart Streams. Inspired by other Flutter state management package DevTool extensions like [Provider](https://pub.dev/packages/provider_devtools) and [Riverpod](https://pub.dev/packages/riverpod_devtools) and to fill the gap for apps using RxDart and Streams.
 
 ![rxdart_devtools panel in action](https://raw.githubusercontent.com/KijongHan/rxdart_devtools/main/assets/panel-demo-subjects.gif)
 
